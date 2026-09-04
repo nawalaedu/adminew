@@ -144,6 +144,8 @@ textarea{
   min-height:120px;
   resize:vertical;
 }
+.link-drive-box{display:none;}
+.link-drive-box.show{display:block;}
 
 small{
   display:block;
@@ -840,6 +842,7 @@ Jenis Penulisan
 <select
 id="jenisPenulisan"
 name="jenisPenulisan"
+onchange="ubahJenisPenulisan()"
 required>
 
 <option value="">
@@ -855,6 +858,26 @@ Naskah Mandiri
 </option>
 
 </select>
+
+</div>
+
+
+<!-- LINK DRIVE NASKAH MANDIRI -->
+<div
+  id="linkDriveBox"
+  class="form-group link-drive-box">
+
+  <label>Link Drive Naskah</label>
+
+  <input
+    type="url"
+    id="linkDrive"
+    name="linkDrive"
+    placeholder="Tempel link Google Drive naskah">
+
+  <small>
+    Link Drive hanya diisi jika memilih <strong>Naskah Mandiri</strong>.
+  </small>
 
 </div>
 
@@ -1384,6 +1407,37 @@ function ubahJenisInput(){
       },
       100
     );
+
+  }
+
+}
+
+
+/* ==================================================
+   JENIS PENULISAN
+================================================== */
+
+function ubahJenisPenulisan(){
+
+  const jenis =
+    document.getElementById("jenisPenulisan").value;
+
+  const box =
+    document.getElementById("linkDriveBox");
+
+  const input =
+    document.getElementById("linkDrive");
+
+  if(jenis === "Naskah Mandiri"){
+
+    box.classList.add("show");
+    input.required = true;
+
+  }else{
+
+    box.classList.remove("show");
+    input.required = false;
+    input.value = "";
 
   }
 
@@ -2502,6 +2556,11 @@ function simpanOrder(
       document.getElementById(
         "jenisPenulisan"
       ).value,
+
+    linkDrive:
+      document.getElementById(
+        "linkDrive"
+      ).value.trim(),
 
     authors:
       authors
