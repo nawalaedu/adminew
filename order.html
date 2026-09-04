@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard</title>
+
+
+<style>
+
+/* ==================================================
+   RESET
+================================================== */
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+
+/* ==================================================
+   BODY
+================================================== */
+
+body{
+
+  font-family:Arial,sans-serif;
+
+  color:#183b56;
+
+  min-height:100vh;
+
+  background-image:
+
+    linear-gradient(
+      rgba(255,255,255,.78),
+      rgba(244,247,250,.88)
+    ),
+
+    url("https://i.pinimg.com/736x/23/44/7c/23447cf2d17d6962783578c82c11b3b7.jpg");
+
+  background-size:cover;
+
+  background-position:center;
+
+  background-repeat:no-repeat;
+
+  background-attachment:fixed;
+
+}
+
+
+/* ==================================================
+   HEADER
+================================================== */
+
+.header{
+
+  height:72px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(24,59,86,.97),
+      rgba(47,111,149,.94)
+    );
+
+  color:white;
+
+  padding:0 6%;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  box-shadow:
+    0 4px 18px
+    rgba(0,0,0,.15);
+
+}
+
+
+.logo{
+
+  font-size:21px;
+
+  font-weight:bold;
+
+}
+
+
+.header-right{
+
+  font-size:14px;
+
+  font-weight:500;
+
+}
+
+
+/* ==================================================
+   MAIN
+================================================== */
+
+.container{
+
+  min-height:
+    calc(100vh - 72px);
+
+  max-width:1150px;
+
+  margin:0 auto;
+
+  padding:
+    35px 25px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+}
+
+
+/* ==================================================
+   TITLE
+================================================== */
+
+.title{
+
+  text-align:center;
+
+  margin-bottom:35px;
+
+}
+
+
+.title h1{
+
+  font-size:32px;
+
+  margin-bottom:9px;
+
+  color:#183b56;
+
+}
+
+
+.title p{
+
+  color:#4a5568;
+
+  font-size:14px;
+
+}
+
+
+/* GARIS */
+
+.title-line{
+
+  width:55px;
+
+  height:4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #183b56,
+      #2f6f95
+    );
+
+  border-radius:10px;
+
+  margin:
+    15px auto 0;
+
+}
+
+
+/* ==================================================
+   CARDS
+================================================== */
+
+.cards{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:22px;
+
+}
+
+
+/* ==================================================
+   CARD
+================================================== */
+
+.card{
+
+  position:relative;
+
+  overflow:hidden;
+
+  background:
+    rgba(255,255,255,.94);
+
+  backdrop-filter:
+    blur(7px);
+
+  -webkit-backdrop-filter:
+    blur(7px);
+
+  border:
+    1px solid
+    rgba(255,255,255,.85);
+
+  border-radius:17px;
+
+  padding:
+    35px 22px 27px;
+
+  text-align:center;
+
+  box-shadow:
+    0 7px 25px
+    rgba(24,59,86,.10);
+
+  transition:.25s;
+
+}
+
+
+.card::before{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+
+  left:0;
+
+  width:100%;
+
+  height:4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #183b56,
+      #2f6f95
+    );
+
+}
+
+
+.card:hover{
+
+  transform:
+    translateY(-5px);
+
+  box-shadow:
+    0 14px 32px
+    rgba(24,59,86,.16);
+
+}
+
+
+/* ==================================================
+   ICON
+================================================== */
+
+.icon{
+
+  width:70px;
+
+  height:70px;
+
+  margin:
+    0 auto 18px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #edf5f9,
+      #e1edf3
+    );
+
+  font-size:38px;
+
+  transition:.25s;
+
+}
+
+
+.card:hover .icon{
+
+  transform:
+    scale(1.06);
+
+}
+
+
+/* ==================================================
+   CARD TITLE
+================================================== */
+
+.card h2{
+
+  font-size:18px;
+
+  margin-bottom:10px;
+
+  color:#183b56;
+
+}
+
+
+/* ==================================================
+   CARD DESCRIPTION
+================================================== */
+
+.card p{
+
+  color:#718096;
+
+  font-size:13px;
+
+  line-height:1.6;
+
+  margin-bottom:22px;
+
+  min-height:62px;
+
+}
+
+
+/* ==================================================
+   BUTTON
+================================================== */
+
+.btn{
+
+  width:100%;
+
+  border:0;
+
+  padding:12px;
+
+  border-radius:8px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #183b56,
+      #2f6f95
+    );
+
+  color:white;
+
+  cursor:pointer;
+
+  font-weight:bold;
+
+  font-size:12px;
+
+  transition:.2s;
+
+}
+
+
+.btn:hover{
+
+  background:
+    linear-gradient(
+      135deg,
+      #214d6c,
+      #367da7
+    );
+
+  transform:
+    translateY(-1px);
+
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.footer{
+
+  text-align:center;
+
+  margin-top:30px;
+
+  color:#718096;
+
+  font-size:11px;
+
+}
+
+
+/* ==================================================
+   TABLET
+================================================== */
+
+@media(max-width:1000px){
+
+  .container{
+
+    justify-content:flex-start;
+
+    padding-top:45px;
+
+  }
+
+  .cards{
+
+    grid-template-columns:
+      repeat(2,1fr);
+
+  }
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media(max-width:600px){
+
+  .header{
+
+    height:65px;
+
+    padding:
+      0 20px;
+
+  }
+
+  .logo{
+
+    font-size:17px;
+
+  }
+
+  .header-right{
+
+    font-size:12px;
+
+  }
+
+  .container{
+
+    min-height:
+      calc(100vh - 65px);
+
+    padding:
+      30px 18px;
+
+  }
+
+  .title{
+
+    margin-bottom:25px;
+
+  }
+
+  .title h1{
+
+    font-size:27px;
+
+  }
+
+  .cards{
+
+    grid-template-columns:1fr;
+
+    gap:15px;
+
+  }
+
+  .card{
+
+    padding:
+      27px 20px 22px;
+
+  }
+
+  .footer{
+
+    margin-top:25px;
+
+  }
+
+}
+
+</style>
+
+  <script src="api.js"></script>
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="header">
+
+  <div class="logo">
+    ADMIN MANAGEMENT
+  </div>
+
+  <div class="header-right">
+    Nawala Education
+  </div>
+
+</header>
+
+
+
+<!-- ==================================================
+     MAIN
+================================================== -->
+
+<div class="container">
+
+
+  <!-- ==================================================
+       TITLE
+  ================================================== -->
+
+  <div class="title">
+
+    <h1>
+      Selamat Datang
+    </h1>
+
+    <p>
+      Pilih layanan yang ingin Anda kelola
+    </p>
+
+    <div class="title-line"></div>
+
+  </div>
+
+
+
+  <!-- ==================================================
+       CARDS
+  ================================================== -->
+
+  <div class="cards">
+
+
+    <!-- ==================================================
+         BUKU
+    ================================================== -->
+
+    <div class="card">
+
+      <div class="icon">
+        📚
+      </div>
+
+      <h2>
+        BUKU
+      </h2>
+
+      <p>
+        Kelola order buku, invoice,
+        ISBN, dan HKI.
+      </p>
+
+      <button
+        type="button"
+        class="btn"
+        onclick="bukaBuku()">
+
+        MASUK
+
+      </button>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         ARTIKEL
+    ================================================== -->
+
+    <div class="card">
+
+      <div class="icon">
+        📝
+      </div>
+
+      <h2>
+        ARTIKEL
+      </h2>
+
+      <p>
+        Kelola artikel dan
+        proses publikasi.
+      </p>
+
+      <button
+        type="button"
+        class="btn"
+        onclick="bukaArtikel()">
+
+        MASUK
+
+      </button>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         OLAH DATA
+    ================================================== -->
+
+    <div class="card">
+
+      <div class="icon">
+        📊
+      </div>
+
+      <h2>
+        OLAH DATA
+      </h2>
+
+      <p>
+        Kelola order pengolahan
+        dan konsultasi data.
+      </p>
+
+      <button
+        type="button"
+        class="btn"
+        onclick="bukaOlahData()">
+
+        MASUK
+
+      </button>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         IJP
+    ================================================== -->
+
+    <div class="card">
+
+      <div class="icon">
+        📢
+      </div>
+
+      <h2>
+        IJP
+      </h2>
+
+      <p>
+        Kelola order jasa publikasi
+        artikel dan jurnal.
+      </p>
+
+      <button
+        type="button"
+        class="btn"
+        onclick="bukaIJP()">
+
+        MASUK
+
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- ==================================================
+       FOOTER
+  ================================================== -->
+
+  <div class="footer">
+
+    Nawala Education · Admin Management
+
+  </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* ==================================================
+   BUKA BUKU
+================================================== */
+
+function bukaBuku(){
+
+  window.location.href =
+    "buku.html";
+
+}
+
+
+/* ==================================================
+   BUKA ARTIKEL
+================================================== */
+
+function bukaArtikel(){
+
+  window.location.href =
+    "artikel.html";
+
+}
+
+
+/* ==================================================
+   BUKA OLAH DATA
+================================================== */
+
+function bukaOlahData(){
+
+  window.location.href =
+    "data.html";
+
+}
+
+
+/* ==================================================
+   BUKA IJP
+================================================== */
+
+function bukaIJP(){
+
+   window.location.href =
+    "ijp.html";
+}
+
+
+</script>
+
+
+</body>
+
+</html>

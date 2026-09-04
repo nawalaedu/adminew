@@ -1,0 +1,2593 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Order Olah Data</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fa;
+  color:#183b56;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  background:linear-gradient(135deg,#183b56,#2f6f95);
+  color:white;
+  padding:20px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 3px 15px rgba(0,0,0,.12);
+}
+
+.logo{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.header-right{
+  font-size:14px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  max-width:1000px;
+  margin:35px auto;
+  padding:0 20px;
+}
+
+/* =========================
+   BACK
+========================= */
+
+.back{
+  background:#718096;
+  color:white;
+  border:0;
+  padding:11px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-bottom:20px;
+  font-weight:bold;
+}
+
+.back:hover{
+  background:#4a5568;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.form-card{
+  background:white;
+  border-radius:16px;
+  padding:30px;
+  box-shadow:0 6px 25px rgba(0,0,0,.08);
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.form-title{
+  border-bottom:1px solid #e2e8f0;
+  padding-bottom:20px;
+  margin-bottom:25px;
+}
+
+.form-title h1{
+  margin:0 0 8px 0;
+  font-size:27px;
+}
+
+.form-title p{
+  margin:0;
+  color:#718096;
+  line-height:1.5;
+}
+
+/* =========================
+   INFO
+========================= */
+
+.info-box{
+  background:#f0f7fb;
+  border-left:4px solid #2f6f95;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:25px;
+  color:#4a5568;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.section-title{
+  margin:30px 0 18px 0;
+  padding-bottom:9px;
+  border-bottom:1px solid #e2e8f0;
+  font-size:17px;
+  font-weight:bold;
+  color:#183b56;
+}
+
+/* =========================
+   FORM GRID
+========================= */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.form-group{
+  margin-bottom:18px;
+}
+
+.form-group.full{
+  grid-column:1 / -1;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:7px;
+  color:#183b56;
+}
+
+.required{
+  color:#e53e3e;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #d6dee6;
+  border-radius:8px;
+  font-family:Arial,sans-serif;
+  font-size:14px;
+  background:white;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  border-color:#2f6f95;
+  box-shadow:0 0 0 2px rgba(47,111,149,.08);
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+small{
+  display:block;
+  margin-top:6px;
+  color:#718096;
+  font-size:11px;
+  line-height:1.5;
+}
+
+/* =========================
+   CHECKBOX SOFTWARE
+========================= */
+
+.software-box{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  padding:15px;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:9px;
+}
+
+.check-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  color:#4a5568;
+  cursor:pointer;
+}
+
+.check-item input{
+  width:auto;
+  margin:0;
+  cursor:pointer;
+}
+
+/* =========================
+   ANALISIS
+========================= */
+
+.analysis-box{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  padding:15px;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:9px;
+}
+
+.analysis-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  color:#4a5568;
+  cursor:pointer;
+}
+
+.analysis-item input{
+  width:auto;
+  cursor:pointer;
+}
+
+/* =========================
+   ANALISIS LAINNYA
+========================= */
+
+.other-analysis-box{
+  display:none;
+  margin-top:12px;
+  padding:15px;
+  background:#f0f7fb;
+  border:1px solid #d6e7f0;
+  border-radius:9px;
+}
+
+.other-analysis-box.show{
+  display:block;
+}
+
+.other-analysis-box label{
+  margin-bottom:7px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn-save{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:9px;
+  background:#183b56;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:15px;
+  font-size:14px;
+}
+
+.btn-save:hover{
+  background:#2f6f95;
+}
+
+.btn-save:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  z-index:9999;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:480px;
+  max-height:90vh;
+  overflow-y:auto;
+  border-radius:16px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 50px rgba(0,0,0,.25);
+}
+
+.modal-icon{
+  font-size:45px;
+  margin-bottom:12px;
+}
+
+.modal-box h2{
+  margin:0 0 8px;
+}
+
+.modal-box p{
+  color:#718096;
+  line-height:1.5;
+  font-size:14px;
+}
+
+.order-result{
+  background:#f4f7fa;
+  border-radius:10px;
+  padding:18px;
+  margin:20px 0;
+  text-align:left;
+}
+
+.result-row{
+  margin-bottom:14px;
+}
+
+.result-row:last-child{
+  margin-bottom:0;
+}
+
+.result-label{
+  font-size:11px;
+  color:#718096;
+  margin-bottom:4px;
+}
+
+.result-value{
+  font-size:15px;
+  font-weight:bold;
+  color:#183b56;
+  word-break:break-word;
+}
+
+.id-order{
+  font-size:21px;
+}
+
+.modal-buttons{
+  display:flex;
+  gap:10px;
+}
+
+.btn-modal{
+  flex:1;
+  border:0;
+  padding:12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn-copy{
+  background:#183b56;
+  color:white;
+}
+
+.btn-close{
+  background:#e2e8f0;
+  color:#183b56;
+}
+
+.btn-copy:hover{
+  background:#2f6f95;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:700px){
+
+  .header{
+    padding:18px 20px;
+  }
+
+  .logo{
+    font-size:17px;
+  }
+
+  .header-right{
+    font-size:12px;
+  }
+
+  .container{
+    margin:25px auto;
+    padding:0 15px;
+  }
+
+  .form-card{
+    padding:22px 18px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+
+  .form-group.full{
+    grid-column:auto;
+  }
+
+  .software-box{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .analysis-box{
+    grid-template-columns:1fr;
+  }
+
+  .modal-buttons{
+    flex-direction:column;
+  }
+
+}
+
+@media(max-width:450px){
+
+  .software-box{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+
+<script src="api.js"></script>
+
+</head>
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+  <div class="logo">
+    ADMIN MANAGEMENT
+  </div>
+
+  <div class="header-right">
+    ORDER OLAH DATA
+  </div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- =========================
+     BACK
+========================= -->
+
+<button
+type="button"
+class="back"
+onclick="kembali()">
+
+← Kembali
+
+</button>
+
+
+<div class="form-card">
+
+
+<!-- =========================
+     TITLE
+========================= -->
+
+<div class="form-title">
+
+  <h1>
+    📊 Order Olah Data
+  </h1>
+
+  <p>
+    Form pencatatan order pengolahan dan analisis data.
+  </p>
+
+</div>
+
+
+<!-- =========================
+     INFO
+========================= -->
+
+<div class="info-box">
+
+  <strong>📌 Informasi Order</strong><br>
+
+  Silakan lengkapi data order sesuai kebutuhan.
+  ID Order akan dibuat otomatis setelah data berhasil disimpan.
+
+</div>
+
+
+<form
+id="orderForm"
+onsubmit="simpanOrder(event)">
+
+
+<!-- ==================================================
+     INFORMASI ORDER
+================================================== -->
+
+<div class="section-title">
+  1. INFORMASI ORDER
+</div>
+
+
+<div class="form-grid">
+
+
+<!-- TANGGAL -->
+
+<div class="form-group">
+
+<label>
+Tanggal Order <span class="required">*</span>
+</label>
+
+<input
+type="date"
+id="tanggal"
+name="tanggal"
+required>
+
+</div>
+
+
+<!-- JAM -->
+
+<div class="form-group">
+
+<label>
+Jam Order <span class="required">*</span>
+</label>
+
+<input
+type="time"
+id="jamOrder"
+name="jamOrder"
+required>
+
+</div>
+
+
+<!-- DEADLINE -->
+
+<div class="form-group">
+
+<label>
+Deadline Order <span class="required">*</span>
+</label>
+
+<input
+type="date"
+id="deadline"
+name="deadline"
+required>
+
+<small>
+Masukkan tanggal batas waktu penyelesaian order.
+</small>
+
+</div>
+
+
+<!-- MARKETING -->
+
+<div class="form-group">
+
+<label>
+Marketing <span class="required">*</span>
+</label>
+
+<input
+type="text"
+id="marketing"
+name="marketing"
+placeholder="Ketik nama marketing"
+required>
+
+<small>
+Masukkan nama marketing yang menangani order ini.
+</small>
+
+</div>
+
+
+<!-- KATEGORI -->
+
+<div class="form-group">
+
+<label>
+Kategori <span class="required">*</span>
+</label>
+
+<select
+id="kategori"
+name="kategori"
+required>
+
+<option value="">
+Pilih Kategori
+</option>
+
+<option value="Skripsi">
+Skripsi
+</option>
+
+<option value="Tesis">
+Tesis
+</option>
+
+<option value="Disertasi">
+Disertasi
+</option>
+
+<option value="Tugas Kuliah">
+Tugas Kuliah
+</option>
+
+<option value="Tugas Akhir">
+Tugas Akhir
+</option>
+
+<option value="Artikel Jurnal">
+Artikel Jurnal
+</option>
+
+<option value="Proposal Penelitian">
+Proposal Penelitian
+</option>
+
+<option value="Penelitian">
+Penelitian
+</option>
+
+<option value="Lainnya">
+Lainnya
+</option>
+
+</select>
+
+</div>
+
+
+<!-- NAMA -->
+
+<div class="form-group">
+
+<label>
+Nama Pemesan <span class="required">*</span>
+</label>
+
+<input
+type="text"
+id="nama"
+name="nama"
+placeholder="Nama lengkap pemesan"
+required>
+
+</div>
+
+
+<!-- ==================================================
+     JUDUL OLAH DATA
+================================================== -->
+
+<div class="form-group full">
+
+<label>
+Judul Olah Data <span class="required">*</span>
+</label>
+
+<input
+type="text"
+id="judulOlahData"
+name="judulOlahData"
+placeholder="Contoh: Analisis Pengaruh Kualitas Pelayanan terhadap Kepuasan Pelanggan"
+required>
+
+<small>
+Masukkan judul penelitian, judul skripsi, atau judul pekerjaan olah data.
+</small>
+
+</div>
+
+
+<!-- INSTITUSI -->
+
+<div class="form-group">
+
+<label>
+Institusi / Universitas <span class="required">*</span>
+</label>
+
+<input
+type="text"
+id="institusi"
+name="institusi"
+placeholder="Contoh: Universitas Indonesia"
+required>
+
+</div>
+
+
+<!-- BIDANG PENELITIAN -->
+
+<div class="form-group full">
+
+<label>
+Bidang Penelitian <span class="required">*</span>
+</label>
+
+<input
+type="text"
+id="bidangPenelitian"
+name="bidangPenelitian"
+placeholder="Contoh: Manajemen, Pendidikan, Akuntansi, Kesehatan"
+required>
+
+</div>
+
+
+</div>
+
+
+<!-- ==================================================
+     KEBUTUHAN ANALISIS
+================================================== -->
+
+<div class="section-title">
+  2. KEBUTUHAN ANALISIS
+</div>
+
+
+<!-- SOFTWARE -->
+
+<div class="form-group">
+
+<label>
+Software yang Digunakan <span class="required">*</span>
+</label>
+
+
+<div class="software-box">
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="SPSS">
+
+SPSS
+
+</label>
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="SmartPLS">
+
+SmartPLS
+
+</label>
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="AMOS/LISREL">
+
+AMOS / LISREL
+
+</label>
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="EViews">
+
+EViews
+
+</label>
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="RStudio">
+
+RStudio
+
+</label>
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="Stata">
+
+Stata
+
+</label>
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="Minitab">
+
+Minitab
+
+</label>
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="MATLAB">
+
+MATLAB
+
+</label>
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="NVivo">
+
+NVivo
+
+</label>
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="AHP">
+
+AHP
+
+</label>
+
+
+<label class="check-item">
+
+<input
+type="checkbox"
+name="software"
+value="Lainnya"
+id="softwareLainnya"
+onchange="toggleSoftwareLainnya()">
+
+Lainnya
+
+</label>
+
+
+</div>
+
+
+<!-- SOFTWARE LAINNYA -->
+
+<div
+id="softwareLainnyaBox"
+class="other-analysis-box">
+
+<label>
+Tuliskan Software Lainnya
+</label>
+
+<input
+type="text"
+id="softwareLainnyaText"
+name="softwareLainnyaText"
+placeholder="Contoh: Python, Gephi, MAXQDA, dll.">
+
+<small>
+Isi jika software yang dibutuhkan tidak tersedia pada pilihan.
+</small>
+
+</div>
+
+
+<small>
+Pilih satu atau lebih software sesuai kebutuhan analisis.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     UJI ANALISIS
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Uji / Analisis yang Dibutuhkan <span class="required">*</span>
+</label>
+
+
+<div class="analysis-box">
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Uji Validitas">
+
+Uji Validitas
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Uji Reliabilitas">
+
+Uji Reliabilitas
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Uji Normalitas">
+
+Uji Normalitas
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Uji Multikolinearitas">
+
+Uji Multikolinearitas
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Uji Heteroskedastisitas">
+
+Uji Heteroskedastisitas
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Uji Autokorelasi">
+
+Uji Autokorelasi
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Regresi Linear">
+
+Regresi Linear
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Regresi Logistik">
+
+Regresi Logistik
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="SEM">
+
+SEM
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="PLS-SEM">
+
+PLS-SEM
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Uji t">
+
+Uji t
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Uji F">
+
+Uji F
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="ANOVA">
+
+ANOVA
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Korelasi">
+
+Korelasi
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Chi-Square">
+
+Chi-Square
+
+</label>
+
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Analisis Deskriptif">
+
+Analisis Deskriptif
+
+</label>
+
+
+<!-- LAINNYA -->
+
+<label class="analysis-item">
+
+<input
+type="checkbox"
+name="ujiAnalisis"
+value="Lainnya"
+id="ujiLainnya"
+onchange="toggleUjiLainnya()">
+
+Lainnya
+
+</label>
+
+
+</div>
+
+
+<!-- UJI ANALISIS LAINNYA -->
+
+<div
+id="ujiLainnyaBox"
+class="other-analysis-box">
+
+<label>
+Tuliskan Uji / Analisis Lainnya
+<span class="required">*</span>
+</label>
+
+<input
+type="text"
+id="ujiAnalisisLainnya"
+name="ujiAnalisisLainnya"
+placeholder="Contoh: Hausman Test, Chow Test, Durbin-Watson, Wilcoxon, dll.">
+
+<small>
+Tuliskan uji atau analisis yang tidak tersedia pada pilihan di atas.
+</small>
+
+</div>
+
+
+<small>
+Pilih semua uji atau analisis yang diperlukan.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     OUTPUT
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Output yang Diminta <span class="required">*</span>
+</label>
+
+<textarea
+id="output"
+name="output"
+placeholder="Contoh: Output SPSS lengkap, tabel hasil uji, interpretasi hasil, pembahasan, grafik, file SmartPLS, dan sebagainya."
+required></textarea>
+
+</div>
+
+
+<!-- ==================================================
+     DATA PENELITIAN
+================================================== -->
+
+<div class="section-title">
+  3. INFORMASI DATA
+</div>
+
+
+<div class="form-grid">
+
+
+<!-- JUMLAH DATA -->
+
+<div class="form-group">
+
+<label>
+Jumlah Data / Responden <span class="required">*</span>
+</label>
+
+<input
+type="number"
+id="jumlahData"
+name="jumlahData"
+min="0"
+placeholder="Contoh: 150"
+required>
+
+<small>
+Masukkan jumlah responden atau jumlah baris data.
+</small>
+
+</div>
+
+
+<!-- JUMLAH VARIABEL -->
+
+<div class="form-group">
+
+<label>
+Jumlah Variabel <span class="required">*</span>
+</label>
+
+<input
+type="number"
+id="jumlahVariabel"
+name="jumlahVariabel"
+min="0"
+placeholder="Contoh: 5"
+required>
+
+</div>
+
+
+<!-- JUMLAH INDIKATOR -->
+
+<div class="form-group">
+
+<label>
+Jumlah Indikator <span class="required">*</span>
+</label>
+
+<input
+type="number"
+id="jumlahIndikator"
+name="jumlahIndikator"
+min="0"
+placeholder="Contoh: 20"
+required>
+
+</div>
+
+
+<!-- KELENGKAPAN DATA -->
+
+<div class="form-group">
+
+<label>
+Kelengkapan Data <span class="required">*</span>
+</label>
+
+<select
+id="kelengkapanData"
+name="kelengkapanData"
+required>
+
+<option value="">
+Pilih kondisi data
+</option>
+
+<option value="Lengkap">
+Lengkap
+</option>
+
+<option value="Ada Missing Value">
+Ada Missing Value
+</option>
+
+<option value="Perlu Cleaning">
+Perlu Cleaning
+</option>
+
+<option value="Belum Dicek">
+Belum Dicek
+</option>
+
+</select>
+
+</div>
+
+
+</div>
+
+
+<!-- ==================================================
+     RAW FILE
+================================================== -->
+
+<div class="section-title">
+  4. FILE DATA
+</div>
+
+
+<div class="form-group">
+
+<label>
+Raw File / Link Drive
+</label>
+
+<input
+type="url"
+id="rawFile"
+name="rawFile"
+placeholder="https://drive.google.com/...">
+
+<small>
+Masukkan link Google Drive / OneDrive / penyimpanan file lainnya.
+Pastikan akses file dapat dibuka oleh tim pengolah data.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     CATATAN
+================================================== -->
+
+<div class="section-title">
+  5. CATATAN ORDER
+</div>
+
+
+<div class="form-group">
+
+<label>
+Catatan / Permintaan Khusus
+</label>
+
+<textarea
+id="catatan"
+name="catatan"
+placeholder="Tuliskan catatan, permintaan khusus, atau informasi tambahan lainnya."></textarea>
+
+</div>
+
+
+<!-- ==================================================
+     SIMPAN
+================================================== -->
+
+<button
+type="submit"
+class="btn-save"
+id="btnSimpan">
+
+💾 SIMPAN ORDER DATA
+
+</button>
+
+
+</form>
+
+
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     MODAL
+================================================== -->
+
+<div
+id="orderModal"
+class="modal">
+
+
+<div class="modal-box">
+
+
+<div class="modal-icon">
+✅
+</div>
+
+
+<h2>
+Order Berhasil Dicatat
+</h2>
+
+
+<p>
+Data order olah data telah berhasil disimpan.
+</p>
+
+
+<div class="order-result">
+
+
+<!-- ID ORDER -->
+
+<div class="result-row">
+
+<div class="result-label">
+ID ORDER
+</div>
+
+<div
+id="resultIdOrder"
+class="result-value id-order">
+
+-
+
+</div>
+
+</div>
+
+
+<!-- NAMA -->
+
+<div class="result-row">
+
+<div class="result-label">
+NAMA PEMESAN
+</div>
+
+<div
+id="resultNama"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+<!-- JUDUL -->
+
+<div class="result-row">
+
+<div class="result-label">
+JUDUL OLAH DATA
+</div>
+
+<div
+id="resultJudul"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+<!-- DEADLINE -->
+
+<div class="result-row">
+
+<div class="result-label">
+DEADLINE ORDER
+</div>
+
+<div
+id="resultDeadline"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="modal-buttons">
+
+
+<button
+type="button"
+class="btn-modal btn-copy"
+onclick="salinIdOrder()">
+
+📋 SALIN ID
+
+</button>
+
+
+<button
+type="button"
+class="btn-modal btn-close"
+onclick="tutupModal()">
+
+TUTUP
+
+</button>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* ==================================================
+   INIT
+================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    const now = new Date();
+
+
+    const tanggal =
+      now.toISOString()
+        .split("T")[0];
+
+
+    const jam =
+      String(
+        now.getHours()
+      ).padStart(2,"0")
+      +
+      ":"
+      +
+      String(
+        now.getMinutes()
+      ).padStart(2,"0");
+
+
+    /* =========================
+       TANGGAL ORDER
+    ========================= */
+
+    document.getElementById(
+      "tanggal"
+    ).value = tanggal;
+
+
+    /* =========================
+       JAM ORDER
+    ========================= */
+
+    document.getElementById(
+      "jamOrder"
+    ).value = jam;
+
+
+    /* =========================
+       DEADLINE DEFAULT
+    ========================= */
+
+    document.getElementById(
+      "deadline"
+    ).value = tanggal;
+
+
+    /* =========================
+       MINIMUM DEADLINE
+    ========================= */
+
+    document.getElementById(
+      "deadline"
+    ).min = tanggal;
+
+  }
+);
+
+
+/* ==================================================
+   TANGGAL ORDER BERUBAH
+================================================== */
+
+document.getElementById(
+  "tanggal"
+).addEventListener(
+  "change",
+  function(){
+
+    const tanggalOrder =
+      this.value;
+
+
+    const deadline =
+      document.getElementById(
+        "deadline"
+      );
+
+
+    deadline.min =
+      tanggalOrder;
+
+
+    if(
+      deadline.value &&
+      deadline.value < tanggalOrder
+    ){
+
+      deadline.value =
+        tanggalOrder;
+
+    }
+
+  }
+);
+
+
+/* ==================================================
+   AMBIL CHECKBOX
+================================================== */
+
+function ambilCheckbox(
+  name
+){
+
+  const checked =
+    document.querySelectorAll(
+      'input[name="' +
+      name +
+      '"]:checked'
+    );
+
+
+  return Array.from(
+    checked
+  ).map(
+    function(item){
+
+      return item.value;
+
+    }
+  );
+
+}
+
+
+/* ==================================================
+   SOFTWARE LAINNYA
+================================================== */
+
+function toggleSoftwareLainnya(){
+
+  const checkbox =
+    document.getElementById(
+      "softwareLainnya"
+    );
+
+
+  const box =
+    document.getElementById(
+      "softwareLainnyaBox"
+    );
+
+
+  const input =
+    document.getElementById(
+      "softwareLainnyaText"
+    );
+
+
+  if(
+    checkbox.checked
+  ){
+
+    box.classList.add(
+      "show"
+    );
+
+
+    input.required =
+      true;
+
+
+    input.focus();
+
+  }
+  else{
+
+    box.classList.remove(
+      "show"
+    );
+
+
+    input.required =
+      false;
+
+
+    input.value =
+      "";
+
+  }
+
+}
+
+
+/* ==================================================
+   UJI ANALISIS LAINNYA
+================================================== */
+
+function toggleUjiLainnya(){
+
+  const checkbox =
+    document.getElementById(
+      "ujiLainnya"
+    );
+
+
+  const box =
+    document.getElementById(
+      "ujiLainnyaBox"
+    );
+
+
+  const input =
+    document.getElementById(
+      "ujiAnalisisLainnya"
+    );
+
+
+  if(
+    checkbox.checked
+  ){
+
+    box.classList.add(
+      "show"
+    );
+
+
+    input.required =
+      true;
+
+
+    input.focus();
+
+  }
+  else{
+
+    box.classList.remove(
+      "show"
+    );
+
+
+    input.required =
+      false;
+
+
+    input.value =
+      "";
+
+  }
+
+}
+
+
+/* ==================================================
+   FORMAT TANGGAL
+================================================== */
+
+function formatTanggalIndonesia(
+  tanggal
+){
+
+  if(!tanggal){
+
+    return "-";
+
+  }
+
+
+  const bagian =
+    tanggal.split("-");
+
+
+  if(
+    bagian.length !== 3
+  ){
+
+    return tanggal;
+
+  }
+
+
+  const tahun =
+    bagian[0];
+
+
+  const bulan =
+    bagian[1];
+
+
+  const hari =
+    bagian[2];
+
+
+  const namaBulan = [
+
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember"
+
+  ];
+
+
+  return (
+    Number(hari) +
+    " " +
+    namaBulan[
+      Number(bulan) - 1
+    ] +
+    " " +
+    tahun
+  );
+
+}
+
+
+/* ==================================================
+   SIMPAN ORDER
+================================================== */
+
+function simpanOrder(
+  event
+){
+
+  event.preventDefault();
+
+
+  const form =
+    document.getElementById(
+      "orderForm"
+    );
+
+
+  if(
+    !form.checkValidity()
+  ){
+
+    form.reportValidity();
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     VALIDASI DEADLINE
+  ================================================== */
+
+  const tanggalOrder =
+    document.getElementById(
+      "tanggal"
+    ).value;
+
+
+  const deadline =
+    document.getElementById(
+      "deadline"
+    ).value;
+
+
+  if(
+    deadline < tanggalOrder
+  ){
+
+    alert(
+      "Deadline tidak boleh lebih awal dari tanggal order."
+    );
+
+
+    document.getElementById(
+      "deadline"
+    ).focus();
+
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     SOFTWARE
+  ================================================== */
+
+  const software =
+    ambilCheckbox(
+      "software"
+    );
+
+
+  if(
+    software.length === 0
+  ){
+
+    alert(
+      "Silakan pilih minimal satu software."
+    );
+
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     SOFTWARE LAINNYA
+  ================================================== */
+
+  const softwareLainnya =
+    document.getElementById(
+      "softwareLainnyaText"
+    ).value.trim();
+
+
+  if(
+    document.getElementById(
+      "softwareLainnya"
+    ).checked &&
+    !softwareLainnya
+  ){
+
+    alert(
+      "Silakan tuliskan software lainnya."
+    );
+
+
+    document.getElementById(
+      "softwareLainnyaText"
+    ).focus();
+
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     UJI ANALISIS
+  ================================================== */
+
+  const ujiAnalisis =
+    ambilCheckbox(
+      "ujiAnalisis"
+    );
+
+
+  if(
+    ujiAnalisis.length === 0
+  ){
+
+    alert(
+      "Silakan pilih minimal satu uji/analisis."
+    );
+
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     UJI ANALISIS LAINNYA
+  ================================================== */
+
+  const ujiAnalisisLainnya =
+    document.getElementById(
+      "ujiAnalisisLainnya"
+    ).value.trim();
+
+
+  if(
+    document.getElementById(
+      "ujiLainnya"
+    ).checked &&
+    !ujiAnalisisLainnya
+  ){
+
+    alert(
+      "Silakan tuliskan uji/analisis lainnya."
+    );
+
+
+    document.getElementById(
+      "ujiAnalisisLainnya"
+    ).focus();
+
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     FORMAT SOFTWARE
+  ================================================== */
+
+  const daftarSoftware =
+    software
+      .filter(
+        function(item){
+
+          return item !== "Lainnya";
+
+        }
+      );
+
+
+  if(
+    softwareLainnya
+  ){
+
+    daftarSoftware.push(
+      softwareLainnya
+    );
+
+  }
+
+
+  /* ==================================================
+     FORMAT UJI ANALISIS
+  ================================================== */
+
+  const daftarUji =
+    ujiAnalisis
+      .filter(
+        function(item){
+
+          return item !== "Lainnya";
+
+        }
+      );
+
+
+  if(
+    ujiAnalisisLainnya
+  ){
+
+    daftarUji.push(
+      ujiAnalisisLainnya
+    );
+
+  }
+
+
+  /* ==================================================
+     DATA ORDER
+  ================================================== */
+
+  const data = {
+
+    tanggal:
+      document.getElementById(
+        "tanggal"
+      ).value,
+
+
+    jamOrder:
+      document.getElementById(
+        "jamOrder"
+      ).value,
+
+
+    deadline:
+      document.getElementById(
+        "deadline"
+      ).value,
+
+
+    marketing:
+      document.getElementById(
+        "marketing"
+      ).value.trim(),
+
+
+    kategori:
+      document.getElementById(
+        "kategori"
+      ).value,
+
+
+    nama:
+      document.getElementById(
+        "nama"
+      ).value.trim(),
+
+
+    /* =========================
+       JUDUL OLAH DATA
+    ========================= */
+
+    judulOlahData:
+      document.getElementById(
+        "judulOlahData"
+      ).value.trim(),
+
+
+    institusi:
+      document.getElementById(
+        "institusi"
+      ).value.trim(),
+
+
+    bidangPenelitian:
+      document.getElementById(
+        "bidangPenelitian"
+      ).value.trim(),
+
+
+    software:
+      daftarSoftware.join(", "),
+
+
+    ujiAnalisis:
+      daftarUji.join(", "),
+
+
+    output:
+      document.getElementById(
+        "output"
+      ).value.trim(),
+
+
+    jumlahData:
+      document.getElementById(
+        "jumlahData"
+      ).value,
+
+
+    jumlahVariabel:
+      document.getElementById(
+        "jumlahVariabel"
+      ).value,
+
+
+    jumlahIndikator:
+      document.getElementById(
+        "jumlahIndikator"
+      ).value,
+
+
+    kelengkapanData:
+      document.getElementById(
+        "kelengkapanData"
+      ).value,
+
+
+    rawFile:
+      document.getElementById(
+        "rawFile"
+      ).value.trim(),
+
+
+    catatan:
+      document.getElementById(
+        "catatan"
+      ).value.trim()
+
+  };
+
+
+  /* ==================================================
+     VALIDASI JUDUL
+  ================================================== */
+
+  if(
+    !data.judulOlahData
+  ){
+
+    alert(
+      "Silakan masukkan Judul Olah Data."
+    );
+
+
+    document.getElementById(
+      "judulOlahData"
+    ).focus();
+
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     DISABLE BUTTON
+  ================================================== */
+
+  const btnSimpan =
+    document.getElementById(
+      "btnSimpan"
+    );
+
+
+  btnSimpan.disabled =
+    true;
+
+
+  btnSimpan.textContent =
+    "⏳ MENYIMPAN...";
+
+
+  /* ==================================================
+     GOOGLE APPS SCRIPT
+  ================================================== */
+
+  if(
+    typeof google !== "undefined" &&
+    google.script &&
+    google.script.run
+  ){
+
+    google.script.run
+
+      .withSuccessHandler(
+        function(result){
+
+          btnSimpan.disabled =
+            false;
+
+
+          btnSimpan.textContent =
+            "💾 SIMPAN ORDER DATA";
+
+
+          if(
+            result &&
+            result.idOrder
+          ){
+
+            tampilkanPopupOrder(
+              result.idOrder,
+              data.nama,
+              data.judulOlahData,
+              data.deadline
+            );
+
+
+            /* =========================
+               RESET FORM
+            ========================= */
+
+            document.getElementById(
+              "orderForm"
+            ).reset();
+
+
+            /* =========================
+               RESET TANGGAL & JAM
+            ========================= */
+
+            const now =
+              new Date();
+
+
+            const tanggalBaru =
+              now.toISOString()
+                .split("T")[0];
+
+
+            const jamBaru =
+              String(
+                now.getHours()
+              ).padStart(2,"0")
+              +
+              ":"
+              +
+              String(
+                now.getMinutes()
+              ).padStart(2,"0");
+
+
+            document.getElementById(
+              "tanggal"
+            ).value =
+              tanggalBaru;
+
+
+            document.getElementById(
+              "jamOrder"
+            ).value =
+              jamBaru;
+
+
+            document.getElementById(
+              "deadline"
+            ).value =
+              tanggalBaru;
+
+
+            document.getElementById(
+              "deadline"
+            ).min =
+              tanggalBaru;
+
+
+            /* =========================
+               RESET BOX SOFTWARE
+            ========================= */
+
+            document.getElementById(
+              "softwareLainnyaBox"
+            ).classList.remove(
+              "show"
+            );
+
+
+            document.getElementById(
+              "softwareLainnyaText"
+            ).required =
+              false;
+
+
+            /* =========================
+               RESET BOX UJI
+            ========================= */
+
+            document.getElementById(
+              "ujiLainnyaBox"
+            ).classList.remove(
+              "show"
+            );
+
+
+            document.getElementById(
+              "ujiAnalisisLainnya"
+            ).required =
+              false;
+
+          }
+          else{
+
+            alert(
+              "Order berhasil disimpan."
+            );
+
+          }
+
+        }
+      )
+
+      .withFailureHandler(
+        function(error){
+
+          btnSimpan.disabled =
+            false;
+
+
+          btnSimpan.textContent =
+            "💾 SIMPAN ORDER DATA";
+
+
+          alert(
+            "Gagal menyimpan order:\n" +
+            error.message
+          );
+
+        }
+      )
+
+      .simpanOrder(data);
+
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     PREVIEW / MODE NON GOOGLE APPS SCRIPT
+  ================================================== */
+
+  console.log(
+    "DATA ORDER:",
+    data
+  );
+
+
+  btnSimpan.disabled =
+    false;
+
+
+  btnSimpan.textContent =
+    "💾 SIMPAN ORDER DATA";
+
+
+  tampilkanPopupOrder(
+    "ORD/DATA/001",
+    data.nama,
+    data.judulOlahData,
+    data.deadline
+  );
+
+}
+
+
+/* ==================================================
+   POPUP ORDER
+================================================== */
+
+function tampilkanPopupOrder(
+  idOrder,
+  nama,
+  judulOlahData,
+  deadline
+){
+
+  document.getElementById(
+    "resultIdOrder"
+  ).textContent =
+    idOrder;
+
+
+  document.getElementById(
+    "resultNama"
+  ).textContent =
+    nama;
+
+
+  document.getElementById(
+    "resultJudul"
+  ).textContent =
+    judulOlahData;
+
+
+  document.getElementById(
+    "resultDeadline"
+  ).textContent =
+    formatTanggalIndonesia(
+      deadline
+    );
+
+
+  document.getElementById(
+    "orderModal"
+  ).classList.add(
+    "show"
+  );
+
+}
+
+
+/* ==================================================
+   SALIN ID
+================================================== */
+
+function salinIdOrder(){
+
+  const id =
+    document.getElementById(
+      "resultIdOrder"
+    ).textContent;
+
+
+  if(
+    navigator.clipboard &&
+    navigator.clipboard.writeText
+  ){
+
+    navigator.clipboard
+      .writeText(id)
+      .then(
+        function(){
+
+          alert(
+            "ID Order berhasil disalin: " +
+            id
+          );
+
+        }
+      );
+
+  }
+  else{
+
+    alert(
+      "ID Order: " +
+      id
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+   TUTUP MODAL
+================================================== */
+
+function tutupModal(){
+
+  document.getElementById(
+    "orderModal"
+  ).classList.remove(
+    "show"
+  );
+
+}
+
+
+/* ==================================================
+   KEMBALI
+================================================== */
+
+function kembali(){
+
+  window.location.href =
+    "data.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>

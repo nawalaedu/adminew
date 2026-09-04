@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Pencatatan Buku</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f7fa;
+  color:#183b56;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  background:linear-gradient(135deg,#183b56,#2f6f95);
+  color:white;
+  padding:22px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  max-width:1100px;
+  margin:45px auto;
+  padding:0 25px;
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back{
+  background:#718096;
+  color:white;
+  border:0;
+  padding:12px 22px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-bottom:30px;
+  font-weight:bold;
+}
+
+.back:hover{
+  background:#5f6d7d;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.title{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.title h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.title p{
+  color:#718096;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:20px;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:35px 20px;
+  text-align:center;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  transition:.25s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 14px 35px rgba(0,0,0,.12);
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+.icon{
+  font-size:48px;
+  margin-bottom:18px;
+}
+
+
+/* =========================
+   CARD TEXT
+========================= */
+
+.card h2{
+  font-size:19px;
+  margin-bottom:12px;
+}
+
+.card p{
+  color:#718096;
+  font-size:13px;
+  line-height:1.6;
+  min-height:65px;
+  margin-bottom:20px;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn{
+  border:0;
+  padding:12px 22px;
+  border-radius:8px;
+  background:#183b56;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn:hover{
+  background:#2f6f95;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+  .cards{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+}
+
+
+@media(max-width:900px){
+
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+
+@media(max-width:600px){
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .title h1{
+    font-size:26px;
+  }
+
+  .container{
+    margin:30px auto;
+  }
+
+}
+
+</style>
+
+  <script src="api.js"></script>
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="header">
+
+  <div class="logo">
+    ADMIN MANAGEMENT
+  </div>
+
+  <div>
+    BUKU
+  </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+<!-- ==================================================
+     BACK
+================================================== -->
+
+<button
+  class="back"
+  onclick="kembali()">
+
+  ← Kembali
+
+</button>
+
+
+
+<!-- ==================================================
+     TITLE
+================================================== -->
+
+<div class="title">
+
+  <h1>
+    📚 MANAJEMEN BUKU
+  </h1>
+
+  <p>
+    Pilih layanan yang ingin Anda kelola
+  </p>
+
+</div>
+
+
+
+<!-- ==================================================
+     CARDS
+================================================== -->
+
+<div class="cards">
+
+
+<!-- ==================================================
+     ORDER BUKU
+================================================== -->
+
+<div class="card">
+
+  <div class="icon">
+    📖
+  </div>
+
+  <h2>
+    ORDER BUKU
+  </h2>
+
+  <p>
+    Input dan kelola data
+    pemesanan buku.
+  </p>
+
+  <button
+    class="btn"
+    onclick="buka('orderbuku.html')">
+
+    BUKA
+
+  </button>
+
+</div>
+
+
+
+<!-- ==================================================
+     INVOICE BUKU
+================================================== -->
+
+<div class="card">
+
+  <div class="icon">
+    🧾
+  </div>
+
+  <h2>
+    INVOICE BUKU
+  </h2>
+
+  <p>
+    Kelola invoice, harga,
+    DP, pelunasan dan
+    status pembayaran.
+  </p>
+
+  <button
+    class="btn"
+    onclick="buka('invoicebuku.html')">
+
+    BUKA
+
+  </button>
+
+</div>
+
+
+
+<!-- ==================================================
+     ISBN
+================================================== -->
+
+<div class="card">
+
+  <div class="icon">
+    🔖
+  </div>
+
+  <h2>
+    ISBN
+  </h2>
+
+  <p>
+    Kelola ISBN dan
+    arsip dokumen buku.
+  </p>
+
+  <button
+    class="btn"
+    onclick="buka('isbn.html')">
+
+    BUKA
+
+  </button>
+
+</div>
+
+
+
+<!-- ==================================================
+     HKI
+================================================== -->
+
+<div class="card">
+
+  <div class="icon">
+    ©️
+  </div>
+
+  <h2>
+    HKI
+  </h2>
+
+  <p>
+    Kelola pengajuan dan
+    pelaporan HKI.
+  </p>
+
+  <button
+    class="btn"
+    onclick="buka('hki.html')">
+
+    BUKA
+
+  </button>
+
+</div>
+
+
+
+<!-- ==================================================
+     HASIL BUKU
+================================================== -->
+
+<div class="card">
+
+  <div class="icon">
+    📚
+  </div>
+
+  <h2>
+    HASIL BUKU
+  </h2>
+
+  <p>
+    Kelola hasil buku,
+    data buku yang telah
+    selesai dan arsip buku.
+  </p>
+
+  <button
+    class="btn"
+    onclick="buka('hasilbuku.html')">
+
+    BUKA
+
+  </button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+/* ==================================================
+   BUKA FILE
+================================================== */
+
+function buka(file){
+
+  window.location.href = file;
+
+}
+
+
+/* ==================================================
+   KEMBALI
+================================================== */
+
+function kembali(){
+
+  window.location.href =
+    'order.html';
+
+}
+
+</script>
+
+
+</body>
+
+</html>

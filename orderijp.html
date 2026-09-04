@@ -1,0 +1,2781 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Order IJP</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fa;
+  color:#183b56;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  background:linear-gradient(135deg,#183b56,#2f6f95);
+  color:white;
+  padding:22px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:bold;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  max-width:950px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* =========================
+   BACK
+========================= */
+
+.back{
+  background:#718096;
+  color:white;
+  border:0;
+  padding:12px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-bottom:20px;
+}
+
+.back:hover{
+  background:#4a5568;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.form-card{
+  background:white;
+  border-radius:18px;
+  padding:35px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.form-title{
+  margin-bottom:30px;
+}
+
+.form-title h1{
+  margin:0 0 8px 0;
+}
+
+.form-title p{
+  color:#718096;
+  line-height:1.6;
+}
+
+/* =========================
+   INPUT TYPE
+========================= */
+
+.input-type{
+  background:#f0f7fb;
+  border:1px solid #d6e7f0;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:30px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid #d6dee6;
+  border-radius:9px;
+  font-family:Arial,sans-serif;
+  font-size:14px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  border-color:#2f6f95;
+  box-shadow:0 0 0 3px rgba(47,111,149,.08);
+}
+
+textarea{
+  min-height:120px;
+  resize:vertical;
+}
+
+small{
+  display:block;
+  margin-top:7px;
+  color:#718096;
+  line-height:1.5;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+/* =========================
+   INFO BOX
+========================= */
+
+.info-box{
+  background:#f0f7fb;
+  border-left:4px solid #2f6f95;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:25px;
+  color:#4a5568;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* =========================
+   READONLY
+========================= */
+
+.readonly{
+  background:#f1f5f9;
+  color:#4a5568;
+  cursor:not-allowed;
+}
+
+/* =========================
+   AUTHOR CARD
+========================= */
+
+.author-card{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:15px;
+}
+
+.author-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.author-number{
+  font-weight:bold;
+  font-size:15px;
+}
+
+.author-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn-add{
+  width:100%;
+  padding:13px;
+  border:1px dashed #2f6f95;
+  background:#f7fbfd;
+  color:#183b56;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-bottom:20px;
+}
+
+.btn-add:hover{
+  background:#edf7fb;
+}
+
+.btn-remove{
+  background:#e53e3e;
+  color:white;
+  border:0;
+  padding:7px 12px;
+  border-radius:7px;
+  cursor:pointer;
+}
+
+.btn-remove:hover{
+  background:#c53030;
+}
+
+.btn-save{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:9px;
+  background:#183b56;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.btn-save:hover{
+  background:#2f6f95;
+}
+
+/* =========================
+   BUTTON AMBIL DETAIL
+========================= */
+
+.btn-detail{
+  width:100%;
+  border:0;
+  padding:13px;
+  border-radius:9px;
+  background:#2f6f95;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.btn-detail:hover{
+  background:#183b56;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  z-index:9999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.55);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:480px;
+  border-radius:18px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 50px rgba(0,0,0,.25);
+}
+
+.modal-icon{
+  font-size:50px;
+  margin-bottom:15px;
+}
+
+.modal-box h2{
+  margin-bottom:8px;
+}
+
+.modal-box p{
+  color:#718096;
+  line-height:1.5;
+}
+
+.order-result{
+  background:#f4f7fa;
+  border-radius:12px;
+  padding:20px;
+  margin:20px 0;
+  text-align:left;
+}
+
+.result-row{
+  margin-bottom:14px;
+}
+
+.result-row:last-child{
+  margin-bottom:0;
+}
+
+.result-label{
+  font-size:12px;
+  color:#718096;
+  margin-bottom:5px;
+}
+
+.result-value{
+  font-size:16px;
+  font-weight:bold;
+  color:#183b56;
+  word-break:break-word;
+}
+
+.id-order{
+  font-size:22px;
+  letter-spacing:.5px;
+}
+
+.modal-buttons{
+  display:flex;
+  gap:10px;
+}
+
+.btn-modal{
+  flex:1;
+  border:0;
+  padding:13px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn-copy{
+  background:#183b56;
+  color:white;
+}
+
+.btn-close{
+  background:#e2e8f0;
+  color:#183b56;
+}
+
+.btn-copy:hover{
+  background:#2f6f95;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:650px){
+
+  .header{
+    padding:20px;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:6px;
+  }
+
+  .form-card{
+    padding:25px 20px;
+  }
+
+  .author-grid{
+    grid-template-columns:1fr;
+  }
+
+  .modal-buttons{
+    flex-direction:column;
+  }
+
+}
+
+</style>
+
+<script src="api.js"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="header">
+
+  <div class="logo">
+    ADMIN MANAGEMENT
+  </div>
+
+  <div>
+    MANAJEMEN IJP
+  </div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ==================================================
+     BACK
+================================================== -->
+
+<button
+type="button"
+class="back"
+onclick="kembali()">
+
+← Kembali ke IJP
+
+</button>
+
+
+<div class="form-card">
+
+
+<!-- ==================================================
+     TITLE
+================================================== -->
+
+<div class="form-title">
+
+<h1>
+📢 Order IJP
+</h1>
+
+<p>
+Kelola order IJP dan penambahan author kolaborasi
+dalam satu form.
+</p>
+
+</div>
+
+
+<!-- ==================================================
+     JENIS INPUT
+================================================== -->
+
+<div class="input-type">
+
+<div
+class="form-group"
+style="margin-bottom:0;">
+
+<label>
+Jenis Input
+</label>
+
+<select
+id="jenisInput"
+onchange="ubahJenisInput()">
+
+<option value="">
+Pilih jenis input
+</option>
+
+<option value="order">
+Order IJP
+</option>
+
+<option value="tambahAuthor">
+Tambah Author (Kolaborasi)
+</option>
+
+</select>
+
+<small>
+
+<strong>Order IJP</strong> digunakan untuk membuat
+order IJP baru.
+
+<br>
+
+<strong>Tambah Author (Kolaborasi)</strong> digunakan
+untuk menambahkan author pada order IJP yang sudah ada.
+
+</small>
+
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     FORM ORDER IJP
+================================================== -->
+
+<div
+id="formOrder"
+class="section">
+
+
+<div class="info-box">
+
+<strong>📢 Order IJP Baru</strong><br>
+
+ID Order akan dibuat otomatis setelah data berhasil
+disimpan.
+
+<br><br>
+
+<strong>K</strong> = Kolaborasi,
+<strong>M</strong> = Mandiri,
+<strong>T</strong> = Tunggal.
+
+</div>
+
+
+<form
+id="orderForm"
+onsubmit="simpanOrderIJP(event)">
+
+
+<!-- ==================================================
+     TANGGAL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Tanggal
+</label>
+
+<input
+type="date"
+id="tanggal"
+name="tanggal"
+required>
+
+</div>
+
+
+<!-- ==================================================
+     MARKETING
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Marketing
+</label>
+
+<input
+type="text"
+id="marketing"
+name="marketing"
+placeholder="Ketik nama marketing"
+autocomplete="off"
+required>
+
+<small>
+Masukkan nama marketing yang melakukan input order.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     KODE JURNAL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Kode Jurnal
+</label>
+
+<input
+type="text"
+id="kodeJurnal"
+name="kodeJurnal"
+placeholder="Contoh: N001, N002, N020"
+required>
+
+<small>
+Masukkan kode jurnal tempat IJP akan diterbitkan.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     BULAN TERBIT
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Bulan Terbit
+</label>
+
+<select
+id="bulanTerbit"
+name="bulanTerbit"
+required>
+
+<option value="">
+Pilih Bulan Terbit
+</option>
+
+<option value="Januari">Januari</option>
+<option value="Februari">Februari</option>
+<option value="Maret">Maret</option>
+<option value="April">April</option>
+<option value="Mei">Mei</option>
+<option value="Juni">Juni</option>
+<option value="Juli">Juli</option>
+<option value="Agustus">Agustus</option>
+<option value="September">September</option>
+<option value="Oktober">Oktober</option>
+<option value="November">November</option>
+<option value="Desember">Desember</option>
+
+</select>
+
+</div>
+
+
+<!-- ==================================================
+     JUDUL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Judul IJP
+</label>
+
+<input
+type="text"
+id="judulIJP"
+name="judulIJP"
+placeholder="Masukkan judul IJP"
+required>
+
+</div>
+
+
+<!-- ==================================================
+     K / M / T
+================================================== -->
+
+<div class="form-group">
+
+<label>
+K / M / T
+</label>
+
+<select
+id="kmt"
+name="kmt"
+onchange="ubahKMT()"
+required>
+
+<option value="">
+Pilih
+</option>
+
+<option value="K">
+K - Kolaborasi
+</option>
+
+<option value="M">
+M - Mandiri
+</option>
+
+<option value="T">
+T - Tunggal
+</option>
+
+</select>
+
+</div>
+
+
+<!-- ==================================================
+     JENIS PENULISAN
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Jenis Penulisan
+</label>
+
+<select
+id="jenisPenulisan"
+name="jenisPenulisan"
+required>
+
+<option value="">
+Pilih jenis penulisan
+</option>
+
+<option value="Naskah Dibuatkan">
+Naskah Dibuatkan
+</option>
+
+<option value="Naskah Mandiri">
+Naskah Mandiri
+</option>
+
+</select>
+
+</div>
+
+
+<!-- LINK DRIVE - KHUSUS KMT M -->
+
+<div class="form-group" id="linkDriveGroup" style="display:none;">
+
+<label>
+Link Drive Google Drive
+</label>
+
+<input
+ type="url"
+ id="linkDrive"
+ name="linkDrive"
+ placeholder="https://drive.google.com/..."
+ autocomplete="off">
+
+<small>
+Wajib diisi jika KMT = M (Mandiri).
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     AUTHOR M / T
+================================================== -->
+
+<div
+id="authorMTSection"
+style="display:none;">
+
+
+<div
+id="infoAuthorMT"
+class="info-box">
+
+</div>
+
+
+<div id="authorMTContainer"></div>
+
+
+<button
+type="button"
+class="btn-add"
+id="btnTambahAuthorMT"
+onclick="tambahAuthorMT()">
+
+＋ TAMBAH AUTHOR
+
+</button>
+
+
+</div>
+
+
+<!-- ==================================================
+     SIMPAN
+================================================== -->
+
+<button
+type="submit"
+class="btn-save">
+
+SIMPAN ORDER IJP
+
+</button>
+
+
+</form>
+
+</div>
+
+
+<!-- ==================================================
+     FORM TAMBAH AUTHOR KOLABORASI
+================================================== -->
+
+<div
+id="formTambahAuthor"
+class="section">
+
+
+<div class="info-box">
+
+<strong>🤝 Tambah Author (Kolaborasi)</strong><br>
+
+Digunakan untuk menambahkan author pada IJP
+yang sudah memiliki ID Order.
+
+<br><br>
+
+Masukkan <strong>ID Order</strong> secara manual,
+kemudian klik <strong>Ambil Detail Order</strong>
+untuk mengambil data IJP.
+
+<br><br>
+
+Jika ingin menambahkan author berikutnya,
+lakukan input kembali menggunakan
+<strong>ID Order yang sama</strong>.
+
+</div>
+
+
+<form
+id="authorForm"
+onsubmit="simpanAuthorIJP(event)">
+
+
+<!-- ==================================================
+     ID ORDER - INPUT MANUAL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+ID Order IJP
+</label>
+
+<input
+type="text"
+id="idOrder"
+name="idOrder"
+placeholder="Ketik ID Order IJP"
+autocomplete="off"
+required>
+
+<button
+type="button"
+class="btn-detail"
+onclick="ambilDetailOrderIJP()">
+
+🔍 AMBIL DETAIL ORDER
+
+</button>
+
+<small>
+Ketik ID Order IJP secara manual, kemudian klik
+<strong>Ambil Detail Order</strong>.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     JUDUL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Judul IJP
+</label>
+
+<input
+type="text"
+id="judulIJPAuthor"
+class="readonly"
+placeholder="Otomatis berdasarkan ID Order"
+readonly>
+
+</div>
+
+
+<!-- ==================================================
+     KODE JURNAL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Kode Jurnal
+</label>
+
+<input
+type="text"
+id="kodeJurnalAuthor"
+class="readonly"
+placeholder="Otomatis berdasarkan ID Order"
+readonly>
+
+</div>
+
+
+<!-- ==================================================
+     BULAN TERBIT
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Bulan Terbit
+</label>
+
+<input
+type="text"
+id="bulanTerbitAuthor"
+class="readonly"
+placeholder="Otomatis berdasarkan ID Order"
+readonly>
+
+</div>
+
+
+<!-- ==================================================
+     MARKETING INPUT
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Marketing Input
+</label>
+
+<input
+type="text"
+id="marketingAuthor"
+name="marketingAuthor"
+placeholder="Ketik nama marketing"
+autocomplete="off"
+required>
+
+<small>
+Ketik nama marketing yang melakukan input author
+kolaborasi.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     TANGGAL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Tanggal Penambahan Author
+</label>
+
+<input
+type="date"
+id="tanggalTambah"
+name="tanggalTambah"
+required>
+
+</div>
+
+
+<!-- ==================================================
+     PENULIS KE BERAPA
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Penulis Ke-
+</label>
+
+<select
+id="urutanPenulis"
+name="urutanPenulis"
+required>
+
+<option value="">
+Pilih urutan penulis
+</option>
+
+<option value="1">Penulis ke-1</option>
+<option value="2">Penulis ke-2</option>
+<option value="3">Penulis ke-3</option>
+<option value="4">Penulis ke-4</option>
+<option value="5">Penulis ke-5</option>
+<option value="6">Penulis ke-6</option>
+<option value="7">Penulis ke-7</option>
+<option value="8">Penulis ke-8</option>
+<option value="9">Penulis ke-9</option>
+<option value="10">Penulis ke-10</option>
+
+</select>
+
+<small>
+Tentukan posisi author dalam daftar penulis IJP.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     SATU AUTHOR
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Author Kolaborasi
+</label>
+
+<small style="margin-bottom:15px;">
+Form ini menerima <strong>1 author</strong>
+dalam satu kali input.
+</small>
+
+
+<div id="authorContainer">
+
+
+<div class="author-card">
+
+
+<div class="author-header">
+
+<div class="author-number">
+Author
+</div>
+
+</div>
+
+
+<div class="author-grid">
+
+
+<div>
+
+<label>
+Nama Author
+</label>
+
+<input
+type="text"
+name="authorNama"
+placeholder="Nama lengkap author"
+required>
+
+</div>
+
+
+<div>
+
+<label>
+Email Author
+</label>
+
+<input
+type="email"
+name="authorEmail"
+placeholder="Email author"
+required>
+
+</div>
+
+
+<div>
+
+<label>
+No. Telp Author
+</label>
+
+<input
+type="text"
+name="authorTelp"
+placeholder="Nomor telepon author"
+required>
+
+</div>
+
+
+<div>
+
+<label>
+Afiliasi Author
+</label>
+
+<input
+type="text"
+name="authorAfiliasi"
+placeholder="Contoh: Universitas Indonesia"
+required>
+
+<small>
+Masukkan institusi/afiliasi author.
+</small>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- ==================================================
+     SIMPAN AUTHOR
+================================================== -->
+
+<button
+type="submit"
+class="btn-save">
+
+SIMPAN AUTHOR KOLABORASI
+
+</button>
+
+
+</form>
+
+</div>
+
+
+</div>
+</div>
+
+
+<!-- ==================================================
+     MODAL ID ORDER IJP
+================================================== -->
+
+<div
+id="orderModal"
+class="modal">
+
+
+<div class="modal-box">
+
+
+<div class="modal-icon">
+✅
+</div>
+
+
+<h2>
+Order IJP Berhasil
+</h2>
+
+
+<p>
+Order IJP telah berhasil dicatat.
+
+Simpan ID Order berikut untuk proses
+Tambah Author, Invoice, dan proses berikutnya.
+</p>
+
+
+<div class="order-result">
+
+
+<div class="result-row">
+
+<div class="result-label">
+ID ORDER IJP
+</div>
+
+<div
+id="resultIdOrder"
+class="result-value id-order">
+
+-
+
+</div>
+
+</div>
+
+
+<div class="result-row">
+
+<div class="result-label">
+JUDUL IJP
+</div>
+
+<div
+id="resultJudul"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="modal-buttons">
+
+<button
+type="button"
+class="btn-modal btn-copy"
+onclick="salinIdOrder()">
+
+📋 SALIN ID
+
+</button>
+
+
+<button
+type="button"
+class="btn-modal btn-close"
+onclick="tutupModal()">
+
+TUTUP
+
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   INIT
+================================================== */
+
+let jumlahAuthorMT = 0;
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    const today =
+      new Date()
+        .toISOString()
+        .split("T")[0];
+
+    document.getElementById(
+      "tanggal"
+    ).value = today;
+
+    document.getElementById(
+      "tanggalTambah"
+    ).value = today;
+
+  }
+);
+
+
+/* ==================================================
+   JENIS INPUT
+================================================== */
+
+function ubahJenisInput(){
+
+  const jenis =
+    document.getElementById(
+      "jenisInput"
+    ).value;
+
+  document
+    .getElementById("formOrder")
+    .classList.remove("active");
+
+  document
+    .getElementById("formTambahAuthor")
+    .classList.remove("active");
+
+
+  if(jenis === "order"){
+
+    document
+      .getElementById("formOrder")
+      .classList.add("active");
+
+  }
+
+
+  if(jenis === "tambahAuthor"){
+
+    document
+      .getElementById("formTambahAuthor")
+      .classList.add("active");
+
+  }
+
+}
+
+
+/* ==================================================
+   K / M / T
+================================================== */
+
+function ubahKMT(){
+
+  const kmt =
+    document.getElementById(
+      "kmt"
+    ).value;
+
+  const section =
+    document.getElementById(
+      "authorMTSection"
+    );
+
+  const container =
+    document.getElementById(
+      "authorMTContainer"
+    );
+
+  const btnTambah =
+    document.getElementById(
+      "btnTambahAuthorMT"
+    );
+
+  const info =
+    document.getElementById(
+      "infoAuthorMT"
+    );
+
+
+  container.innerHTML = "";
+
+  jumlahAuthorMT = 0;
+
+
+  /* ==================================================
+     K = KOLABORASI
+  ================================================== */
+
+  if(kmt === "K"){
+
+    section.style.display = "none";
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     M = MANDIRI
+  ================================================== */
+
+  if(kmt === "M"){
+
+    section.style.display = "block";
+
+    btnTambah.style.display = "block";
+
+    info.innerHTML = `
+
+      <strong>👤 M - Mandiri</strong><br>
+
+      Anda dapat memasukkan beberapa author.
+
+      <br><br>
+
+      Setiap author wajib dilengkapi dengan:
+
+      <br>
+      • Nama Author
+      <br>
+      • Email Author
+      <br>
+      • No. Telp Author
+      <br>
+      • Afiliasi Author
+      <br>
+      • Urutan Penulis
+
+      <br><br>
+
+      Gunakan tombol
+      <strong>Tambah Author</strong>
+      untuk menambahkan penulis.
+
+    `;
+
+    tambahAuthorMT();
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     T = TUNGGAL
+  ================================================== */
+
+  if(kmt === "T"){
+
+    section.style.display = "block";
+
+    btnTambah.style.display = "none";
+
+    info.innerHTML = `
+
+      <strong>👤 T - Tunggal</strong><br>
+
+      Hanya satu author.
+
+      <br><br>
+
+      Author wajib dilengkapi dengan:
+
+      <br>
+      • Nama Author
+      <br>
+      • Email Author
+      <br>
+      • No. Telp Author
+      <br>
+      • Afiliasi Author
+      <br>
+      • Urutan Penulis
+
+      <br><br>
+
+      IJP ini hanya memiliki
+      <strong>1 penulis</strong>.
+
+    `;
+
+    tambahAuthorMT();
+
+    return;
+
+  }
+
+
+  section.style.display = "none";
+
+}
+
+
+/* ==================================================
+   TAMBAH AUTHOR M / T
+================================================== */
+
+function tambahAuthorMT(){
+
+  const kmt =
+    document.getElementById(
+      "kmt"
+    ).value;
+
+
+  if(
+    kmt === "T" &&
+    jumlahAuthorMT >= 1
+  ){
+
+    return;
+
+  }
+
+
+  jumlahAuthorMT++;
+
+
+  const container =
+    document.getElementById(
+      "authorMTContainer"
+    );
+
+
+  const card =
+    document.createElement(
+      "div"
+    );
+
+
+  card.className =
+    "author-card";
+
+
+  card.setAttribute(
+    "data-author-index",
+    jumlahAuthorMT
+  );
+
+
+  card.innerHTML = `
+
+    <div class="author-header">
+
+      <div class="author-number">
+        Author ${jumlahAuthorMT}
+      </div>
+
+      ${
+        kmt === "M" && jumlahAuthorMT > 1
+        ?
+        `
+        <button
+          type="button"
+          class="btn-remove"
+          onclick="hapusAuthorMT(this)">
+
+          Hapus
+
+        </button>
+        `
+        :
+        ""
+      }
+
+    </div>
+
+
+    <div class="author-grid">
+
+
+      <div>
+
+        <label>
+          Nama Author
+        </label>
+
+        <input
+          type="text"
+          name="mtNama[]"
+          placeholder="Nama lengkap author"
+          required>
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Email Author
+        </label>
+
+        <input
+          type="email"
+          name="mtEmail[]"
+          placeholder="Email author"
+          required>
+
+      </div>
+
+
+      <div>
+
+        <label>
+          No. Telp Author
+        </label>
+
+        <input
+          type="text"
+          name="mtTelp[]"
+          placeholder="Nomor telepon author"
+          required>
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Afiliasi Author
+        </label>
+
+        <input
+          type="text"
+          name="mtAfiliasi[]"
+          placeholder="Contoh: Universitas Indonesia"
+          required>
+
+        <small>
+          Masukkan institusi/afiliasi author.
+        </small>
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Penulis Ke-
+        </label>
+
+        <select
+          name="mtUrutan[]"
+          required>
+
+          <option value="">
+            Pilih urutan penulis
+          </option>
+
+          ${buatOptionPenulis()}
+
+        </select>
+
+      </div>
+
+
+    </div>
+
+  `;
+
+
+  container.appendChild(
+    card
+  );
+
+}
+
+
+/* ==================================================
+   OPTION URUTAN PENULIS
+================================================== */
+
+function buatOptionPenulis(){
+
+  let html = "";
+
+
+  for(
+    let i = 1;
+    i <= 20;
+    i++
+  ){
+
+    html += `
+
+      <option value="${i}">
+        Penulis ke-${i}
+      </option>
+
+    `;
+
+  }
+
+
+  return html;
+
+}
+
+
+/* ==================================================
+   HAPUS AUTHOR M
+================================================== */
+
+function hapusAuthorMT(
+  button
+){
+
+  const card =
+    button.closest(
+      ".author-card"
+    );
+
+
+  if(card){
+
+    card.remove();
+
+  }
+
+
+  perbaruiNomorAuthorMT();
+
+}
+
+
+/* ==================================================
+   NOMOR AUTHOR M
+================================================== */
+
+function perbaruiNomorAuthorMT(){
+
+  const cards =
+    document.querySelectorAll(
+      "#authorMTContainer .author-card"
+    );
+
+
+  cards.forEach(
+    function(card,index){
+
+      card.querySelector(
+        ".author-number"
+      ).textContent =
+        "Author " + (index + 1);
+
+    }
+  );
+
+
+  jumlahAuthorMT =
+    cards.length;
+
+}
+
+
+/* ==================================================
+   DETAIL ORDER IJP
+   ID ORDER DIKETIK MANUAL
+================================================== */
+
+function ambilDetailOrderIJP(){
+
+  const input =
+    document.getElementById(
+      "idOrder"
+    );
+
+
+  const idOrder =
+    input.value.trim();
+
+
+  /* ==================================================
+     VALIDASI ID ORDER
+  ================================================== */
+
+  if(!idOrder){
+
+    alert(
+      "Silakan ketik ID Order IJP terlebih dahulu."
+    );
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     KOSONGKAN DETAIL LAMA
+  ================================================== */
+
+  document.getElementById(
+    "judulIJPAuthor"
+  ).value = "";
+
+  document.getElementById(
+    "kodeJurnalAuthor"
+  ).value = "";
+
+  document.getElementById(
+    "bulanTerbitAuthor"
+  ).value = "";
+
+
+  /* ==================================================
+     CEK GOOGLE APPS SCRIPT
+  ================================================== */
+
+  if(
+    typeof google === "undefined" ||
+    !google.script ||
+    !google.script.run
+  ){
+
+    alert(
+      "Google Apps Script tidak tersedia."
+    );
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     AMBIL DATA ORDER
+  ================================================== */
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(data){
+
+        if(!data){
+
+          alert(
+            "ID Order IJP tidak ditemukan."
+          );
+
+          return;
+
+        }
+
+
+        /* =========================
+           JUDUL
+        ========================= */
+
+        document.getElementById(
+          "judulIJPAuthor"
+        ).value =
+          data.judulIJP ||
+          data.judulArtikel ||
+          "";
+
+
+        /* =========================
+           KODE JURNAL
+        ========================= */
+
+        document.getElementById(
+          "kodeJurnalAuthor"
+        ).value =
+          data.kodeJurnal ||
+          "";
+
+
+        /* =========================
+           BULAN TERBIT
+        ========================= */
+
+        document.getElementById(
+          "bulanTerbitAuthor"
+        ).value =
+          data.bulanTerbit ||
+          "";
+
+
+        /* =========================
+           VALIDASI HASIL
+        ========================= */
+
+        if(
+          !data.judulIJP &&
+          !data.judulArtikel &&
+          !data.kodeJurnal &&
+          !data.bulanTerbit
+        ){
+
+          alert(
+            "ID Order ditemukan, tetapi detail order kosong."
+          );
+
+          return;
+
+        }
+
+
+        alert(
+          "Detail Order IJP berhasil ditemukan."
+        );
+
+      }
+    )
+
+
+    .withFailureHandler(
+      function(error){
+
+        alert(
+          "Gagal mengambil detail order IJP: " +
+          (
+            error &&
+            error.message
+            ?
+            error.message
+            :
+            error
+          )
+        );
+
+      }
+    )
+
+
+    .ambilDetailOrderIJP(
+      idOrder
+    );
+
+}
+
+
+/* ==================================================
+   SIMPAN ORDER IJP
+================================================== */
+
+function simpanOrderIJP(
+  event
+){
+
+  event.preventDefault();
+
+
+  const form =
+    document.getElementById(
+      "orderForm"
+    );
+
+
+  if(!form.checkValidity()){
+
+    form.reportValidity();
+
+    return;
+
+  }
+
+
+  const kmt =
+    document.getElementById(
+      "kmt"
+    ).value;
+
+
+  const authors =
+    ambilAuthorMT();
+
+
+  /* ==================================================
+     T = TEPAT SATU AUTHOR
+  ================================================== */
+
+  if(
+    kmt === "T" &&
+    authors.length !== 1
+  ){
+
+    alert(
+      "Jenis T (Tunggal) harus memiliki tepat 1 author."
+    );
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     M = MINIMAL SATU AUTHOR
+  ================================================== */
+
+  if(
+    kmt === "M" &&
+    authors.length < 1
+  ){
+
+    alert(
+      "Jenis M (Mandiri) minimal harus memiliki 1 author."
+    );
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     VALIDASI AUTHOR
+  ================================================== */
+
+  for(
+    let i = 0;
+    i < authors.length;
+    i++
+  ){
+
+    if(!authors[i].urutanPenulis){
+
+      alert(
+        "Urutan penulis untuk Author " +
+        (i + 1) +
+        " belum ditentukan."
+      );
+
+      return;
+
+    }
+
+
+    if(!authors[i].afiliasi){
+
+      alert(
+        "Afiliasi untuk Author " +
+        (i + 1) +
+        " belum diisi."
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  /* ==================================================
+     DATA ORDER
+  ================================================== */
+
+  const data = {
+
+    tanggal:
+      document.getElementById(
+        "tanggal"
+      ).value,
+
+    marketing:
+      document.getElementById(
+        "marketing"
+      ).value.trim(),
+
+    kodeJurnal:
+      document.getElementById(
+        "kodeJurnal"
+      ).value.trim(),
+
+    bulanTerbit:
+      document.getElementById(
+        "bulanTerbit"
+      ).value,
+
+    judulIJP:
+      document.getElementById(
+        "judulIJP"
+      ).value.trim(),
+
+    kmt:
+      kmt,
+
+    jenisPenulisan:
+      document.getElementById(
+        "jenisPenulisan"
+      ).value,
+
+    authors:
+      authors,
+
+    linkDrive:
+      document.getElementById("linkDrive")
+        ? document.getElementById("linkDrive").value.trim()
+        : ""
+
+  };
+
+
+  /* ==================================================
+     VALIDASI MARKETING
+  ================================================== */
+
+  if(!data.marketing){
+
+    alert(
+      "Nama marketing wajib diisi."
+    );
+
+    document.getElementById(
+      "marketing"
+    ).focus();
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     KIRIM KE CODE.GS
+  ================================================== */
+
+  if(
+    typeof google !== "undefined" &&
+    google.script &&
+    google.script.run
+  ){
+
+    google.script.run
+
+      .withSuccessHandler(
+        function(result){
+
+          if(
+            result &&
+            result.idOrder
+          ){
+
+            tampilkanPopupOrder(
+              result.idOrder,
+              result.judulIJP ||
+              data.judulIJP
+            );
+
+          }
+
+          else{
+
+            alert(
+              "Order IJP berhasil disimpan."
+            );
+
+          }
+
+        }
+      )
+
+
+      .withFailureHandler(
+        function(error){
+
+          alert(
+            "Gagal menyimpan order IJP: " +
+            error.message
+          );
+
+        }
+      )
+
+
+      .simpanOrderIJP(
+        data
+      );
+
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     PREVIEW
+  ================================================== */
+
+  console.log(
+    "DATA ORDER IJP:",
+    data
+  );
+
+
+  tampilkanPopupOrder(
+    "ORD/IJP/001",
+    data.judulIJP
+  );
+
+}
+
+
+/* ==================================================
+   AMBIL AUTHOR M / T
+================================================== */
+
+function ambilAuthorMT(){
+
+  const result = [];
+
+
+  const cards =
+    document.querySelectorAll(
+      "#authorMTContainer .author-card"
+    );
+
+
+  cards.forEach(
+    function(card){
+
+      const nama =
+        card.querySelector(
+          '[name="mtNama[]"]'
+        ).value.trim();
+
+
+      const email =
+        card.querySelector(
+          '[name="mtEmail[]"]'
+        ).value.trim();
+
+
+      const telp =
+        card.querySelector(
+          '[name="mtTelp[]"]'
+        ).value.trim();
+
+
+      const afiliasi =
+        card.querySelector(
+          '[name="mtAfiliasi[]"]'
+        ).value.trim();
+
+
+      const urutanPenulis =
+        card.querySelector(
+          '[name="mtUrutan[]"]'
+        ).value;
+
+
+      result.push({
+
+        nama:
+          nama,
+
+        email:
+          email,
+
+        telp:
+          telp,
+
+        afiliasi:
+          afiliasi,
+
+        urutanPenulis:
+          urutanPenulis
+
+      });
+
+    }
+  );
+
+
+  return result;
+
+}
+
+
+/* ==================================================
+   SIMPAN AUTHOR KOLABORASI IJP
+================================================== */
+
+function simpanAuthorIJP(
+  event
+){
+
+  event.preventDefault();
+
+
+  const form =
+    document.getElementById(
+      "authorForm"
+    );
+
+
+  if(!form.checkValidity()){
+
+    form.reportValidity();
+
+    return;
+
+  }
+
+
+  const idOrder =
+    document.getElementById(
+      "idOrder"
+    ).value.trim();
+
+
+  /* ==================================================
+     VALIDASI ID ORDER
+  ================================================== */
+
+  if(!idOrder){
+
+    alert(
+      "ID Order IJP wajib diisi."
+    );
+
+    document.getElementById(
+      "idOrder"
+    ).focus();
+
+    return;
+
+  }
+
+
+  const judulIJP =
+    document.getElementById(
+      "judulIJPAuthor"
+    ).value;
+
+
+  const kodeJurnal =
+    document.getElementById(
+      "kodeJurnalAuthor"
+    ).value;
+
+
+  const bulanTerbit =
+    document.getElementById(
+      "bulanTerbitAuthor"
+    ).value;
+
+
+  const marketing =
+    document.getElementById(
+      "marketingAuthor"
+    ).value.trim();
+
+
+  const tanggal =
+    document.getElementById(
+      "tanggalTambah"
+    ).value;
+
+
+  const urutanPenulis =
+    document.getElementById(
+      "urutanPenulis"
+    ).value;
+
+
+  /* ==================================================
+     VALIDASI DETAIL ORDER
+  ================================================== */
+
+  if(!judulIJP){
+
+    alert(
+      "Detail Order belum diambil. Klik tombol AMBIL DETAIL ORDER terlebih dahulu."
+    );
+
+    document.getElementById(
+      "idOrder"
+    ).focus();
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     VALIDASI MARKETING
+  ================================================== */
+
+  if(!marketing){
+
+    alert(
+      "Nama marketing wajib diisi."
+    );
+
+    document.getElementById(
+      "marketingAuthor"
+    ).focus();
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     AUTHOR
+  ================================================== */
+
+  const card =
+    document.querySelector(
+      "#authorContainer .author-card"
+    );
+
+
+  if(!card){
+
+    alert(
+      "Data author tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  const author = {
+
+    nama:
+      card.querySelector(
+        '[name="authorNama"]'
+      ).value.trim(),
+
+    email:
+      card.querySelector(
+        '[name="authorEmail"]'
+      ).value.trim(),
+
+    telp:
+      card.querySelector(
+        '[name="authorTelp"]'
+      ).value.trim(),
+
+    afiliasi:
+      card.querySelector(
+        '[name="authorAfiliasi"]'
+      ).value.trim(),
+
+    urutanPenulis:
+      urutanPenulis
+
+  };
+
+
+  /* ==================================================
+     VALIDASI AFILIASI
+  ================================================== */
+
+  if(!author.afiliasi){
+
+    alert(
+      "Afiliasi author wajib diisi."
+    );
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     DATA AUTHOR
+  ================================================== */
+
+  const data = {
+
+    idOrder:
+      idOrder,
+
+    judulIJP:
+      judulIJP,
+
+    kodeJurnal:
+      kodeJurnal,
+
+    bulanTerbit:
+      bulanTerbit,
+
+    marketingInput:
+      marketing,
+
+    tanggal:
+      tanggal,
+
+    urutanPenulis:
+      urutanPenulis,
+
+    author:
+      author
+
+  };
+
+
+  /* ==================================================
+     KIRIM KE CODE.GS
+  ================================================== */
+
+  if(
+    typeof google !== "undefined" &&
+    google.script &&
+    google.script.run
+  ){
+
+    google.script.run
+
+      .withSuccessHandler(
+        function(result){
+
+          alert(
+            "Author kolaborasi IJP berhasil disimpan."
+          );
+
+          resetFormAuthor();
+
+        }
+      )
+
+
+      .withFailureHandler(
+        function(error){
+
+          alert(
+            "Gagal menyimpan author IJP: " +
+            error.message
+          );
+
+        }
+      )
+
+
+      .simpanAuthorIJP(
+        data
+      );
+
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     PREVIEW
+  ================================================== */
+
+  console.log(
+    "DATA AUTHOR KOLABORASI IJP:",
+    data
+  );
+
+
+  alert(
+    "Data Author Kolaborasi IJP siap disimpan.\n\n" +
+    "ID Order: " +
+    data.idOrder +
+    "\nJudul IJP: " +
+    data.judulIJP +
+    "\nKode Jurnal: " +
+    data.kodeJurnal +
+    "\nBulan Terbit: " +
+    data.bulanTerbit +
+    "\nMarketing: " +
+    marketing +
+    "\nPenulis ke-" +
+    data.urutanPenulis +
+    "\nAuthor: " +
+    data.author.nama +
+    "\nAfiliasi: " +
+    data.author.afiliasi
+  );
+
+}
+
+
+/* ==================================================
+   RESET FORM AUTHOR
+================================================== */
+
+function resetFormAuthor(){
+
+  document.getElementById(
+    "authorForm"
+  ).reset();
+
+
+  document.getElementById(
+    "judulIJPAuthor"
+  ).value = "";
+
+
+  document.getElementById(
+    "kodeJurnalAuthor"
+  ).value = "";
+
+
+  document.getElementById(
+    "bulanTerbitAuthor"
+  ).value = "";
+
+
+  const today =
+    new Date()
+      .toISOString()
+      .split("T")[0];
+
+
+  document.getElementById(
+    "tanggalTambah"
+  ).value = today;
+
+}
+
+
+/* ==================================================
+   POPUP ORDER IJP
+================================================== */
+
+function tampilkanPopupOrder(
+  idOrder,
+  judul
+){
+
+  document.getElementById(
+    "resultIdOrder"
+  ).textContent =
+    idOrder;
+
+
+  document.getElementById(
+    "resultJudul"
+  ).textContent =
+    judul;
+
+
+  document.getElementById(
+    "orderModal"
+  ).classList.add(
+    "show"
+  );
+
+}
+
+
+/* ==================================================
+   SALIN ID
+================================================== */
+
+function salinIdOrder(){
+
+  const id =
+    document.getElementById(
+      "resultIdOrder"
+    ).textContent;
+
+
+  if(
+    navigator.clipboard &&
+    navigator.clipboard.writeText
+  ){
+
+    navigator.clipboard
+      .writeText(id)
+      .then(
+        function(){
+
+          alert(
+            "ID Order IJP berhasil disalin: " +
+            id
+          );
+
+        }
+      );
+
+  }
+
+  else{
+
+    const textarea =
+      document.createElement(
+        "textarea"
+      );
+
+    textarea.value = id;
+
+    document.body.appendChild(
+      textarea
+    );
+
+    textarea.select();
+
+    try{
+
+      document.execCommand(
+        "copy"
+      );
+
+      alert(
+        "ID Order IJP berhasil disalin: " +
+        id
+      );
+
+    }
+
+    catch(error){
+
+      alert(
+        "ID Order: " +
+        id
+      );
+
+    }
+
+    document.body.removeChild(
+      textarea
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+   TUTUP MODAL
+================================================== */
+
+function tutupModal(){
+
+  document.getElementById(
+    "orderModal"
+  ).classList.remove(
+    "show"
+  );
+
+}
+
+
+/* ==================================================
+   KEMBALI
+================================================== */
+
+function kembali(){
+
+  window.location.href =
+    "ijp.html";
+
+}
+
+</script>
+
+
+
+<script>
+(function(){
+  function syncLinkDrive(){
+    var group=document.getElementById('linkDriveGroup');
+    var input=document.getElementById('linkDrive');
+    if(!group || !input) return;
+    var show=false;
+    if(false){
+      var jp=document.getElementById('jenisPenulisan');
+      show=jp && String(jp.value||'').trim().toLowerCase()==='naskah mandiri';
+    } else {
+      var k=document.getElementById('kmt');
+      show=k && String(k.value||'').trim().toUpperCase()==='M';
+    }
+    group.style.display=show?'block':'none';
+    input.required=show;
+    if(!show) input.value='';
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    var jp=document.getElementById('jenisPenulisan');
+    var k=document.getElementById('kmt');
+    if(jp) jp.addEventListener('change',syncLinkDrive);
+    if(k) k.addEventListener('change',syncLinkDrive);
+    syncLinkDrive();
+  });
+  window.syncLinkDrive=syncLinkDrive;
+})();
+</script>
+
+</body>
+
+</html>

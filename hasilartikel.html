@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Riset Artikel</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fa;
+  color:#183b56;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  background:linear-gradient(135deg,#183b56,#2f6f95);
+  color:white;
+  padding:22px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header-left{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.header-right{
+  font-size:15px;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  max-width:850px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back{
+  background:#718096;
+  color:white;
+  border:0;
+  padding:12px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-bottom:20px;
+  font-size:14px;
+}
+
+.back:hover{
+  background:#4a5568;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.form-card{
+  background:white;
+  padding:35px;
+  border-radius:18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.form-title{
+  margin-bottom:30px;
+}
+
+.form-title h1{
+  margin:0 0 8px;
+  font-size:28px;
+}
+
+.form-title p{
+  color:#718096;
+  line-height:1.5;
+  margin:0;
+}
+
+
+/* =========================
+   INFO BOX
+========================= */
+
+.info-box{
+  background:#f0f7fb;
+  border-left:4px solid #2f6f95;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:25px;
+  font-size:14px;
+  line-height:1.6;
+  color:#4a5568;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.required{
+  color:#e53e3e;
+}
+
+input,
+select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d6dee6;
+  border-radius:9px;
+  font-size:14px;
+  font-family:Arial,sans-serif;
+  background:white;
+}
+
+input:focus,
+select:focus{
+  outline:none;
+  border-color:#2f6f95;
+  box-shadow:0 0 0 2px rgba(47,111,149,.08);
+}
+
+
+/* =========================
+   READONLY
+========================= */
+
+.readonly{
+  background:#f1f5f9;
+  color:#4a5568;
+  cursor:not-allowed;
+}
+
+
+/* =========================
+   SMALL
+========================= */
+
+small{
+  display:block;
+  margin-top:7px;
+  color:#718096;
+  line-height:1.5;
+  font-size:12px;
+}
+
+
+/* =========================
+   ID ORDER + CARI
+========================= */
+
+.order-search{
+  display:flex;
+  gap:10px;
+  align-items:stretch;
+}
+
+.order-search input{
+  flex:1;
+  min-width:0;
+}
+
+.btn-cari{
+  border:0;
+  padding:0 20px;
+  border-radius:9px;
+  background:#2f6f95;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
+  white-space:nowrap;
+  transition:.2s;
+}
+
+.btn-cari:hover{
+  background:#183b56;
+}
+
+.btn-cari:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}
+
+.btn-cari .icon{
+  font-size:17px;
+  margin-right:5px;
+}
+
+
+/* =========================
+   DETAIL ORDER
+========================= */
+
+.detail-section{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:25px;
+}
+
+.detail-title{
+  font-size:16px;
+  font-weight:bold;
+  margin-bottom:20px;
+  color:#183b56;
+}
+
+.detail-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+
+/* =========================
+   STATUS CARI
+========================= */
+
+.search-status{
+  display:none;
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:8px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.search-status.active{
+  display:block;
+}
+
+.search-status.loading{
+  background:#f0f7fb;
+  border:1px solid #d6e7f0;
+  color:#2f6f95;
+}
+
+.search-status.success{
+  background:#ecfdf5;
+  border:1px solid #a7f3d0;
+  color:#065f46;
+}
+
+.search-status.error{
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  color:#991b1b;
+}
+
+
+/* =========================
+   BUTTON SAVE
+========================= */
+
+.btn-save{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:9px;
+  background:#183b56;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
+  margin-top:5px;
+}
+
+.btn-save:hover{
+  background:#2f6f95;
+}
+
+.btn-save:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  display:none;
+  text-align:center;
+  margin-top:15px;
+  color:#718096;
+  font-size:14px;
+}
+
+.loading.active{
+  display:block;
+}
+
+
+/* =========================
+   POPUP
+========================= */
+
+.popup-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.popup-overlay.active{
+  display:flex;
+}
+
+.popup{
+  width:90%;
+  max-width:450px;
+  background:white;
+  border-radius:18px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,.2);
+  animation:popupIn .25s ease;
+}
+
+@keyframes popupIn{
+
+  from{
+    opacity:0;
+    transform:scale(.9);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+
+}
+
+.popup-icon{
+  font-size:50px;
+  margin-bottom:15px;
+}
+
+.popup h2{
+  margin:0 0 10px;
+  color:#183b56;
+}
+
+.popup p{
+  color:#718096;
+  line-height:1.5;
+}
+
+.result-box{
+  background:#f0f7fb;
+  border:1px solid #d6e7f0;
+  border-radius:12px;
+  padding:18px;
+  margin:20px 0;
+  text-align:left;
+}
+
+.result-row{
+  margin-bottom:12px;
+}
+
+.result-row:last-child{
+  margin-bottom:0;
+}
+
+.result-label{
+  font-size:12px;
+  color:#718096;
+  margin-bottom:4px;
+}
+
+.result-value{
+  font-weight:bold;
+  color:#183b56;
+  word-break:break-word;
+}
+
+.btn-popup{
+  width:100%;
+  border:0;
+  padding:13px;
+  border-radius:9px;
+  background:#183b56;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-popup:hover{
+  background:#2f6f95;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:650px){
+
+  .header{
+    padding:20px;
+  }
+
+  .header-left{
+    font-size:17px;
+  }
+
+  .header-right{
+    font-size:13px;
+  }
+
+  .form-card{
+    padding:25px 20px;
+  }
+
+  .detail-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-title h1{
+    font-size:24px;
+  }
+
+  .order-search{
+    gap:8px;
+  }
+
+  .btn-cari{
+    padding:0 14px;
+  }
+
+  .btn-cari .text{
+    display:none;
+  }
+
+}
+
+
+/* =========================
+   MOBILE KECIL
+========================= */
+
+@media(max-width:400px){
+
+  .order-search{
+    flex-direction:column;
+  }
+
+  .btn-cari{
+    padding:12px;
+    width:100%;
+  }
+
+  .btn-cari .text{
+    display:inline;
+  }
+
+}
+
+</style>
+
+<script src="api.js"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="header">
+
+  <div class="header-left">
+    ADMIN MANAGEMENT
+  </div>
+
+  <div class="header-right">
+    RISET ARTIKEL
+  </div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ==================================================
+     BACK
+================================================== -->
+
+<button
+type="button"
+class="back"
+onclick="kembali()">
+
+← Kembali ke Artikel
+
+</button>
+
+
+<!-- ==================================================
+     FORM CARD
+================================================== -->
+
+<div class="form-card">
+
+
+<!-- ==================================================
+     TITLE
+================================================== -->
+
+<div class="form-title">
+
+<h1>
+🔬 Hasil Riset Artikel
+</h1>
+
+<p>
+Kelola hasil riset artikel berdasarkan ID Order Artikel
+yang telah dibuat.
+</p>
+
+</div>
+
+
+<!-- ==================================================
+     INFO
+================================================== -->
+
+<div class="info-box">
+
+<strong>Informasi:</strong><br>
+
+Ketik <strong>ID Order Artikel</strong> kemudian tekan
+tombol <strong>🔍 Cari Data</strong>.
+Setelah data ditemukan, informasi
+<strong>Judul Artikel Jurnal, Kode Jurnal, dan Bulan Terbit</strong>
+akan ditampilkan otomatis.
+
+<br><br>
+
+Setelah proses riset selesai, masukkan
+<strong>link Google Drive hasil artikel</strong>
+pada bagian Arsip Hasil Artikel.
+
+</div>
+
+
+<!-- ==================================================
+     FORM
+================================================== -->
+
+<form
+id="risetForm"
+onsubmit="simpanRiset(event)">
+
+
+<!-- ==================================================
+     ID ORDER ARTIKEL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+ID Order Artikel <span class="required">*</span>
+</label>
+
+
+<div class="order-search">
+
+<input
+type="text"
+id="idOrder"
+placeholder="Ketik ID Order Artikel"
+autocomplete="off"
+required
+onkeydown="enterCariOrder(event)">
+
+
+<button
+type="button"
+id="btnCari"
+class="btn-cari"
+onclick="cariDataOrder()">
+
+<span class="icon">🔍</span>
+<span class="text">Cari Data</span>
+
+</button>
+
+</div>
+
+
+<small>
+Ketik ID Order Artikel yang sudah dibuat,
+kemudian klik tombol Cari Data.
+</small>
+
+
+<div
+id="searchStatus"
+class="search-status">
+
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     DETAIL ARTIKEL
+================================================== -->
+
+<div
+id="detailOrderSection"
+class="detail-section">
+
+
+<div class="detail-title">
+
+📋 Informasi Artikel
+
+</div>
+
+
+<div class="detail-grid">
+
+
+<!-- ==================================================
+     JUDUL ARTIKEL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Judul Artikel Jurnal
+</label>
+
+<input
+type="text"
+id="judulArtikel"
+class="readonly"
+placeholder="Akan muncul setelah ID Order dicari"
+readonly>
+
+</div>
+
+
+<!-- ==================================================
+     KODE JURNAL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Kode Jurnal
+</label>
+
+<input
+type="text"
+id="kodeJurnal"
+class="readonly"
+placeholder="Akan muncul setelah ID Order dicari"
+readonly>
+
+</div>
+
+
+<!-- ==================================================
+     BULAN TERBIT
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Bulan Terbit
+</label>
+
+<input
+type="text"
+id="bulanTerbit"
+class="readonly"
+placeholder="Akan muncul setelah ID Order dicari"
+readonly>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- ==================================================
+     TIM RISET
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Nama Tim Riset <span class="required">*</span>
+</label>
+
+<input
+type="text"
+id="timRiset"
+placeholder="Ketik nama tim riset"
+autocomplete="off"
+required>
+
+<small>
+Ketik nama tim riset yang mengerjakan artikel tersebut.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     ARSIP HASIL ARTIKEL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Arsip Hasil Artikel <span class="required">*</span>
+</label>
+
+<input
+type="url"
+id="arsip"
+placeholder="https://drive.google.com/..."
+required>
+
+<small>
+Masukkan link Google Drive yang berisi hasil artikel
+yang sudah dibuat oleh tim riset.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     SIMPAN
+================================================== -->
+
+<button
+type="submit"
+id="btnSimpan"
+class="btn-save">
+
+SIMPAN HASIL RISET
+
+</button>
+
+
+<div
+id="loading"
+class="loading">
+
+⏳ Menyimpan hasil riset artikel...
+
+</div>
+
+
+</form>
+
+
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     POPUP BERHASIL
+================================================== -->
+
+<div
+id="popupBerhasil"
+class="popup-overlay">
+
+
+<div class="popup">
+
+
+<div class="popup-icon">
+✅
+</div>
+
+
+<h2>
+Riset Artikel Berhasil Disimpan
+</h2>
+
+
+<p>
+Data hasil riset artikel telah berhasil dicatat.
+</p>
+
+
+<div class="result-box">
+
+
+<!-- ID ORDER -->
+
+<div class="result-row">
+
+<div class="result-label">
+ID ORDER
+</div>
+
+<div
+id="resultIdOrder"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+<!-- KODE JURNAL -->
+
+<div class="result-row">
+
+<div class="result-label">
+KODE JURNAL
+</div>
+
+<div
+id="resultKodeJurnal"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+<!-- JUDUL ARTIKEL -->
+
+<div class="result-row">
+
+<div class="result-label">
+JUDUL ARTIKEL
+</div>
+
+<div
+id="resultJudulArtikel"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+<!-- BULAN TERBIT -->
+
+<div class="result-row">
+
+<div class="result-label">
+BULAN TERBIT
+</div>
+
+<div
+id="resultBulanTerbit"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+<!-- TIM RISET -->
+
+<div class="result-row">
+
+<div class="result-label">
+TIM RISET
+</div>
+
+<div
+id="resultTimRiset"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<button
+type="button"
+class="btn-popup"
+onclick="tutupPopup()">
+
+SELESAI
+
+</button>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* ==================================================
+   INIT
+================================================== */
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+  console.log(
+    "Halaman Riset Artikel aktif."
+  );
+
+});
+
+
+/* ==================================================
+   ENTER PADA ID ORDER
+================================================== */
+
+function enterCariOrder(event){
+
+  /*
+   * Jika user menekan ENTER
+   * pada kolom ID Order,
+   * langsung jalankan pencarian.
+   */
+
+  if(event.key === "Enter"){
+
+    event.preventDefault();
+
+    cariDataOrder();
+
+  }
+
+}
+
+
+/* ==================================================
+   CARI DATA ORDER
+================================================== */
+
+function cariDataOrder(){
+
+  const input =
+    document.getElementById(
+      "idOrder"
+    );
+
+
+  const idOrder =
+    input.value.trim();
+
+
+  const btnCari =
+    document.getElementById(
+      "btnCari"
+    );
+
+
+  const status =
+    document.getElementById(
+      "searchStatus"
+    );
+
+
+  /*
+   * Validasi ID Order
+   */
+
+  if(!idOrder){
+
+    tampilSearchStatus(
+      "Silakan ketik ID Order Artikel terlebih dahulu.",
+      "error"
+    );
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  /*
+   * Kosongkan data lama
+   */
+
+  kosongkanDetailArtikel();
+
+
+  /*
+   * Loading tombol
+   */
+
+  btnCari.disabled =
+    true;
+
+
+  btnCari.innerHTML =
+    '<span class="icon">⏳</span>' +
+    '<span class="text">Mencari...</span>';
+
+
+  tampilSearchStatus(
+    "Sedang mencari data ID Order " +
+    idOrder +
+    "...",
+    "loading"
+  );
+
+
+  /*
+   * ==================================================
+   * PANGGIL APPS SCRIPT
+   * ==================================================
+   *
+   * Method:
+   *
+   * ambilDetailOrderArtikel(idOrder)
+   *
+   */
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(data){
+
+        /*
+         * Kembalikan tombol
+         */
+
+        btnCari.disabled =
+          false;
+
+
+        btnCari.innerHTML =
+          '<span class="icon">🔍</span>' +
+          '<span class="text">Cari Data</span>';
+
+
+        /*
+         * Data tidak ditemukan
+         */
+
+        if(!data){
+
+          kosongkanDetailArtikel();
+
+
+          tampilSearchStatus(
+            "ID Order Artikel \"" +
+            idOrder +
+            "\" tidak ditemukan.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        /*
+         * Ambil data artikel.
+         *
+         * Dibuat fleksibel agar tetap
+         * bisa membaca beberapa nama
+         * field dari Apps Script.
+         */
+
+        const judulArtikel =
+          data.judulArtikel ||
+          data.judul ||
+          data.judulBuku ||
+          "";
+
+
+        const kodeJurnal =
+          data.kodeJurnal ||
+          data.kode_jurnal ||
+          "";
+
+
+        const bulanTerbit =
+          data.bulanTerbit ||
+          data.bulan_terbit ||
+          "";
+
+
+        /*
+         * Isi detail artikel
+         */
+
+        document.getElementById(
+          "judulArtikel"
+        ).value =
+          judulArtikel;
+
+
+        document.getElementById(
+          "kodeJurnal"
+        ).value =
+          kodeJurnal;
+
+
+        document.getElementById(
+          "bulanTerbit"
+        ).value =
+          bulanTerbit;
+
+
+        /*
+         * Validasi apakah data utama
+         * berhasil ditemukan.
+         */
+
+        if(
+          !judulArtikel &&
+          !kodeJurnal &&
+          !bulanTerbit
+        ){
+
+          tampilSearchStatus(
+            "ID Order ditemukan, tetapi detail artikel kosong.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        /*
+         * Berhasil
+         */
+
+        tampilSearchStatus(
+          "✓ Data artikel berhasil ditemukan.",
+          "success"
+        );
+
+
+        console.log(
+          "Detail Order Artikel:",
+          data
+        );
+
+      }
+    )
+
+
+    .withFailureHandler(
+      function(error){
+
+        /*
+         * Kembalikan tombol
+         */
+
+        btnCari.disabled =
+          false;
+
+
+        btnCari.innerHTML =
+          '<span class="icon">🔍</span>' +
+          '<span class="text">Cari Data</span>';
+
+
+        kosongkanDetailArtikel();
+
+
+        tampilSearchStatus(
+          "Gagal mengambil data: " +
+          (
+            error &&
+            error.message
+              ? error.message
+              : error
+          ),
+          "error"
+        );
+
+
+        console.error(
+          "Error ambilDetailOrderArtikel:",
+          error
+        );
+
+      }
+    )
+
+
+    .ambilDetailOrderArtikel(
+      idOrder
+    );
+
+}
+
+
+/* ==================================================
+   KOSONGKAN DETAIL ARTIKEL
+================================================== */
+
+function kosongkanDetailArtikel(){
+
+  document.getElementById(
+    "judulArtikel"
+  ).value = "";
+
+
+  document.getElementById(
+    "kodeJurnal"
+  ).value = "";
+
+
+  document.getElementById(
+    "bulanTerbit"
+  ).value = "";
+
+}
+
+
+/* ==================================================
+   STATUS PENCARIAN
+================================================== */
+
+function tampilSearchStatus(
+  message,
+  type
+){
+
+  const status =
+    document.getElementById(
+      "searchStatus"
+    );
+
+
+  status.textContent =
+    message;
+
+
+  status.className =
+    "search-status active " +
+    type;
+
+}
+
+
+/* ==================================================
+   SIMPAN RISET
+================================================== */
+
+function simpanRiset(
+  event
+){
+
+  event.preventDefault();
+
+
+  const form =
+    document.getElementById(
+      "risetForm"
+    );
+
+
+  /*
+   * Validasi HTML
+   */
+
+  if(!form.checkValidity()){
+
+    form.reportValidity();
+
+    return;
+
+  }
+
+
+  /*
+   * Ambil data
+   */
+
+  const data = {
+
+    idOrder:
+      document.getElementById(
+        "idOrder"
+      ).value.trim(),
+
+
+    kodeJurnal:
+      document.getElementById(
+        "kodeJurnal"
+      ).value.trim(),
+
+
+    judulArtikel:
+      document.getElementById(
+        "judulArtikel"
+      ).value.trim(),
+
+
+    bulanTerbit:
+      document.getElementById(
+        "bulanTerbit"
+      ).value.trim(),
+
+
+    timRiset:
+      document.getElementById(
+        "timRiset"
+      ).value.trim(),
+
+
+    arsip:
+      document.getElementById(
+        "arsip"
+      ).value.trim()
+
+  };
+
+
+  /* ==================================================
+     VALIDASI TAMBAHAN
+  ================================================== */
+
+  if(!data.idOrder){
+
+    alert(
+      "Silakan ketik ID Order Artikel."
+    );
+
+    document.getElementById(
+      "idOrder"
+    ).focus();
+
+    return;
+
+  }
+
+
+  if(!data.judulArtikel){
+
+    alert(
+      "Data artikel belum ditemukan. Silakan klik Cari Data terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.kodeJurnal){
+
+    alert(
+      "Kode jurnal belum ditemukan. Silakan klik Cari Data terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.bulanTerbit){
+
+    alert(
+      "Bulan terbit belum ditemukan. Silakan klik Cari Data terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.timRiset){
+
+    alert(
+      "Silakan ketik Nama Tim Riset."
+    );
+
+    document.getElementById(
+      "timRiset"
+    ).focus();
+
+    return;
+
+  }
+
+
+  if(!data.arsip){
+
+    alert(
+      "Masukkan link Google Drive hasil artikel."
+    );
+
+    document.getElementById(
+      "arsip"
+    ).focus();
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     BUTTON LOADING
+  ================================================== */
+
+  const btn =
+    document.getElementById(
+      "btnSimpan"
+    );
+
+
+  const loading =
+    document.getElementById(
+      "loading"
+    );
+
+
+  btn.disabled =
+    true;
+
+
+  btn.textContent =
+    "MENYIMPAN...";
+
+
+  loading.classList.add(
+    "active"
+  );
+
+
+  /* ==================================================
+     KIRIM KE CODE.GS
+  ================================================== */
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(result){
+
+        btn.disabled =
+          false;
+
+
+        btn.textContent =
+          "SIMPAN HASIL RISET";
+
+
+        loading.classList.remove(
+          "active"
+        );
+
+
+        /*
+         * Jika berhasil
+         */
+
+        if(
+          result &&
+          result.success
+        ){
+
+          tampilkanPopupBerhasil(
+            data,
+            result
+          );
+
+
+          /*
+           * Reset form
+           */
+
+          document.getElementById(
+            "risetForm"
+          ).reset();
+
+
+          /*
+           * Kosongkan detail artikel
+           */
+
+          kosongkanDetailArtikel();
+
+
+          /*
+           * Kosongkan status pencarian
+           */
+
+          const status =
+            document.getElementById(
+              "searchStatus"
+            );
+
+
+          status.textContent =
+            "";
+
+
+          status.className =
+            "search-status";
+
+        }
+
+        else{
+
+          alert(
+            result &&
+            result.message
+              ?
+              result.message
+              :
+              "Gagal menyimpan hasil riset."
+          );
+
+        }
+
+      }
+    )
+
+
+    .withFailureHandler(
+      function(error){
+
+        btn.disabled =
+          false;
+
+
+        btn.textContent =
+          "SIMPAN HASIL RISET";
+
+
+        loading.classList.remove(
+          "active"
+        );
+
+
+        alert(
+          "Gagal menyimpan hasil riset artikel:\n" +
+          (
+            error &&
+            error.message
+              ?
+              error.message
+              :
+              error
+          )
+        );
+
+
+        console.error(
+          "Error simpanRisetArtikel:",
+          error
+        );
+
+      }
+    )
+
+
+    /*
+     * Tetap menggunakan method
+     * yang sudah digunakan sebelumnya.
+     */
+
+    .simpanRisetArtikel(
+      data
+    );
+
+}
+
+
+/* ==================================================
+   POPUP BERHASIL
+================================================== */
+
+function tampilkanPopupBerhasil(
+  data,
+  result
+){
+
+  document.getElementById(
+    "resultIdOrder"
+  ).textContent =
+    data.idOrder || "-";
+
+
+  document.getElementById(
+    "resultKodeJurnal"
+  ).textContent =
+    data.kodeJurnal || "-";
+
+
+  document.getElementById(
+    "resultJudulArtikel"
+  ).textContent =
+    data.judulArtikel || "-";
+
+
+  document.getElementById(
+    "resultBulanTerbit"
+  ).textContent =
+    data.bulanTerbit || "-";
+
+
+  document.getElementById(
+    "resultTimRiset"
+  ).textContent =
+    data.timRiset || "-";
+
+
+  document.getElementById(
+    "popupBerhasil"
+  ).classList.add(
+    "active"
+  );
+
+}
+
+
+/* ==================================================
+   TUTUP POPUP
+================================================== */
+
+function tutupPopup(){
+
+  document.getElementById(
+    "popupBerhasil"
+  ).classList.remove(
+    "active"
+  );
+
+}
+
+
+/* ==================================================
+   KEMBALI
+================================================== */
+
+function kembali(){
+
+  window.location.href =
+    "artikel.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>

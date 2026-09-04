@@ -1,0 +1,2278 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Invoice Buku</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fa;
+  color:#183b56;
+}
+
+.header{
+  background:linear-gradient(135deg,#183b56,#2f6f95);
+  color:white;
+  padding:22px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.container{
+  max-width:850px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.back{
+  background:#718096;
+  color:white;
+  border:0;
+  padding:12px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-bottom:20px;
+}
+
+.back:hover{
+  background:#4a5568;
+}
+
+.form-card{
+  background:white;
+  padding:35px;
+  border-radius:18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+.form-title{
+  margin-bottom:30px;
+}
+
+.form-title h1{
+  margin:0 0 8px;
+}
+
+.form-title p{
+  color:#718096;
+  line-height:1.5;
+}
+
+.form-group{
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+input,
+select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d6dee6;
+  border-radius:9px;
+  font-size:14px;
+  font-family:Arial,sans-serif;
+  background:white;
+}
+
+input:focus,
+select:focus{
+  outline:none;
+  border-color:#2f6f95;
+  box-shadow:0 0 0 2px rgba(47,111,149,.08);
+}
+
+.readonly{
+  background:#f1f5f9;
+  color:#4a5568;
+  cursor:not-allowed;
+}
+
+small{
+  display:block;
+  margin-top:7px;
+  color:#718096;
+  line-height:1.5;
+}
+
+.info-box{
+  background:#f0f7fb;
+  border-left:4px solid #2f6f95;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:25px;
+  font-size:14px;
+  line-height:1.6;
+}
+
+
+/* =========================================================
+   INPUT + BUTTON CARI
+========================================================= */
+
+.input-search{
+  display:flex;
+  gap:10px;
+}
+
+.input-search input{
+  flex:1;
+}
+
+.btn-search{
+  border:0;
+  padding:0 20px;
+  border-radius:9px;
+  background:#2f6f95;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.btn-search:hover{
+  background:#183b56;
+}
+
+.btn-search:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-box{
+  display:none;
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:8px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.status-box.show{
+  display:block;
+}
+
+.status-box.loading{
+  background:#f0f7fb;
+  color:#2f6f95;
+}
+
+.status-box.success{
+  background:#f0fff4;
+  color:#276749;
+}
+
+.status-box.error{
+  background:#fff5f5;
+  color:#c53030;
+}
+
+
+/* =========================================================
+   BUTTON SAVE
+========================================================= */
+
+.btn-save{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:9px;
+  background:#183b56;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
+  margin-top:10px;
+}
+
+.btn-save:hover{
+  background:#2f6f95;
+}
+
+.btn-save:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+  display:none;
+  text-align:center;
+  margin-top:15px;
+  color:#718096;
+}
+
+.loading.active{
+  display:block;
+}
+
+
+/* =========================================================
+   POPUP
+========================================================= */
+
+.popup-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.popup-overlay.active{
+  display:flex;
+}
+
+.popup{
+  width:90%;
+  max-width:430px;
+  background:white;
+  border-radius:18px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,.2);
+  animation:popupIn .25s ease;
+}
+
+@keyframes popupIn{
+
+  from{
+    opacity:0;
+    transform:scale(.9);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+
+}
+
+.popup-icon{
+  font-size:50px;
+  margin-bottom:15px;
+}
+
+.popup h2{
+  margin-bottom:10px;
+}
+
+.popup p{
+  color:#718096;
+  line-height:1.5;
+}
+
+.invoice-number{
+  background:#f0f7fb;
+  border:2px dashed #2f6f95;
+  border-radius:12px;
+  padding:18px;
+  margin:20px 0;
+}
+
+.invoice-number small{
+  margin:0 0 6px;
+}
+
+.invoice-number strong{
+  display:block;
+  font-size:28px;
+  color:#183b56;
+}
+
+.btn-popup{
+  width:100%;
+  border:0;
+  padding:13px;
+  border-radius:9px;
+  background:#183b56;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-popup:hover{
+  background:#2f6f95;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:650px){
+
+  .header{
+    padding:20px;
+  }
+
+  .form-card{
+    padding:25px 20px;
+  }
+
+  .input-search{
+    flex-direction:column;
+  }
+
+  .btn-search{
+    padding:13px;
+  }
+
+}
+
+</style>
+
+<script src="api.js"></script>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+  <div>
+    ADMIN MANAGEMENT
+  </div>
+
+  <div>
+    INVOICE BUKU
+  </div>
+
+</header>
+
+
+<div class="container">
+
+
+<button
+  type="button"
+  class="back"
+  onclick="kembali()">
+
+  ← Kembali ke Buku
+
+</button>
+
+
+<div class="form-card">
+
+
+<div class="form-title">
+
+  <h1>
+    🧾 Form Invoice Buku
+  </h1>
+
+  <p>
+    Catat invoice dan pembayaran berdasarkan
+    ID Order Buku dan ID Author.
+  </p>
+
+</div>
+
+
+<div class="info-box">
+
+  <strong>Informasi:</strong><br>
+
+  ID Order Buku dan ID Author sekarang
+  <strong>diketik secara manual</strong> agar halaman
+  lebih ringan dan tidak perlu memuat seluruh data.
+
+  <br><br>
+
+  Satu ID Order Buku dapat memiliki
+  <strong>banyak Author</strong>.
+
+  <br><br>
+
+  Ketik <strong>ID Order Buku</strong> lalu klik
+  <strong>Cari Order</strong>.
+
+  Setelah order ditemukan, ketik
+  <strong>ID Author</strong> lalu klik
+  <strong>Cari Author</strong>.
+
+</div>
+
+
+<form
+  id="invoiceForm"
+  onsubmit="simpanInvoice(event)">
+
+
+<!-- =====================================================
+     ID ORDER
+====================================================== -->
+
+<div class="form-group">
+
+  <label>
+    ID Order Buku
+  </label>
+
+  <div class="input-search">
+
+    <input
+      type="text"
+      id="idOrder"
+      placeholder="Contoh: ORD001"
+      autocomplete="off"
+      required>
+
+    <button
+      type="button"
+      id="btnCariOrder"
+      class="btn-search"
+      onclick="cariOrder()">
+
+      🔍 Cari Order
+
+    </button>
+
+  </div>
+
+  <small>
+    Ketik ID Order Buku secara manual.
+  </small>
+
+  <div
+    id="orderStatus"
+    class="status-box">
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     JUDUL BUKU
+====================================================== -->
+
+<div class="form-group">
+
+  <label>
+    Judul Buku
+  </label>
+
+  <input
+    type="text"
+    id="judulBuku"
+    class="readonly"
+    placeholder="Akan muncul setelah Order ditemukan"
+    readonly>
+
+  <small>
+    Judul buku akan terisi otomatis berdasarkan ID Order.
+  </small>
+
+</div>
+
+
+<!-- =====================================================
+     ID AUTHOR
+====================================================== -->
+
+<div class="form-group">
+
+  <label>
+    ID Author
+  </label>
+
+  <div class="input-search">
+
+    <input
+      type="text"
+      id="idAuthor"
+      placeholder="Contoh: AUTH001"
+      autocomplete="off"
+      required>
+
+    <button
+      type="button"
+      id="btnCariAuthor"
+      class="btn-search"
+      onclick="cariAuthor()">
+
+      🔍 Cari Author
+
+    </button>
+
+  </div>
+
+  <small>
+    Ketik ID Author secara manual.
+    Satu Order Buku dapat memiliki banyak Author.
+  </small>
+
+  <div
+    id="authorStatus"
+    class="status-box">
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     NAMA AUTHOR
+====================================================== -->
+
+<div class="form-group">
+
+  <label>
+    Nama Author
+  </label>
+
+  <input
+    type="text"
+    id="namaAuthor"
+    class="readonly"
+    placeholder="Akan muncul setelah Author ditemukan"
+    readonly>
+
+</div>
+
+
+<!-- =====================================================
+     BAB
+====================================================== -->
+
+<div class="form-group">
+
+  <label>
+    Bab
+  </label>
+
+  <input
+    type="text"
+    id="bab"
+    class="readonly"
+    placeholder="Akan muncul setelah Author ditemukan"
+    readonly>
+
+</div>
+
+
+<!-- =====================================================
+     MARKETING
+====================================================== -->
+
+<div class="form-group">
+
+  <label>
+    Marketing Input
+  </label>
+
+  <input
+    type="text"
+    id="marketingInput"
+    placeholder="Ketik nama marketing"
+    autocomplete="off"
+    required>
+
+  <small>
+    Tulis nama marketing yang melakukan
+    input invoice.
+  </small>
+
+</div>
+
+
+<!-- =====================================================
+     TANGGAL
+====================================================== -->
+
+<div class="form-group">
+
+  <label>
+    Tanggal Pembayaran
+  </label>
+
+  <input
+    type="date"
+    id="tanggal"
+    required>
+
+</div>
+
+
+<!-- =====================================================
+     HARGA
+====================================================== -->
+
+<div class="form-group">
+
+  <label>
+    Harga
+  </label>
+
+  <input
+    type="number"
+    id="harga"
+    min="0"
+    placeholder="Masukkan harga author"
+    required>
+
+  <small>
+    Masukkan total harga yang harus dibayarkan
+    kepada author.
+  </small>
+
+</div>
+
+
+<!-- =====================================================
+     STATUS PEMBAYARAN
+====================================================== -->
+
+<div class="form-group">
+
+  <label>
+    Status Pembayaran
+  </label>
+
+  <select
+    id="statusPembayaran"
+    required
+    onchange="ubahStatusPembayaran()">
+
+    <option value="">
+      Pilih status pembayaran
+    </option>
+
+    <option value="DP">
+      DP
+    </option>
+
+    <option value="Pelunasan">
+      Pelunasan
+    </option>
+
+    <option value="Lunas">
+      Lunas
+    </option>
+
+  </select>
+
+</div>
+
+
+<!-- =====================================================
+     NOMINAL
+====================================================== -->
+
+<div class="form-group">
+
+  <label id="labelNominal">
+    Nominal Pembayaran
+  </label>
+
+  <input
+    type="number"
+    id="nominal"
+    min="0"
+    placeholder="Masukkan nominal pembayaran"
+    required>
+
+  <small id="deskripsiNominal">
+    Nominal pembayaran sesuai transaksi.
+  </small>
+
+</div>
+
+
+<button
+  type="submit"
+  id="btnSimpan"
+  class="btn-save">
+
+  SIMPAN INVOICE BUKU
+
+</button>
+
+
+<div
+  id="loading"
+  class="loading">
+
+  ⏳ Menyimpan invoice buku...
+
+</div>
+
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     POPUP
+====================================================== -->
+
+<div
+  id="popupBerhasil"
+  class="popup-overlay">
+
+  <div class="popup">
+
+    <div class="popup-icon">
+      ✅
+    </div>
+
+    <h2>
+      Invoice Buku Berhasil Disimpan
+    </h2>
+
+    <p>
+      Data invoice buku telah berhasil disimpan.
+    </p>
+
+    <div class="invoice-number">
+
+      <small>
+        Nomor Invoice
+      </small>
+
+      <strong id="nomorInvoice">
+        INV/001
+      </strong>
+
+    </div>
+
+    <p id="detailInvoice"></p>
+
+    <button
+      type="button"
+      class="btn-popup"
+      onclick="tutupPopup()">
+
+      SELESAI
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    setTanggalHariIni();
+
+  }
+);
+
+
+/* =========================================================
+   TANGGAL HARI INI
+========================================================= */
+
+function setTanggalHariIni(){
+
+  const tanggal =
+    document.getElementById(
+      "tanggal"
+    );
+
+  const today =
+    new Date();
+
+  const year =
+    today.getFullYear();
+
+  const month =
+    String(
+      today.getMonth() + 1
+    ).padStart(2,"0");
+
+  const day =
+    String(
+      today.getDate()
+    ).padStart(2,"0");
+
+  tanggal.value =
+    year + "-" +
+    month + "-" +
+    day;
+
+}
+
+
+/* =========================================================
+   CEK GOOGLE APPS SCRIPT
+========================================================= */
+
+function gasTersedia(){
+
+  return (
+    typeof google !== "undefined" &&
+    google.script &&
+    google.script.run
+  );
+
+}
+
+
+/* =========================================================
+   CARI ORDER BERDASARKAN ID
+========================================================= */
+
+function cariOrder(){
+
+  const input =
+    document.getElementById(
+      "idOrder"
+    );
+
+  const idOrder =
+    input.value.trim();
+
+
+  const judul =
+    document.getElementById(
+      "judulBuku"
+    );
+
+  const status =
+    document.getElementById(
+      "orderStatus"
+    );
+
+  const btn =
+    document.getElementById(
+      "btnCariOrder"
+    );
+
+
+  /*
+   * Reset data sebelumnya
+   */
+
+  judul.value = "";
+
+  document.getElementById(
+    "idAuthor"
+  ).value = "";
+
+  document.getElementById(
+    "namaAuthor"
+  ).value = "";
+
+  document.getElementById(
+    "bab"
+  ).value = "";
+
+
+  document.getElementById(
+    "authorStatus"
+  ).className =
+    "status-box";
+
+  document.getElementById(
+    "authorStatus"
+  ).textContent =
+    "";
+
+
+  status.className =
+    "status-box";
+
+  status.textContent =
+    "";
+
+
+  if(!idOrder){
+
+    status.className =
+      "status-box show error";
+
+    status.textContent =
+      "Silakan ketik ID Order Buku.";
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  if(!gasTersedia()){
+
+    status.className =
+      "status-box show error";
+
+    status.textContent =
+      "Google Apps Script tidak tersedia.";
+
+    return;
+
+  }
+
+
+  btn.disabled =
+    true;
+
+  btn.textContent =
+    "Mencari...";
+
+
+  status.className =
+    "status-box show loading";
+
+  status.textContent =
+    "⏳ Mencari ID Order Buku...";
+
+
+  /*
+   * =====================================================
+   * BACKEND
+   * =====================================================
+   *
+   * Hanya mengirim SATU ID ORDER.
+   *
+   * Tidak mengambil seluruh daftar order.
+   */
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(result){
+
+        console.log(
+          "HASIL CARI ORDER:",
+          result
+        );
+
+
+        btn.disabled =
+          false;
+
+        btn.textContent =
+          "🔍 Cari Order";
+
+
+        if(
+          !result
+        ){
+
+          status.className =
+            "status-box show error";
+
+          status.textContent =
+            "ID Order Buku tidak ditemukan.";
+
+          return;
+
+        }
+
+
+        if(
+          result.success === false
+        ){
+
+          status.className =
+            "status-box show error";
+
+          status.textContent =
+            result.message ||
+            "ID Order Buku tidak ditemukan.";
+
+          return;
+
+        }
+
+
+        const data =
+          ambilObjectData(
+            result
+          );
+
+
+        /*
+         * Ambil judul buku
+         */
+
+        const judulData =
+          ambilNilai(
+            data,
+            [
+              "judulBuku",
+              "judul",
+              "namaBuku",
+              "Judul Buku"
+            ]
+          );
+
+
+        /*
+         * Jika backend mengembalikan
+         * ID Order tetapi judul kosong.
+         */
+
+        if(!judulData){
+
+          status.className =
+            "status-box show error";
+
+          status.textContent =
+            "Order ditemukan, tetapi Judul Buku tidak tersedia.";
+
+          return;
+
+        }
+
+
+        judul.value =
+          judulData;
+
+
+        status.className =
+          "status-box show success";
+
+        status.textContent =
+          "✓ Order ditemukan. Silakan ketik ID Author.";
+
+      }
+    )
+
+    .withFailureHandler(
+      function(error){
+
+        btn.disabled =
+          false;
+
+        btn.textContent =
+          "🔍 Cari Order";
+
+
+        console.error(
+          "ERROR CARI ORDER:",
+          error
+        );
+
+
+        status.className =
+          "status-box show error";
+
+        status.textContent =
+          "Gagal mencari Order Buku: " +
+          errorMessage(error);
+
+      }
+    )
+
+    /*
+     * =====================================================
+     * METHOD BACKEND
+     * =====================================================
+     *
+     * Pastikan Apps Script memiliki:
+     *
+     * ambilDetailOrder(idOrder)
+     *
+     */
+
+    .ambilDetailOrder(
+      idOrder
+    );
+
+}
+
+
+/* =========================================================
+   CARI AUTHOR BERDASARKAN ID
+========================================================= */
+
+function cariAuthor(){
+
+  const idOrder =
+    document.getElementById(
+      "idOrder"
+    ).value.trim();
+
+
+  const idAuthorInput =
+    document.getElementById(
+      "idAuthor"
+    );
+
+
+  const idAuthor =
+    idAuthorInput.value.trim();
+
+
+  const nama =
+    document.getElementById(
+      "namaAuthor"
+    );
+
+
+  const bab =
+    document.getElementById(
+      "bab"
+    );
+
+
+  const status =
+    document.getElementById(
+      "authorStatus"
+    );
+
+
+  const btn =
+    document.getElementById(
+      "btnCariAuthor"
+    );
+
+
+  /*
+   * Reset
+   */
+
+  nama.value = "";
+
+  bab.value = "";
+
+
+  status.className =
+    "status-box";
+
+  status.textContent =
+    "";
+
+
+  /*
+   * ID Order wajib sudah dicari
+   */
+
+  if(!idOrder){
+
+    status.className =
+      "status-box show error";
+
+    status.textContent =
+      "Silakan cari ID Order Buku terlebih dahulu.";
+
+    document.getElementById(
+      "idOrder"
+    ).focus();
+
+    return;
+
+  }
+
+
+  /*
+   * ID Author wajib diisi
+   */
+
+  if(!idAuthor){
+
+    status.className =
+      "status-box show error";
+
+    status.textContent =
+      "Silakan ketik ID Author.";
+
+    idAuthorInput.focus();
+
+    return;
+
+  }
+
+
+  /*
+   * Pastikan order sudah ditemukan
+   */
+
+  const judul =
+    document.getElementById(
+      "judulBuku"
+    ).value.trim();
+
+
+  if(!judul){
+
+    status.className =
+      "status-box show error";
+
+    status.textContent =
+      "Cari ID Order Buku terlebih dahulu.";
+
+    return;
+
+  }
+
+
+  if(!gasTersedia()){
+
+    status.className =
+      "status-box show error";
+
+    status.textContent =
+      "Google Apps Script tidak tersedia.";
+
+    return;
+
+  }
+
+
+  btn.disabled =
+    true;
+
+  btn.textContent =
+    "Mencari...";
+
+
+  status.className =
+    "status-box show loading";
+
+  status.textContent =
+    "⏳ Mencari ID Author...";
+
+
+  /*
+   * =====================================================
+   * BACKEND
+   * =====================================================
+   *
+   * Hanya mencari SATU ID AUTHOR.
+   */
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(result){
+
+        console.log(
+          "HASIL CARI AUTHOR:",
+          result
+        );
+
+
+        btn.disabled =
+          false;
+
+        btn.textContent =
+          "🔍 Cari Author";
+
+
+        if(!result){
+
+          status.className =
+            "status-box show error";
+
+          status.textContent =
+            "ID Author tidak ditemukan.";
+
+          return;
+
+        }
+
+
+        if(
+          result.success === false
+        ){
+
+          status.className =
+            "status-box show error";
+
+          status.textContent =
+            result.message ||
+            "ID Author tidak ditemukan.";
+
+          return;
+
+        }
+
+
+        const data =
+          ambilObjectData(
+            result
+          );
+
+
+        /*
+         * Nama Author
+         */
+
+        const namaAuthor =
+          ambilNilai(
+            data,
+            [
+              "namaAuthor",
+              "nama",
+              "nama_author",
+              "authorNama",
+              "namaPenulis",
+              "Nama Author",
+              "Nama"
+            ]
+          );
+
+
+        /*
+         * Bab
+         */
+
+        const dataBab =
+          ambilNilai(
+            data,
+            [
+              "bab",
+              "Bab",
+              "namaBab",
+              "nama_bab",
+              "Nama Bab"
+            ]
+          );
+
+
+        if(!namaAuthor){
+
+          status.className =
+            "status-box show error";
+
+          status.textContent =
+            "ID Author ditemukan tetapi Nama Author kosong.";
+
+          return;
+
+        }
+
+
+        /*
+         * Tampilkan data
+         */
+
+        nama.value =
+          namaAuthor;
+
+        bab.value =
+          dataBab || "";
+
+
+        status.className =
+          "status-box show success";
+
+        status.textContent =
+          "✓ Author ditemukan dan sesuai dengan Order Buku.";
+
+      }
+    )
+
+    .withFailureHandler(
+      function(error){
+
+        btn.disabled =
+          false;
+
+        btn.textContent =
+          "🔍 Cari Author";
+
+
+        console.error(
+          "ERROR CARI AUTHOR:",
+          error
+        );
+
+
+        status.className =
+          "status-box show error";
+
+        status.textContent =
+          "Gagal mencari Author: " +
+          errorMessage(error);
+
+      }
+    )
+
+    /*
+     * =====================================================
+     * METHOD BACKEND
+     * =====================================================
+     *
+     * Mengirim:
+     *
+     * 1. ID Author
+     *
+     * 2. ID Order
+     *
+     * ID Order ikut dikirim supaya backend
+     * dapat memastikan Author tersebut
+     * memang milik Order Buku tersebut.
+     *
+     */
+
+    .ambilDetailAuthor(
+      idAuthor,
+      idOrder
+    );
+
+}
+
+
+/* =========================================================
+   NORMALISASI OBJECT
+========================================================= */
+
+function normalisasiObject(
+  item
+){
+
+  if(
+    item &&
+    typeof item === "object"
+  ){
+
+    if(
+      item.data &&
+      typeof item.data === "object" &&
+      !Array.isArray(item.data)
+    ){
+
+      return item.data;
+
+    }
+
+
+    return item;
+
+  }
+
+
+  return {};
+
+}
+
+
+/* =========================================================
+   AMBIL OBJECT DATA
+========================================================= */
+
+function ambilObjectData(
+  result
+){
+
+  if(
+    !result ||
+    typeof result !== "object"
+  ){
+
+    return {};
+
+  }
+
+
+  if(
+    result.data &&
+    typeof result.data === "object" &&
+    !Array.isArray(result.data)
+  ){
+
+    return result.data;
+
+  }
+
+
+  return result;
+
+}
+
+
+/* =========================================================
+   AMBIL NILAI
+========================================================= */
+
+function ambilNilai(
+  object,
+  keys
+){
+
+  if(
+    !object ||
+    typeof object !== "object"
+  ){
+
+    return "";
+
+  }
+
+
+  for(
+    let i = 0;
+    i < keys.length;
+    i++
+  ){
+
+    const key =
+      keys[i];
+
+
+    const value =
+      object[key];
+
+
+    if(
+      value !== undefined &&
+      value !== null &&
+      String(value).trim() !== ""
+    ){
+
+      return String(
+        value
+      ).trim();
+
+    }
+
+  }
+
+
+  return "";
+
+}
+
+
+/* =========================================================
+   STATUS PEMBAYARAN
+========================================================= */
+
+function ubahStatusPembayaran(){
+
+  const status =
+    document.getElementById(
+      "statusPembayaran"
+    ).value;
+
+
+  const label =
+    document.getElementById(
+      "labelNominal"
+    );
+
+
+  const deskripsi =
+    document.getElementById(
+      "deskripsiNominal"
+    );
+
+
+  if(
+    status === "DP"
+  ){
+
+    label.textContent =
+      "Nominal DP";
+
+
+    deskripsi.textContent =
+      "Masukkan nominal pembayaran DP.";
+
+  }
+
+  else if(
+    status === "Pelunasan"
+  ){
+
+    label.textContent =
+      "Nominal Pelunasan";
+
+
+    deskripsi.textContent =
+      "Masukkan nominal pembayaran pelunasan.";
+
+  }
+
+  else if(
+    status === "Lunas"
+  ){
+
+    label.textContent =
+      "Nominal Lunas";
+
+
+    deskripsi.textContent =
+      "Masukkan nominal pembayaran lunas.";
+
+  }
+
+  else{
+
+    label.textContent =
+      "Nominal Pembayaran";
+
+
+    deskripsi.textContent =
+      "Nominal pembayaran sesuai transaksi.";
+
+  }
+
+}
+
+
+/* =========================================================
+   SIMPAN INVOICE
+========================================================= */
+
+function simpanInvoice(
+  event
+){
+
+  event.preventDefault();
+
+
+  const form =
+    document.getElementById(
+      "invoiceForm"
+    );
+
+
+  if(
+    !form.checkValidity()
+  ){
+
+    form.reportValidity();
+
+    return;
+
+  }
+
+
+  const btn =
+    document.getElementById(
+      "btnSimpan"
+    );
+
+
+  const loading =
+    document.getElementById(
+      "loading"
+    );
+
+
+  const data = {
+
+    idOrder:
+      document.getElementById(
+        "idOrder"
+      ).value.trim(),
+
+
+    idAuthor:
+      document.getElementById(
+        "idAuthor"
+      ).value.trim(),
+
+
+    judulBuku:
+      document.getElementById(
+        "judulBuku"
+      ).value.trim(),
+
+
+    namaAuthor:
+      document.getElementById(
+        "namaAuthor"
+      ).value.trim(),
+
+
+    bab:
+      document.getElementById(
+        "bab"
+      ).value.trim(),
+
+
+    marketingInput:
+      document.getElementById(
+        "marketingInput"
+      ).value.trim(),
+
+
+    tanggal:
+      document.getElementById(
+        "tanggal"
+      ).value,
+
+
+    harga:
+      document.getElementById(
+        "harga"
+      ).value,
+
+
+    statusPembayaran:
+      document.getElementById(
+        "statusPembayaran"
+      ).value,
+
+
+    nominal:
+      document.getElementById(
+        "nominal"
+      ).value
+
+  };
+
+
+  /*
+   * =====================================================
+   * VALIDASI
+   * =====================================================
+   */
+
+  if(!data.idOrder){
+
+    alert(
+      "ID Order Buku wajib diisi."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.judulBuku){
+
+    alert(
+      "Silakan cari ID Order Buku terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.idAuthor){
+
+    alert(
+      "ID Author wajib diisi."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.namaAuthor){
+
+    alert(
+      "Silakan cari ID Author terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.marketingInput){
+
+    alert(
+      "Nama Marketing wajib diisi."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.tanggal){
+
+    alert(
+      "Tanggal pembayaran wajib diisi."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    data.harga === "" ||
+    Number(data.harga) < 0
+  ){
+
+    alert(
+      "Harga tidak valid."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.statusPembayaran){
+
+    alert(
+      "Silakan pilih Status Pembayaran."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    data.nominal === "" ||
+    Number(data.nominal) < 0
+  ){
+
+    alert(
+      "Nominal pembayaran tidak valid."
+    );
+
+    return;
+
+  }
+
+
+  if(!gasTersedia()){
+
+    alert(
+      "Google Apps Script tidak tersedia."
+    );
+
+    return;
+
+  }
+
+
+  btn.disabled =
+    true;
+
+
+  btn.textContent =
+    "MENYIMPAN...";
+
+
+  loading.classList.add(
+    "active"
+  );
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(result){
+
+        console.log(
+          "HASIL SIMPAN INVOICE:",
+          result
+        );
+
+
+        btn.disabled =
+          false;
+
+
+        btn.textContent =
+          "SIMPAN INVOICE BUKU";
+
+
+        loading.classList.remove(
+          "active"
+        );
+
+
+        if(
+          result &&
+          result.success
+        ){
+
+          document.getElementById(
+            "nomorInvoice"
+          ).textContent =
+            result.idInvoice ||
+            result.nomorInvoice ||
+            "-";
+
+
+          document.getElementById(
+            "detailInvoice"
+          ).innerHTML =
+
+            "ID Order: <strong>" +
+            escapeHtml(
+              data.idOrder
+            ) +
+            "</strong><br>" +
+
+            "Judul Buku: <strong>" +
+            escapeHtml(
+              data.judulBuku
+            ) +
+            "</strong><br>" +
+
+            "ID Author: <strong>" +
+            escapeHtml(
+              data.idAuthor
+            ) +
+            "</strong><br>" +
+
+            "Author: <strong>" +
+            escapeHtml(
+              data.namaAuthor
+            ) +
+            "</strong><br>" +
+
+            "Bab: <strong>" +
+            escapeHtml(
+              data.bab
+            ) +
+            "</strong><br>" +
+
+            "Marketing: <strong>" +
+            escapeHtml(
+              data.marketingInput
+            ) +
+            "</strong><br>" +
+
+            "Status: <strong>" +
+            escapeHtml(
+              data.statusPembayaran
+            ) +
+            "</strong><br>" +
+
+            "Nominal: <strong>Rp " +
+            formatRupiah(
+              data.nominal
+            ) +
+            "</strong>";
+
+
+          document.getElementById(
+            "popupBerhasil"
+          ).classList.add(
+            "active"
+          );
+
+
+          resetFormInvoice();
+
+        }
+
+        else{
+
+          alert(
+            (
+              result &&
+              result.message
+            ) ||
+            "Gagal menyimpan invoice buku."
+          );
+
+        }
+
+      }
+    )
+
+    .withFailureHandler(
+      function(error){
+
+        btn.disabled =
+          false;
+
+
+        btn.textContent =
+          "SIMPAN INVOICE BUKU";
+
+
+        loading.classList.remove(
+          "active"
+        );
+
+
+        console.error(
+          "ERROR SIMPAN INVOICE:",
+          error
+        );
+
+
+        alert(
+          "Gagal menyimpan invoice buku:\n" +
+          errorMessage(error)
+        );
+
+      }
+    )
+
+    .simpanInvoice(
+      data
+    );
+
+}
+
+
+/* =========================================================
+   RESET FORM
+========================================================= */
+
+function resetFormInvoice(){
+
+  document.getElementById(
+    "invoiceForm"
+  ).reset();
+
+
+  document.getElementById(
+    "judulBuku"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "namaAuthor"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "bab"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "orderStatus"
+  ).className =
+    "status-box";
+
+
+  document.getElementById(
+    "orderStatus"
+  ).textContent =
+    "";
+
+
+  document.getElementById(
+    "authorStatus"
+  ).className =
+    "status-box";
+
+
+  document.getElementById(
+    "authorStatus"
+  ).textContent =
+    "";
+
+
+  setTanggalHariIni();
+
+
+  document.getElementById(
+    "labelNominal"
+  ).textContent =
+    "Nominal Pembayaran";
+
+
+  document.getElementById(
+    "deskripsiNominal"
+  ).textContent =
+    "Nominal pembayaran sesuai transaksi.";
+
+}
+
+
+/* =========================================================
+   FORMAT RUPIAH
+========================================================= */
+
+function formatRupiah(
+  angka
+){
+
+  return new Intl.NumberFormat(
+    "id-ID"
+  ).format(
+    Number(angka) || 0
+  );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+  value
+){
+
+  return String(
+    value == null
+      ? ""
+      : value
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+function errorMessage(
+  error
+){
+
+  if(
+    error &&
+    error.message
+  ){
+
+    return error.message;
+
+  }
+
+
+  return String(
+    error ||
+    "Error tidak diketahui"
+  );
+
+}
+
+
+/* =========================================================
+   TUTUP POPUP
+========================================================= */
+
+function tutupPopup(){
+
+  document.getElementById(
+    "popupBerhasil"
+  ).classList.remove(
+    "active"
+  );
+
+}
+
+
+/* =========================================================
+   KEMBALI
+========================================================= */
+
+function kembali(){
+
+  window.location.href =
+    "buku.html";
+
+}
+
+
+/* =========================================================
+   ENTER UNTUK CARI ORDER
+========================================================= */
+
+document.getElementById(
+  "idOrder"
+).addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key === "Enter"
+    ){
+
+      event.preventDefault();
+
+      cariOrder();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   ENTER UNTUK CARI AUTHOR
+========================================================= */
+
+document.getElementById(
+  "idAuthor"
+).addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key === "Enter"
+    ){
+
+      event.preventDefault();
+
+      cariAuthor();
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+
+</html>

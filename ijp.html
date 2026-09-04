@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Pencatatan IJP</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f7fa;
+  color:#183b56;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  background:linear-gradient(135deg,#183b56,#2f6f95);
+  color:white;
+  padding:22px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  max-width:1100px;
+  margin:45px auto;
+  padding:0 25px;
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back{
+  background:#718096;
+  color:white;
+  border:0;
+  padding:12px 22px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-bottom:30px;
+  font-weight:bold;
+}
+
+.back:hover{
+  background:#5f6d7d;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.title{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.title h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.title p{
+  color:#718096;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:35px 20px;
+  text-align:center;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  transition:.25s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 14px 35px rgba(0,0,0,.12);
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+.icon{
+  font-size:48px;
+  margin-bottom:18px;
+}
+
+
+/* =========================
+   CARD TEXT
+========================= */
+
+.card h2{
+  font-size:19px;
+  margin-bottom:12px;
+}
+
+.card p{
+  color:#718096;
+  font-size:13px;
+  line-height:1.6;
+  min-height:65px;
+  margin-bottom:20px;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn{
+  border:0;
+  padding:12px 22px;
+  border-radius:8px;
+  background:#183b56;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn:hover{
+  background:#2f6f95;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+
+@media(max-width:600px){
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .title h1{
+    font-size:26px;
+  }
+
+  .container{
+    margin:30px auto;
+  }
+
+}
+
+</style>
+
+  <script src="api.js"></script>
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="header">
+
+  <div class="logo">
+    ADMIN MANAGEMENT
+  </div>
+
+  <div>
+    IJP
+  </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+<!-- ==================================================
+     BACK
+================================================== -->
+
+<button
+  type="button"
+  class="back"
+  onclick="kembali()">
+
+  ← Kembali
+
+</button>
+
+
+
+<!-- ==================================================
+     TITLE
+================================================== -->
+
+<div class="title">
+
+  <h1>
+    📢 MANAJEMEN IJP
+  </h1>
+
+  <p>
+    Pilih layanan IJP yang ingin Anda kelola
+  </p>
+
+</div>
+
+
+
+<!-- ==================================================
+     CARDS
+================================================== -->
+
+<div class="cards">
+
+
+<!-- ==================================================
+     ORDER IJP
+================================================== -->
+
+<div class="card">
+
+  <div class="icon">
+    📝
+  </div>
+
+  <h2>
+    ORDER IJP
+  </h2>
+
+  <p>
+    Input dan kelola data
+    pemesanan layanan IJP.
+  </p>
+
+  <button
+    type="button"
+    class="btn"
+    onclick="bukaOrderIJP()">
+
+    BUKA
+
+  </button>
+
+</div>
+
+
+
+<!-- ==================================================
+     INVOICE IJP
+================================================== -->
+
+<div class="card">
+
+  <div class="icon">
+    🧾
+  </div>
+
+  <h2>
+    INVOICE IJP
+  </h2>
+
+  <p>
+    Kelola invoice IJP,
+    harga, DP, pelunasan dan
+    status pembayaran.
+  </p>
+
+  <button
+    type="button"
+    class="btn"
+    onclick="bukaInvoiceIJP()">
+
+    BUKA
+
+  </button>
+
+</div>
+
+
+
+<!-- ==================================================
+     HASIL / PROSES IJP
+================================================== -->
+
+<div class="card">
+
+  <div class="icon">
+    📢
+  </div>
+
+  <h2>
+    HASIL IJP
+  </h2>
+
+  <p>
+    Kelola proses pengerjaan IJP,
+    status publikasi dan arsip
+    hasil layanan IJP.
+  </p>
+
+  <button
+    type="button"
+    class="btn"
+    onclick="bukaHasilIJP()">
+
+    BUKA
+
+  </button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+/* ==================================================
+   ORDER IJP
+================================================== */
+
+function bukaOrderIJP(){
+
+  window.location.href =
+    "orderijp.html";
+
+}
+
+
+/* ==================================================
+   INVOICE IJP
+================================================== */
+
+function bukaInvoiceIJP(){
+
+  window.location.href =
+    "invoiceijp.html";
+
+}
+
+
+/* ==================================================
+   HASIL / PROSES IJP
+================================================== */
+
+function bukaHasilIJP(){
+
+  window.location.href =
+    "hasilijp.html";
+
+}
+
+
+/* ==================================================
+   KEMBALI
+================================================== */
+
+function kembali(){
+
+  window.location.href =
+    "order.html";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

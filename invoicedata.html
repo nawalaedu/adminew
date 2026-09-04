@@ -1,0 +1,2376 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Invoice Olah Data</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fa;
+  color:#183b56;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  background:linear-gradient(135deg,#183b56,#2f6f95);
+  color:white;
+  padding:22px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 3px 15px rgba(0,0,0,.12);
+}
+
+.logo{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.header-right{
+  font-size:14px;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  max-width:900px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back{
+  background:#718096;
+  color:white;
+  border:0;
+  padding:12px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-bottom:20px;
+  font-weight:bold;
+}
+
+.back:hover{
+  background:#4a5568;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.form-card{
+  background:white;
+  padding:35px;
+  border-radius:18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.form-title{
+  margin-bottom:30px;
+}
+
+.form-title h1{
+  margin:0 0 8px;
+}
+
+.form-title p{
+  color:#718096;
+  line-height:1.5;
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info-box{
+  background:#f0f7fb;
+  border-left:4px solid #2f6f95;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:25px;
+  font-size:14px;
+  line-height:1.6;
+}
+
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.section-title{
+  margin:28px 0 18px;
+  padding-bottom:9px;
+  border-bottom:1px solid #e2e8f0;
+  font-size:16px;
+  font-weight:bold;
+  color:#183b56;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.required{
+  color:#e53e3e;
+}
+
+input,
+select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d6dee6;
+  border-radius:9px;
+  font-size:14px;
+  font-family:Arial,sans-serif;
+  background:white;
+}
+
+input:focus,
+select:focus{
+  outline:none;
+  border-color:#2f6f95;
+  box-shadow:0 0 0 2px rgba(47,111,149,.08);
+}
+
+.readonly{
+  background:#f1f5f9;
+  color:#4a5568;
+  cursor:not-allowed;
+}
+
+small{
+  display:block;
+  margin-top:7px;
+  color:#718096;
+  line-height:1.5;
+  font-size:12px;
+}
+
+
+/* =========================
+   INPUT + BUTTON
+========================= */
+
+.input-action{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:start;
+}
+
+.btn-cari{
+  border:0;
+  padding:13px 18px;
+  border-radius:9px;
+  background:#2f6f95;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
+  white-space:nowrap;
+}
+
+.btn-cari:hover{
+  background:#183b56;
+}
+
+.btn-cari:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}
+
+
+/* =========================
+   STATUS ORDER
+========================= */
+
+.order-status{
+  display:none;
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:8px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.order-status.active{
+  display:block;
+}
+
+.order-status.loading{
+  background:#f0f7fb;
+  color:#2f6f95;
+}
+
+.order-status.success{
+  background:#f0fff4;
+  color:#276749;
+  border:1px solid #c6f6d5;
+}
+
+.order-status.error{
+  background:#fff5f5;
+  color:#c53030;
+  border:1px solid #fed7d7;
+}
+
+
+/* =========================
+   DATA ORDER
+========================= */
+
+.data-box{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:25px;
+}
+
+.data-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.data-item{
+  background:white;
+  border:1px solid #edf2f7;
+  border-radius:8px;
+  padding:15px;
+}
+
+.data-label{
+  font-size:11px;
+  color:#718096;
+  margin-bottom:7px;
+}
+
+.data-value{
+  font-size:15px;
+  font-weight:bold;
+  color:#183b56;
+  line-height:1.5;
+  word-break:break-word;
+}
+
+
+/* =========================
+   HARGA
+========================= */
+
+.harga-box{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:25px;
+}
+
+.harga-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:15px;
+}
+
+.harga-item{
+  background:white;
+  border:1px solid #edf2f7;
+  border-radius:8px;
+  padding:15px;
+}
+
+.harga-item label{
+  font-size:12px;
+}
+
+.total-box{
+  margin-top:18px;
+  background:#f0f7fb;
+  border:2px solid #2f6f95;
+  border-radius:10px;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.total-label{
+  font-size:14px;
+  font-weight:bold;
+}
+
+.total-value{
+  font-size:22px;
+  font-weight:bold;
+  color:#183b56;
+}
+
+
+/* =========================
+   BUTTON SIMPAN
+========================= */
+
+.btn-save{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:9px;
+  background:#183b56;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
+  margin-top:10px;
+}
+
+.btn-save:hover{
+  background:#2f6f95;
+}
+
+.btn-save:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  display:none;
+  text-align:center;
+  margin-top:15px;
+  color:#718096;
+  font-size:13px;
+}
+
+.loading.active{
+  display:block;
+}
+
+
+/* =========================
+   POPUP
+========================= */
+
+.popup-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.popup-overlay.active{
+  display:flex;
+}
+
+.popup{
+  width:90%;
+  max-width:500px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:white;
+  border-radius:18px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,.2);
+  animation:popupIn .25s ease;
+}
+
+@keyframes popupIn{
+
+  from{
+    opacity:0;
+    transform:scale(.9);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+
+}
+
+.popup-icon{
+  font-size:50px;
+  margin-bottom:15px;
+}
+
+.popup h2{
+  margin:0 0 10px;
+}
+
+.popup p{
+  color:#718096;
+  line-height:1.5;
+}
+
+.order-number{
+  background:#f0f7fb;
+  border:2px dashed #2f6f95;
+  border-radius:12px;
+  padding:18px;
+  margin:20px 0;
+}
+
+.order-number small{
+  margin:0 0 6px;
+}
+
+.order-number strong{
+  display:block;
+  font-size:24px;
+  color:#183b56;
+  word-break:break-word;
+}
+
+.invoice-detail{
+  background:#f8fafc;
+  border-radius:10px;
+  padding:15px;
+  text-align:left;
+  margin:20px 0;
+  font-size:13px;
+  line-height:1.8;
+}
+
+.btn-popup{
+  width:100%;
+  border:0;
+  padding:13px;
+  border-radius:9px;
+  background:#183b56;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-popup:hover{
+  background:#2f6f95;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:650px){
+
+  .header{
+    padding:20px;
+  }
+
+  .logo{
+    font-size:17px;
+  }
+
+  .header-right{
+    font-size:12px;
+  }
+
+  .container{
+    margin:25px auto;
+    padding:0 15px;
+  }
+
+  .form-card{
+    padding:25px 20px;
+  }
+
+  .data-row{
+    grid-template-columns:1fr;
+  }
+
+  .harga-row{
+    grid-template-columns:1fr;
+  }
+
+  .total-box{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+
+  .input-action{
+    grid-template-columns:1fr;
+  }
+
+  .btn-cari{
+    width:100%;
+  }
+
+}
+
+</style>
+
+<script src="api.js"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="header">
+
+  <div class="logo">
+    ADMIN MANAGEMENT
+  </div>
+
+  <div class="header-right">
+    INVOICE OLAH DATA
+  </div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ==================================================
+     BACK
+================================================== -->
+
+<button
+type="button"
+class="back"
+onclick="kembali()">
+
+← Kembali ke Olah Data
+
+</button>
+
+
+<div class="form-card">
+
+
+<!-- ==================================================
+     TITLE
+================================================== -->
+
+<div class="form-title">
+
+  <h1>
+    🧾 Form Invoice Olah Data
+  </h1>
+
+  <p>
+    Catat transaksi pembayaran berdasarkan
+    ID Order Olah Data yang telah dibuat.
+  </p>
+
+</div>
+
+
+<!-- ==================================================
+     INFO
+================================================== -->
+
+<div class="info-box">
+
+  <strong>📌 Informasi Invoice</strong><br>
+
+  ID Order Data sekarang <strong>diketik langsung</strong>
+  oleh admin. Tidak menggunakan dropdown.
+
+  <br><br>
+
+  Setelah ID Order dimasukkan dan tombol
+  <strong>CARI DATA ORDER</strong> ditekan,
+  sistem akan mengambil <strong>Nama Pemesan</strong>
+  dan <strong>Judul Olah Data</strong> berdasarkan
+  ID Order tersebut.
+
+  <br><br>
+
+  <strong>Marketing Input</strong> juga diketik langsung
+  oleh admin dan tidak menggunakan dropdown.
+
+  <br><br>
+
+  Harga transaksi terdiri dari
+  <strong>Harga Awal + Extra Cost − Promo</strong>.
+
+</div>
+
+
+<form
+id="invoiceForm"
+onsubmit="simpanInvoice(event)">
+
+
+<!-- ==================================================
+     DATA ORDER
+================================================== -->
+
+<div class="section-title">
+1. DATA ORDER
+</div>
+
+
+<div class="form-group">
+
+<label>
+ID Order Data <span class="required">*</span>
+</label>
+
+
+<div class="input-action">
+
+  <input
+  type="text"
+  id="idOrder"
+  required
+  autocomplete="off"
+  placeholder="Ketik ID Order Data"
+  onkeydown="handleEnterOrder(event)"
+  onblur="ambilDetailOrder()">
+
+
+  <button
+  type="button"
+  id="btnCariOrder"
+  class="btn-cari"
+  onclick="ambilDetailOrder()">
+
+  🔍 CARI DATA ORDER
+
+  </button>
+
+</div>
+
+
+<small>
+Ketik ID Order Data secara manual, kemudian klik
+<strong>CARI DATA ORDER</strong>.
+</small>
+
+
+<div
+id="orderStatus"
+class="order-status">
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     INFORMASI ORDER
+================================================== -->
+
+<div class="data-box">
+
+<div class="data-row">
+
+
+<div class="data-item">
+
+<div class="data-label">
+NAMA PEMESAN
+</div>
+
+<div
+id="namaPemesan"
+class="data-value">
+
+-
+
+</div>
+
+</div>
+
+
+<div class="data-item">
+
+<div class="data-label">
+JUDUL / PEKERJAAN OLAH DATA
+</div>
+
+<div
+id="judulOlahData"
+class="data-value">
+
+-
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     PEMBAYARAN
+================================================== -->
+
+<div class="section-title">
+2. DATA PEMBAYARAN
+</div>
+
+
+<!-- ==================================================
+     MARKETING
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Marketing Input <span class="required">*</span>
+</label>
+
+
+<input
+type="text"
+id="marketingInput"
+required
+autocomplete="off"
+placeholder="Ketik nama marketing">
+
+
+<small>
+Ketik nama marketing yang melakukan pencatatan
+transaksi.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     TANGGAL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Tanggal Pembayaran <span class="required">*</span>
+</label>
+
+<input
+type="date"
+id="tanggal"
+required>
+
+</div>
+
+
+<!-- ==================================================
+     HARGA
+================================================== -->
+
+<div class="section-title">
+3. RINCIAN HARGA
+</div>
+
+
+<div class="harga-box">
+
+
+<div class="harga-row">
+
+
+<!-- HARGA AWAL -->
+
+<div class="harga-item">
+
+<label>
+Harga Awal <span class="required">*</span>
+</label>
+
+<input
+type="number"
+id="hargaAwal"
+min="0"
+placeholder="0"
+required
+oninput="hitungTotal()">
+
+<small>
+Harga dasar jasa olah data.
+</small>
+
+</div>
+
+
+<!-- EXTRA COST -->
+
+<div class="harga-item">
+
+<label>
+Extra Cost
+</label>
+
+<input
+type="number"
+id="extraCost"
+min="0"
+placeholder="0"
+value="0"
+oninput="hitungTotal()">
+
+<small>
+Biaya tambahan jika ada.
+</small>
+
+</div>
+
+
+<!-- PROMO -->
+
+<div class="harga-item">
+
+<label>
+Promo / Potongan
+</label>
+
+<input
+type="number"
+id="promo"
+min="0"
+placeholder="0"
+value="0"
+oninput="hitungTotal()">
+
+<small>
+Potongan harga jika ada.
+</small>
+
+</div>
+
+
+</div>
+
+
+<!-- TOTAL -->
+
+<div class="total-box">
+
+<div class="total-label">
+TOTAL HARGA
+</div>
+
+<div
+id="totalHarga"
+class="total-value">
+
+Rp 0
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- ==================================================
+     STATUS
+================================================== -->
+
+<div class="section-title">
+4. PEMBAYARAN
+</div>
+
+
+<div class="form-group">
+
+<label>
+Status Pembayaran <span class="required">*</span>
+</label>
+
+<select
+id="statusPembayaran"
+required
+onchange="ubahStatusPembayaran()">
+
+<option value="">
+Pilih status pembayaran
+</option>
+
+<option value="DP">
+DP
+</option>
+
+<option value="Pelunasan">
+Pelunasan
+</option>
+
+<option value="Lunas">
+Lunas
+</option>
+
+</select>
+
+</div>
+
+
+<!-- ==================================================
+     NOMINAL
+================================================== -->
+
+<div class="form-group">
+
+<label id="labelNominal">
+
+Nominal Pembayaran
+<span class="required">*</span>
+
+</label>
+
+<input
+type="number"
+id="nominal"
+min="0"
+placeholder="Masukkan nominal pembayaran"
+required>
+
+<small id="deskripsiNominal">
+Masukkan nominal pembayaran sesuai transaksi.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     SIMPAN
+================================================== -->
+
+<button
+type="submit"
+id="btnSimpan"
+class="btn-save">
+
+💾 SIMPAN TRANSAKSI OLAH DATA
+
+</button>
+
+
+<div
+id="loading"
+class="loading">
+
+⏳ Menyimpan transaksi olah data...
+
+</div>
+
+
+</form>
+
+
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     POPUP BERHASIL
+================================================== -->
+
+<div
+id="popupBerhasil"
+class="popup-overlay">
+
+
+<div class="popup">
+
+
+<div class="popup-icon">
+✅
+</div>
+
+
+<h2>
+Transaksi Berhasil Disimpan
+</h2>
+
+
+<p>
+Data pembayaran olah data telah berhasil dicatat.
+</p>
+
+
+<!-- ID ORDER -->
+
+<div class="order-number">
+
+<small>
+ID ORDER
+</small>
+
+<strong id="popupIdOrder">
+-
+</strong>
+
+</div>
+
+
+<!-- DETAIL -->
+
+<div
+id="detailInvoice"
+class="invoice-detail">
+
+</div>
+
+
+<button
+type="button"
+class="btn-popup"
+onclick="tutupPopup()">
+
+SELESAI
+
+</button>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* ==================================================
+   INITIAL LOAD
+================================================== */
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+  const today =
+    new Date()
+    .toISOString()
+    .split("T")[0];
+
+
+  document.getElementById(
+    "tanggal"
+  ).value =
+    today;
+
+
+  /*
+   * TIDAK ADA LAGI
+   *
+   * ambilDaftarOrderData()
+   *
+   * karena ID ORDER sekarang diketik manual.
+   */
+
+});
+
+
+/* ==================================================
+   ENTER PADA ID ORDER
+================================================== */
+
+function handleEnterOrder(event){
+
+  if(event.key === "Enter"){
+
+    event.preventDefault();
+
+    ambilDetailOrder();
+
+  }
+
+}
+
+
+/* ==================================================
+   RESET DETAIL ORDER
+================================================== */
+
+function resetDetailOrder(){
+
+  document.getElementById(
+    "namaPemesan"
+  ).textContent =
+    "-";
+
+
+  document.getElementById(
+    "judulOlahData"
+  ).textContent =
+    "-";
+
+}
+
+
+/* ==================================================
+   STATUS PENCARIAN ORDER
+================================================== */
+
+function setOrderStatus(
+  message,
+  type
+){
+
+  const status =
+    document.getElementById(
+      "orderStatus"
+    );
+
+
+  status.textContent =
+    message;
+
+
+  status.className =
+    "order-status active " +
+    type;
+
+}
+
+
+/* ==================================================
+   AMBIL DETAIL ORDER
+================================================== */
+
+function ambilDetailOrder(){
+
+  const input =
+    document.getElementById(
+      "idOrder"
+    );
+
+
+  const idOrder =
+    input.value.trim();
+
+
+  resetDetailOrder();
+
+
+  /*
+   * Jika kosong
+   */
+
+  if(!idOrder){
+
+    setOrderStatus(
+      "",
+      ""
+    );
+
+    document.getElementById(
+      "orderStatus"
+    ).className =
+      "order-status";
+
+    return;
+
+  }
+
+
+  /*
+   * Cek Google Apps Script
+   */
+
+  if(
+    typeof google === "undefined" ||
+    !google.script ||
+    !google.script.run
+  ){
+
+    setOrderStatus(
+      "Google Apps Script tidak tersedia.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Tombol cari
+   */
+
+  const btnCari =
+    document.getElementById(
+      "btnCariOrder"
+    );
+
+
+  btnCari.disabled =
+    true;
+
+
+  btnCari.textContent =
+    "⏳ MENCARI...";
+
+
+  setOrderStatus(
+    "Sedang mengambil data Order...",
+    "loading"
+  );
+
+
+  /*
+   * PANGGIL BACKEND
+   */
+
+  google.script.run
+
+  .withSuccessHandler(
+    function(data){
+
+      btnCari.disabled =
+        false;
+
+
+      btnCari.textContent =
+        "🔍 CARI DATA ORDER";
+
+
+      console.log(
+        "DETAIL ORDER DATA:",
+        data
+      );
+
+
+      /*
+       * DATA TIDAK DITEMUKAN
+       */
+
+      if(!data){
+
+        resetDetailOrder();
+
+
+        setOrderStatus(
+          "ID Order tidak ditemukan.",
+          "error"
+        );
+
+
+        return;
+
+      }
+
+
+      /*
+       * Backend bisa mengembalikan
+       * success:false
+       */
+
+      if(
+        data.success === false
+      ){
+
+        resetDetailOrder();
+
+
+        setOrderStatus(
+          data.message ||
+          "Data Order tidak ditemukan.",
+          "error"
+        );
+
+
+        return;
+
+      }
+
+
+      /*
+       * Jika backend membungkus data
+       * di dalam data
+       */
+
+      let order =
+        data;
+
+
+      if(
+        data.data &&
+        typeof data.data === "object" &&
+        !Array.isArray(data.data)
+      ){
+
+        order =
+          data.data;
+
+      }
+
+
+      /*
+       * =========================
+       * NAMA PEMESAN
+       * =========================
+       */
+
+      const nama =
+        order.nama ||
+        order.namaPemesan ||
+        order.nama_pemesan ||
+        order["Nama Pemesan"] ||
+        order["Nama"] ||
+        "";
+
+
+      /*
+       * =========================
+       * JUDUL OLAH DATA
+       * =========================
+       */
+
+      const judulOlahData =
+        order.judulOlahData ||
+        order.judul_olah_data ||
+        order.judul ||
+        order.namaLayanan ||
+        order.layanan ||
+        order.pekerjaan ||
+        order["Judul Olah Data"] ||
+        order["Judul"] ||
+        "";
+
+
+      /*
+       * =========================
+       * VALIDASI DATA
+       * =========================
+       */
+
+      if(!nama){
+
+        resetDetailOrder();
+
+
+        setOrderStatus(
+          "ID Order ditemukan, tetapi Nama Pemesan tidak tersedia.",
+          "error"
+        );
+
+
+        return;
+
+      }
+
+
+      if(!judulOlahData){
+
+        document.getElementById(
+          "namaPemesan"
+        ).textContent =
+          nama;
+
+
+        document.getElementById(
+          "judulOlahData"
+        ).textContent =
+          "-";
+
+
+        setOrderStatus(
+          "ID Order ditemukan, tetapi Judul Olah Data tidak tersedia.",
+          "error"
+        );
+
+
+        return;
+
+      }
+
+
+      /*
+       * =========================
+       * TAMPILKAN DATA
+       * =========================
+       */
+
+      document.getElementById(
+        "namaPemesan"
+      ).textContent =
+        nama;
+
+
+      document.getElementById(
+        "judulOlahData"
+      ).textContent =
+        judulOlahData;
+
+
+      /*
+       * =========================
+       * BERHASIL
+       * =========================
+       */
+
+      setOrderStatus(
+        "✓ Data Order berhasil ditemukan.",
+        "success"
+      );
+
+    }
+  )
+
+  .withFailureHandler(
+    function(error){
+
+      btnCari.disabled =
+        false;
+
+
+      btnCari.textContent =
+        "🔍 CARI DATA ORDER";
+
+
+      console.error(
+        "ERROR DETAIL ORDER DATA:",
+        error
+      );
+
+
+      resetDetailOrder();
+
+
+      setOrderStatus(
+        "Gagal mengambil data Order: " +
+        (
+          error &&
+          error.message
+            ? error.message
+            : error
+        ),
+        "error"
+      );
+
+    }
+  )
+
+  .ambilOrderDataUntukInvoice(
+    idOrder
+  );
+
+}
+
+
+/* ==================================================
+   HITUNG TOTAL HARGA
+================================================== */
+
+function hitungTotal(){
+
+  const hargaAwal =
+    Number(
+      document.getElementById(
+        "hargaAwal"
+      ).value
+    ) || 0;
+
+
+  const extraCost =
+    Number(
+      document.getElementById(
+        "extraCost"
+      ).value
+    ) || 0;
+
+
+  const promo =
+    Number(
+      document.getElementById(
+        "promo"
+      ).value
+    ) || 0;
+
+
+  /*
+   * RUMUS:
+   *
+   * TOTAL =
+   * HARGA AWAL
+   * +
+   * EXTRA COST
+   * -
+   * PROMO
+   */
+
+  let total =
+    hargaAwal +
+    extraCost -
+    promo;
+
+
+  /*
+   * TOTAL TIDAK BOLEH NEGATIF
+   */
+
+  if(total < 0){
+
+    total = 0;
+
+  }
+
+
+  document.getElementById(
+    "totalHarga"
+  ).textContent =
+
+    "Rp " +
+    formatRupiah(total);
+
+}
+
+
+/* ==================================================
+   STATUS PEMBAYARAN
+================================================== */
+
+function ubahStatusPembayaran(){
+
+  const status =
+    document.getElementById(
+      "statusPembayaran"
+    ).value;
+
+
+  const label =
+    document.getElementById(
+      "labelNominal"
+    );
+
+
+  const deskripsi =
+    document.getElementById(
+      "deskripsiNominal"
+    );
+
+
+  if(status === "DP"){
+
+    label.innerHTML =
+      "Nominal DP <span class='required'>*</span>";
+
+
+    deskripsi.textContent =
+      "Masukkan nominal pembayaran DP.";
+
+  }
+
+  else if(status === "Pelunasan"){
+
+    label.innerHTML =
+      "Nominal Pelunasan <span class='required'>*</span>";
+
+
+    deskripsi.textContent =
+      "Masukkan nominal pembayaran pelunasan.";
+
+  }
+
+  else if(status === "Lunas"){
+
+    label.innerHTML =
+      "Nominal Lunas <span class='required'>*</span>";
+
+
+    deskripsi.textContent =
+      "Masukkan nominal pembayaran lunas.";
+
+  }
+
+  else{
+
+    label.innerHTML =
+      "Nominal Pembayaran <span class='required'>*</span>";
+
+
+    deskripsi.textContent =
+      "Masukkan nominal pembayaran sesuai transaksi.";
+
+  }
+
+}
+
+
+/* ==================================================
+   SIMPAN INVOICE
+================================================== */
+
+function simpanInvoice(event){
+
+  event.preventDefault();
+
+
+  const form =
+    document.getElementById(
+      "invoiceForm"
+    );
+
+
+  /*
+   * VALIDASI HTML
+   */
+
+  if(!form.checkValidity()){
+
+    form.reportValidity();
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     DATA ORDER
+  ================================================== */
+
+  const idOrder =
+    document.getElementById(
+      "idOrder"
+    ).value.trim();
+
+
+  const nama =
+    document.getElementById(
+      "namaPemesan"
+    ).textContent.trim();
+
+
+  const judulOlahData =
+    document.getElementById(
+      "judulOlahData"
+    ).textContent.trim();
+
+
+  /* ==================================================
+     DATA PEMBAYARAN
+  ================================================== */
+
+  const marketingInput =
+    document.getElementById(
+      "marketingInput"
+    ).value.trim();
+
+
+  const tanggal =
+    document.getElementById(
+      "tanggal"
+    ).value;
+
+
+  const hargaAwal =
+    document.getElementById(
+      "hargaAwal"
+    ).value;
+
+
+  const extraCost =
+    document.getElementById(
+      "extraCost"
+    ).value || 0;
+
+
+  const promo =
+    document.getElementById(
+      "promo"
+    ).value || 0;
+
+
+  const statusPembayaran =
+    document.getElementById(
+      "statusPembayaran"
+    ).value;
+
+
+  const nominal =
+    document.getElementById(
+      "nominal"
+    ).value;
+
+
+  /* ==================================================
+     HITUNG TOTAL
+  ================================================== */
+
+  let totalHarga =
+
+    (
+      Number(hargaAwal) || 0
+    )
+
+    +
+
+    (
+      Number(extraCost) || 0
+    )
+
+    -
+
+    (
+      Number(promo) || 0
+    );
+
+
+  if(totalHarga < 0){
+
+    totalHarga = 0;
+
+  }
+
+
+  /* ==================================================
+     VALIDASI
+  ================================================== */
+
+  if(!idOrder){
+
+    alert(
+      "Silakan ketik ID Order Data."
+    );
+
+    document.getElementById(
+      "idOrder"
+    ).focus();
+
+    return;
+
+  }
+
+
+  /*
+   * Pastikan data order sudah dicari.
+   */
+
+  if(
+    nama === "-" ||
+    nama === ""
+  ){
+
+    alert(
+      "Data Order belum ditemukan. Silakan klik CARI DATA ORDER terlebih dahulu."
+    );
+
+    document.getElementById(
+      "idOrder"
+    ).focus();
+
+    return;
+
+  }
+
+
+  if(
+    judulOlahData === "-" ||
+    judulOlahData === ""
+  ){
+
+    alert(
+      "Judul olah data belum tersedia. Silakan cari kembali data Order."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * MARKETING SEKARANG TEXT INPUT
+   */
+
+  if(!marketingInput){
+
+    alert(
+      "Silakan ketik nama Marketing Input."
+    );
+
+    document.getElementById(
+      "marketingInput"
+    ).focus();
+
+    return;
+
+  }
+
+
+  if(
+    hargaAwal === "" ||
+    Number(hargaAwal) < 0
+  ){
+
+    alert(
+      "Harga awal belum diisi dengan benar."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    Number(extraCost) < 0
+  ){
+
+    alert(
+      "Extra Cost tidak boleh kurang dari 0."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    Number(promo) < 0
+  ){
+
+    alert(
+      "Promo tidak boleh kurang dari 0."
+    );
+
+    return;
+
+  }
+
+
+  if(totalHarga < 0){
+
+    alert(
+      "Total harga tidak boleh negatif."
+    );
+
+    return;
+
+  }
+
+
+  if(!statusPembayaran){
+
+    alert(
+      "Silakan pilih Status Pembayaran."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    nominal === "" ||
+    Number(nominal) < 0
+  ){
+
+    alert(
+      "Nominal pembayaran belum diisi dengan benar."
+    );
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     DATA YANG DIKIRIM KE CODE.GS
+  ================================================== */
+
+  const data = {
+
+    idOrder:
+      idOrder,
+
+    nama:
+      nama,
+
+    judulOlahData:
+      judulOlahData,
+
+    marketingInput:
+      marketingInput,
+
+    tanggal:
+      tanggal,
+
+    hargaAwal:
+      hargaAwal,
+
+    extraCost:
+      extraCost,
+
+    promo:
+      promo,
+
+    totalHarga:
+      totalHarga,
+
+    statusPembayaran:
+      statusPembayaran,
+
+    nominal:
+      nominal
+
+  };
+
+
+  console.log(
+    "DATA TRANSAKSI OLAH DATA:",
+    data
+  );
+
+
+  /* ==================================================
+     LOADING
+  ================================================== */
+
+  const btn =
+    document.getElementById(
+      "btnSimpan"
+    );
+
+
+  const loading =
+    document.getElementById(
+      "loading"
+    );
+
+
+  btn.disabled =
+    true;
+
+
+  btn.textContent =
+    "MENYIMPAN...";
+
+
+  loading.classList.add(
+    "active"
+  );
+
+
+  /* ==================================================
+     GOOGLE APPS SCRIPT
+  ================================================== */
+
+  if(
+    typeof google !== "undefined" &&
+    google.script &&
+    google.script.run
+  ){
+
+    google.script.run
+
+    .withSuccessHandler(
+      function(result){
+
+        btn.disabled =
+          false;
+
+
+        btn.textContent =
+          "💾 SIMPAN TRANSAKSI OLAH DATA";
+
+
+        loading.classList.remove(
+          "active"
+        );
+
+
+        console.log(
+          "HASIL SIMPAN:",
+          result
+        );
+
+
+        if(
+          result &&
+          result.success
+        ){
+
+          /*
+           * TAMPILKAN POPUP
+           */
+
+          tampilkanPopupInvoice(
+            data
+          );
+
+
+          /*
+           * RESET FORM
+           */
+
+          document.getElementById(
+            "invoiceForm"
+          ).reset();
+
+
+          /*
+           * RESET DETAIL ORDER
+           */
+
+          resetDetailOrder();
+
+
+          /*
+           * RESET STATUS ORDER
+           */
+
+          document.getElementById(
+            "orderStatus"
+          ).className =
+            "order-status";
+
+
+          document.getElementById(
+            "orderStatus"
+          ).textContent =
+            "";
+
+
+          /*
+           * TANGGAL KEMBALI HARI INI
+           */
+
+          document.getElementById(
+            "tanggal"
+          ).value =
+
+            new Date()
+            .toISOString()
+            .split("T")[0];
+
+
+          /*
+           * TOTAL KEMBALI 0
+           */
+
+          document.getElementById(
+            "totalHarga"
+          ).textContent =
+            "Rp 0";
+
+
+          /*
+           * RESET LABEL NOMINAL
+           */
+
+          ubahStatusPembayaran();
+
+        }
+
+        else{
+
+          alert(
+
+            (
+              result &&
+              result.message
+            )
+
+            ||
+
+            "Gagal menyimpan transaksi olah data."
+
+          );
+
+        }
+
+      }
+    )
+
+    .withFailureHandler(
+      function(error){
+
+        btn.disabled =
+          false;
+
+
+        btn.textContent =
+          "💾 SIMPAN TRANSAKSI OLAH DATA";
+
+
+        loading.classList.remove(
+          "active"
+        );
+
+
+        console.error(
+          "ERROR SIMPAN TRANSAKSI:",
+          error
+        );
+
+
+        alert(
+
+          "Gagal menyimpan transaksi olah data:\n" +
+
+          (
+            error &&
+            error.message
+              ? error.message
+              : error
+          )
+
+        );
+
+      }
+    )
+
+    .simpanInvoiceOlahData(
+      data
+    );
+
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     MODE PREVIEW
+     Jika google.script.run tidak tersedia
+  ================================================== */
+
+  console.log(
+    "MODE PREVIEW:",
+    data
+  );
+
+
+  btn.disabled =
+    false;
+
+
+  btn.textContent =
+    "💾 SIMPAN TRANSAKSI OLAH DATA";
+
+
+  loading.classList.remove(
+    "active"
+  );
+
+
+  tampilkanPopupInvoice(
+    data
+  );
+
+}
+
+
+/* ==================================================
+   POPUP TRANSAKSI
+================================================== */
+
+function tampilkanPopupInvoice(
+  data
+){
+
+  /*
+   * ID ORDER
+   */
+
+  document.getElementById(
+    "popupIdOrder"
+  ).textContent =
+    data.idOrder;
+
+
+  /*
+   * DETAIL TRANSAKSI
+   */
+
+  document.getElementById(
+    "detailInvoice"
+  ).innerHTML =
+
+    "Nama Pemesan: <strong>" +
+    escapeHtml(data.nama) +
+    "</strong><br>" +
+
+    "Judul Olah Data: <strong>" +
+    escapeHtml(data.judulOlahData) +
+    "</strong><br>" +
+
+    "Marketing: <strong>" +
+    escapeHtml(data.marketingInput) +
+    "</strong><br>" +
+
+    "Tanggal Pembayaran: <strong>" +
+    escapeHtml(data.tanggal) +
+    "</strong><br>" +
+
+    "Harga Awal: <strong>Rp " +
+    formatRupiah(data.hargaAwal) +
+    "</strong><br>" +
+
+    "Extra Cost: <strong>Rp " +
+    formatRupiah(data.extraCost) +
+    "</strong><br>" +
+
+    "Promo: <strong>Rp " +
+    formatRupiah(data.promo) +
+    "</strong><br>" +
+
+    "<hr>" +
+
+    "Total Harga: <strong>Rp " +
+    formatRupiah(data.totalHarga) +
+    "</strong><br>" +
+
+    "Status Pembayaran: <strong>" +
+    escapeHtml(data.statusPembayaran) +
+    "</strong><br>" +
+
+    "Nominal Pembayaran: <strong>Rp " +
+    formatRupiah(data.nominal) +
+    "</strong>";
+
+
+  /*
+   * BUKA POPUP
+   */
+
+  document.getElementById(
+    "popupBerhasil"
+  ).classList.add(
+    "active"
+  );
+
+}
+
+
+/* ==================================================
+   FORMAT RUPIAH
+================================================== */
+
+function formatRupiah(angka){
+
+  return new Intl.NumberFormat(
+    "id-ID"
+  ).format(
+    Number(angka) || 0
+  );
+
+}
+
+
+/* ==================================================
+   ESCAPE HTML
+================================================== */
+
+function escapeHtml(text){
+
+  return String(
+    text == null
+      ? ""
+      : text
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+/* ==================================================
+   TUTUP POPUP
+================================================== */
+
+function tutupPopup(){
+
+  document.getElementById(
+    "popupBerhasil"
+  ).classList.remove(
+    "active"
+  );
+
+}
+
+
+/* ==================================================
+   KEMBALI
+================================================== */
+
+function kembali(){
+
+  window.location.href =
+    "data.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>

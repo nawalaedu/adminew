@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hasil IJP</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fa;
+  color:#183b56;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  background:linear-gradient(135deg,#183b56,#2f6f95);
+  color:white;
+  padding:22px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header-left{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.header-right{
+  font-size:15px;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  max-width:850px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+.back{
+  background:#718096;
+  color:white;
+  border:0;
+  padding:12px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-bottom:20px;
+  font-size:14px;
+}
+
+.back:hover{
+  background:#4a5568;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.form-card{
+  background:white;
+  padding:35px;
+  border-radius:18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.form-title{
+  margin-bottom:30px;
+}
+
+.form-title h1{
+  margin:0 0 8px;
+  font-size:28px;
+}
+
+.form-title p{
+  color:#718096;
+  line-height:1.5;
+  margin:0;
+}
+
+
+/* =========================
+   INFO BOX
+========================= */
+
+.info-box{
+  background:#f0f7fb;
+  border-left:4px solid #2f6f95;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:25px;
+  font-size:14px;
+  line-height:1.6;
+  color:#4a5568;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+input,
+select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d6dee6;
+  border-radius:9px;
+  font-size:14px;
+  font-family:Arial,sans-serif;
+  background:white;
+}
+
+input:focus,
+select:focus{
+  outline:none;
+  border-color:#2f6f95;
+  box-shadow:0 0 0 2px rgba(47,111,149,.08);
+}
+
+
+/* =========================
+   SEARCH ID ORDER
+========================= */
+
+.search-row{
+  display:flex;
+  gap:10px;
+  align-items:stretch;
+}
+
+.search-row input{
+  flex:1;
+  min-width:0;
+}
+
+.btn-search{
+  flex:0 0 130px;
+  border:0;
+  border-radius:9px;
+  background:#2f6f95;
+  color:white;
+  font-size:14px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.btn-search:hover{
+  background:#183b56;
+}
+
+.btn-search:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}
+
+.search-icon{
+  margin-right:5px;
+}
+
+
+/* =========================
+   READONLY
+========================= */
+
+.readonly{
+  background:#f1f5f9;
+  color:#4a5568;
+  cursor:not-allowed;
+}
+
+
+/* =========================
+   SMALL
+========================= */
+
+small{
+  display:block;
+  margin-top:7px;
+  color:#718096;
+  line-height:1.5;
+  font-size:12px;
+}
+
+
+/* =========================
+   DETAIL IJP
+========================= */
+
+.detail-section{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:25px;
+}
+
+.detail-title{
+  font-size:16px;
+  font-weight:bold;
+  margin-bottom:20px;
+  color:#183b56;
+}
+
+.detail-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn-save{
+  width:100%;
+  border:0;
+  padding:14px;
+  border-radius:9px;
+  background:#183b56;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
+  margin-top:5px;
+}
+
+.btn-save:hover{
+  background:#2f6f95;
+}
+
+.btn-save:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  display:none;
+  text-align:center;
+  margin-top:15px;
+  color:#718096;
+  font-size:14px;
+}
+
+.loading.active{
+  display:block;
+}
+
+
+/* =========================
+   POPUP
+========================= */
+
+.popup-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.popup-overlay.active{
+  display:flex;
+}
+
+.popup{
+  width:90%;
+  max-width:450px;
+  background:white;
+  border-radius:18px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,.2);
+  animation:popupIn .25s ease;
+}
+
+@keyframes popupIn{
+
+  from{
+    opacity:0;
+    transform:scale(.9);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+
+}
+
+.popup-icon{
+  font-size:50px;
+  margin-bottom:15px;
+}
+
+.popup h2{
+  margin:0 0 10px;
+  color:#183b56;
+}
+
+.popup p{
+  color:#718096;
+  line-height:1.5;
+}
+
+.result-box{
+  background:#f0f7fb;
+  border:1px solid #d6e7f0;
+  border-radius:12px;
+  padding:18px;
+  margin:20px 0;
+  text-align:left;
+}
+
+.result-row{
+  margin-bottom:12px;
+}
+
+.result-row:last-child{
+  margin-bottom:0;
+}
+
+.result-label{
+  font-size:12px;
+  color:#718096;
+  margin-bottom:4px;
+}
+
+.result-value{
+  font-weight:bold;
+  color:#183b56;
+  word-break:break-word;
+}
+
+.btn-popup{
+  width:100%;
+  border:0;
+  padding:13px;
+  border-radius:9px;
+  background:#183b56;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-popup:hover{
+  background:#2f6f95;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:650px){
+
+  .header{
+    padding:20px;
+  }
+
+  .header-left{
+    font-size:17px;
+  }
+
+  .header-right{
+    font-size:13px;
+  }
+
+  .form-card{
+    padding:25px 20px;
+  }
+
+  .detail-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-title h1{
+    font-size:24px;
+  }
+
+  .search-row{
+    flex-direction:column;
+  }
+
+  .btn-search{
+    width:100%;
+    flex:none;
+    padding:13px;
+  }
+
+}
+
+</style>
+
+<script src="api.js"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="header">
+
+  <div class="header-left">
+    ADMIN MANAGEMENT
+  </div>
+
+  <div class="header-right">
+    HASIL IJP
+  </div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ==================================================
+     BACK
+================================================== -->
+
+<button
+type="button"
+class="back"
+onclick="kembali()">
+
+← Kembali ke IJP
+
+</button>
+
+
+<!-- ==================================================
+     FORM CARD
+================================================== -->
+
+<div class="form-card">
+
+
+<!-- ==================================================
+     TITLE
+================================================== -->
+
+<div class="form-title">
+
+<h1>
+🔬 Hasil IJP
+</h1>
+
+<p>
+Kelola hasil IJP berdasarkan ID Order IJP
+yang telah dibuat.
+</p>
+
+</div>
+
+
+<!-- ==================================================
+     INFO
+================================================== -->
+
+<div class="info-box">
+
+<strong>Informasi:</strong><br>
+
+Ketik <strong>ID Order IJP</strong> terlebih dahulu,
+kemudian tekan tombol <strong>🔍 Cari Data</strong>.
+Sistem akan mengambil informasi
+<strong>Judul IJP, Kode Jurnal, dan Bulan Terbit</strong>
+secara otomatis.
+
+<br><br>
+
+Setelah proses IJP selesai, masukkan
+<strong>Nama Tim Riset</strong> dan
+<strong>link Google Drive hasil IJP</strong>
+pada bagian yang tersedia.
+
+</div>
+
+
+<!-- ==================================================
+     FORM
+================================================== -->
+
+<form
+id="ijpForm"
+onsubmit="simpanIJP(event)">
+
+
+<!-- ==================================================
+     ID ORDER IJP
+================================================== -->
+
+<div class="form-group">
+
+<label>
+ID Order IJP
+</label>
+
+<div class="search-row">
+
+<input
+type="text"
+id="idOrder"
+placeholder="Ketik ID Order IJP"
+required
+autocomplete="off"
+onkeydown="tekanEnterCari(event)">
+
+<button
+type="button"
+id="btnCari"
+class="btn-search"
+onclick="cariOrderIJP()">
+
+<span class="search-icon">🔍</span>
+Cari Data
+
+</button>
+
+</div>
+
+<small>
+Ketik ID Order IJP yang sudah dibuat,
+kemudian tekan tombol Cari Data.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     DETAIL IJP
+================================================== -->
+
+<div
+id="detailOrderSection"
+class="detail-section">
+
+
+<div class="detail-title">
+
+📋 Informasi IJP
+
+</div>
+
+
+<div class="detail-grid">
+
+
+<!-- ==================================================
+     JUDUL IJP
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Judul IJP
+</label>
+
+<input
+type="text"
+id="judulIJP"
+class="readonly"
+placeholder="Akan muncul setelah ID Order dicari"
+readonly>
+
+</div>
+
+
+<!-- ==================================================
+     KODE JURNAL
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Kode Jurnal
+</label>
+
+<input
+type="text"
+id="kodeJurnal"
+class="readonly"
+placeholder="Akan muncul setelah ID Order dicari"
+readonly>
+
+</div>
+
+
+<!-- ==================================================
+     BULAN TERBIT
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Bulan Terbit
+</label>
+
+<input
+type="text"
+id="bulanTerbit"
+class="readonly"
+placeholder="Akan muncul setelah ID Order dicari"
+readonly>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     NAMA TIM RISET
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Nama Tim Riset
+</label>
+
+<input
+type="text"
+id="timIJP"
+placeholder="Ketik nama tim riset"
+required
+autocomplete="off">
+
+<small>
+Ketik nama tim riset yang mengerjakan IJP tersebut.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     ARSIP HASIL IJP
+================================================== -->
+
+<div class="form-group">
+
+<label>
+Arsip Hasil IJP
+</label>
+
+<input
+type="url"
+id="arsip"
+placeholder="https://drive.google.com/..."
+required>
+
+<small>
+Masukkan link Google Drive yang berisi hasil IJP
+yang sudah dibuat oleh tim riset.
+</small>
+
+</div>
+
+
+<!-- ==================================================
+     SIMPAN
+================================================== -->
+
+<button
+type="submit"
+id="btnSimpan"
+class="btn-save">
+
+SIMPAN HASIL IJP
+
+</button>
+
+
+<div
+id="loading"
+class="loading">
+
+⏳ Menyimpan hasil IJP...
+
+</div>
+
+
+</form>
+
+
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     POPUP BERHASIL
+================================================== -->
+
+<div
+id="popupBerhasil"
+class="popup-overlay">
+
+
+<div class="popup">
+
+
+<div class="popup-icon">
+✅
+</div>
+
+
+<h2>
+Hasil IJP Berhasil Disimpan
+</h2>
+
+
+<p>
+Data hasil IJP telah berhasil dicatat.
+</p>
+
+
+<div class="result-box">
+
+
+<div class="result-row">
+
+<div class="result-label">
+ID ORDER IJP
+</div>
+
+<div
+id="resultIdOrder"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+<div class="result-row">
+
+<div class="result-label">
+KODE JURNAL
+</div>
+
+<div
+id="resultKodeJurnal"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+<div class="result-row">
+
+<div class="result-label">
+JUDUL IJP
+</div>
+
+<div
+id="resultJudulIJP"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+<div class="result-row">
+
+<div class="result-label">
+BULAN TERBIT
+</div>
+
+<div
+id="resultBulanTerbit"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+<div class="result-row">
+
+<div class="result-label">
+NAMA TIM RISET
+</div>
+
+<div
+id="resultTimIJP"
+class="result-value">
+
+-
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<button
+type="button"
+class="btn-popup"
+onclick="tutupPopup()">
+
+SELESAI
+
+</button>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* ==================================================
+   INIT
+================================================== */
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+  /*
+    Tidak lagi memuat dropdown ID Order.
+    ID Order sekarang diketik manual.
+  */
+
+  kosongkanDetailIJP();
+
+});
+
+
+/* ==================================================
+   TEKAN ENTER PADA ID ORDER
+================================================== */
+
+function tekanEnterCari(event){
+
+  if(event.key === "Enter"){
+
+    event.preventDefault();
+
+    cariOrderIJP();
+
+  }
+
+}
+
+
+/* ==================================================
+   CARI ORDER IJP
+================================================== */
+
+function cariOrderIJP(){
+
+  const input =
+    document.getElementById(
+      "idOrder"
+    );
+
+  const idOrder =
+    input.value.trim();
+
+
+  /*
+    Validasi ID Order
+  */
+
+  if(!idOrder){
+
+    alert(
+      "Silakan ketik ID Order IJP terlebih dahulu."
+    );
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  /*
+    Ambil elemen
+  */
+
+  const btnCari =
+    document.getElementById(
+      "btnCari"
+    );
+
+
+  const judul =
+    document.getElementById(
+      "judulIJP"
+    );
+
+
+  const kode =
+    document.getElementById(
+      "kodeJurnal"
+    );
+
+
+  const bulan =
+    document.getElementById(
+      "bulanTerbit"
+    );
+
+
+  /*
+    Tombol loading
+  */
+
+  btnCari.disabled =
+    true;
+
+
+  btnCari.innerHTML =
+    "⏳ Mencari...";
+
+
+  /*
+    Tampilkan loading
+  */
+
+  judul.value =
+    "Memuat...";
+
+  kode.value =
+    "Memuat...";
+
+  bulan.value =
+    "Memuat...";
+
+
+  /*
+    Panggil Code.gs
+  */
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(data){
+
+        /*
+          Aktifkan kembali tombol
+        */
+
+        btnCari.disabled =
+          false;
+
+        btnCari.innerHTML =
+          '<span class="search-icon">🔍</span> Cari Data';
+
+
+        /*
+          Data tidak ditemukan
+        */
+
+        if(!data){
+
+          kosongkanDetailIJP();
+
+
+          alert(
+            "ID Order IJP tidak ditemukan.\n\n" +
+            "Pastikan ID Order yang diketik sudah benar."
+          );
+
+
+          input.focus();
+
+          return;
+
+        }
+
+
+        /*
+          JUDUL IJP
+        */
+
+        judul.value =
+          data.judulIJP ||
+          data.judulArtikel ||
+          data.judul ||
+          "";
+
+
+        /*
+          KODE JURNAL
+        */
+
+        kode.value =
+          data.kodeJurnal ||
+          "";
+
+
+        /*
+          BULAN TERBIT
+        */
+
+        bulan.value =
+          data.bulanTerbit ||
+          "";
+
+
+        /*
+          Validasi hasil pencarian
+        */
+
+        if(
+          !judul.value &&
+          !kode.value &&
+          !bulan.value
+        ){
+
+          alert(
+            "Data ID Order ditemukan, tetapi detail IJP belum tersedia."
+          );
+
+          return;
+
+        }
+
+      }
+    )
+
+    .withFailureHandler(
+      function(error){
+
+        /*
+          Aktifkan kembali tombol
+        */
+
+        btnCari.disabled =
+          false;
+
+        btnCari.innerHTML =
+          '<span class="search-icon">🔍</span> Cari Data';
+
+
+        /*
+          Kosongkan detail
+        */
+
+        kosongkanDetailIJP();
+
+
+        /*
+          Tampilkan error
+        */
+
+        alert(
+          "Gagal mengambil detail order IJP:\n" +
+          (
+            error && error.message
+            ?
+            error.message
+            :
+            "Terjadi kesalahan."
+          )
+        );
+
+
+        input.focus();
+
+      }
+    )
+
+    .ambilDetailOrderIJP(
+      idOrder
+    );
+
+}
+
+
+/* ==================================================
+   KOSONGKAN DETAIL IJP
+================================================== */
+
+function kosongkanDetailIJP(){
+
+  document.getElementById(
+    "judulIJP"
+  ).value = "";
+
+
+  document.getElementById(
+    "kodeJurnal"
+  ).value = "";
+
+
+  document.getElementById(
+    "bulanTerbit"
+  ).value = "";
+
+}
+
+
+/* ==================================================
+   SIMPAN HASIL IJP
+================================================== */
+
+function simpanIJP(
+  event
+){
+
+  event.preventDefault();
+
+
+  const form =
+    document.getElementById(
+      "ijpForm"
+    );
+
+
+  /*
+    Validasi HTML
+  */
+
+  if(!form.checkValidity()){
+
+    form.reportValidity();
+
+    return;
+
+  }
+
+
+  /*
+    Ambil data
+  */
+
+  const data = {
+
+    idOrder:
+      document.getElementById(
+        "idOrder"
+      ).value.trim(),
+
+    kodeJurnal:
+      document.getElementById(
+        "kodeJurnal"
+      ).value.trim(),
+
+    judulIJP:
+      document.getElementById(
+        "judulIJP"
+      ).value.trim(),
+
+    bulanTerbit:
+      document.getElementById(
+        "bulanTerbit"
+      ).value.trim(),
+
+    timIJP:
+      document.getElementById(
+        "timIJP"
+      ).value.trim(),
+
+    arsip:
+      document.getElementById(
+        "arsip"
+      ).value.trim()
+
+  };
+
+
+  /* ==================================================
+     VALIDASI TAMBAHAN
+  ================================================== */
+
+  if(!data.idOrder){
+
+    alert(
+      "Silakan ketik ID Order IJP."
+    );
+
+    document.getElementById(
+      "idOrder"
+    ).focus();
+
+    return;
+
+  }
+
+
+  if(!data.judulIJP){
+
+    alert(
+      "Judul IJP belum ditemukan.\n\n" +
+      "Silakan cari ID Order terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.kodeJurnal){
+
+    alert(
+      "Kode jurnal belum ditemukan.\n\n" +
+      "Silakan cari ID Order terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.bulanTerbit){
+
+    alert(
+      "Bulan terbit belum ditemukan.\n\n" +
+      "Silakan cari ID Order terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  if(!data.timIJP){
+
+    alert(
+      "Silakan ketik Nama Tim Riset."
+    );
+
+    document.getElementById(
+      "timIJP"
+    ).focus();
+
+    return;
+
+  }
+
+
+  if(!data.arsip){
+
+    alert(
+      "Masukkan link Google Drive hasil IJP."
+    );
+
+    document.getElementById(
+      "arsip"
+    ).focus();
+
+    return;
+
+  }
+
+
+  /* ==================================================
+     BUTTON LOADING
+  ================================================== */
+
+  const btn =
+    document.getElementById(
+      "btnSimpan"
+    );
+
+
+  const loading =
+    document.getElementById(
+      "loading"
+    );
+
+
+  btn.disabled =
+    true;
+
+
+  btn.textContent =
+    "MENYIMPAN...";
+
+
+  loading.classList.add(
+    "active"
+  );
+
+
+  /* ==================================================
+     KIRIM KE CODE.GS
+  ================================================== */
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(result){
+
+        btn.disabled =
+          false;
+
+
+        btn.textContent =
+          "SIMPAN HASIL IJP";
+
+
+        loading.classList.remove(
+          "active"
+        );
+
+
+        /*
+          Jika berhasil
+        */
+
+        if(
+          result &&
+          result.success
+        ){
+
+          tampilkanPopupBerhasil(
+            data,
+            result
+          );
+
+
+          /*
+            Reset form
+          */
+
+          document.getElementById(
+            "ijpForm"
+          ).reset();
+
+
+          /*
+            Kosongkan informasi otomatis
+          */
+
+          kosongkanDetailIJP();
+
+        }
+
+        else{
+
+          alert(
+            result &&
+            result.message
+            ?
+            result.message
+            :
+            "Gagal menyimpan hasil IJP."
+          );
+
+        }
+
+      }
+    )
+
+    .withFailureHandler(
+      function(error){
+
+        btn.disabled =
+          false;
+
+
+        btn.textContent =
+          "SIMPAN HASIL IJP";
+
+
+        loading.classList.remove(
+          "active"
+        );
+
+
+        alert(
+          "Gagal menyimpan hasil IJP:\n" +
+          (
+            error && error.message
+            ?
+            error.message
+            :
+            "Terjadi kesalahan."
+          )
+        );
+
+      }
+    )
+
+    .simpanHasilIJP(
+      data
+    );
+
+}
+
+
+/* ==================================================
+   POPUP BERHASIL
+================================================== */
+
+function tampilkanPopupBerhasil(
+  data,
+  result
+){
+
+  document.getElementById(
+    "resultIdOrder"
+  ).textContent =
+    data.idOrder || "-";
+
+
+  document.getElementById(
+    "resultKodeJurnal"
+  ).textContent =
+    data.kodeJurnal || "-";
+
+
+  document.getElementById(
+    "resultJudulIJP"
+  ).textContent =
+    data.judulIJP || "-";
+
+
+  document.getElementById(
+    "resultBulanTerbit"
+  ).textContent =
+    data.bulanTerbit || "-";
+
+
+  document.getElementById(
+    "resultTimIJP"
+  ).textContent =
+    data.timIJP || "-";
+
+
+  document.getElementById(
+    "popupBerhasil"
+  ).classList.add(
+    "active"
+  );
+
+}
+
+
+/* ==================================================
+   TUTUP POPUP
+================================================== */
+
+function tutupPopup(){
+
+  document.getElementById(
+    "popupBerhasil"
+  ).classList.remove(
+    "active"
+  );
+
+}
+
+
+/* ==================================================
+   KEMBALI
+================================================== */
+
+function kembali(){
+
+  window.location.href =
+    "ijp.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>
