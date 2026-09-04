@@ -859,28 +859,6 @@ Naskah Mandiri
 </div>
 
 
-<!-- LINK DRIVE - KHUSUS JENIS PENULISAN MANDIRI -->
-
-<div class="form-group" id="linkDriveGroup" style="display:none;">
-
-<label>
-Link Drive Google Drive
-</label>
-
-<input
- type="url"
- id="linkDrive"
- name="linkDrive"
- placeholder="https://drive.google.com/..."
- autocomplete="off">
-
-<small>
-Wajib diisi jika Jenis Penulisan = Naskah Mandiri.
-</small>
-
-</div>
-
-
 <!-- AUTHOR M / T -->
 
 <div
@@ -1669,7 +1647,24 @@ function tambahAuthorMT(){
           class="bab-author-container"
           style="display:none;">
 
-          <div class="bab-list"></div>
+          <div class="form-group" style="margin:0;">
+
+            <label>
+              Tuliskan Bab yang Dikerjakan
+            </label>
+
+            <input
+              type="text"
+              class="input-bab-manual"
+              placeholder="Contoh: Bab 1, Bab 3, Bab 5"
+              oninput="updateBabAuthorManual(this)">
+
+            <small>
+              Tuliskan nomor/judul bab yang dikerjakan.
+              Pisahkan beberapa bab dengan koma, misalnya: Bab 1, Bab 3, Bab 5.
+            </small>
+
+          </div>
 
         </div>
 
@@ -1790,125 +1785,57 @@ function tambahAuthorMT(){
 
 function isiBabUntukAuthorMT(card){
 
-  const rincian =
-    document.getElementById(
-      "rincianBab"
-    ).value;
+  /*
+   * Mode Pilih Bab sekarang menggunakan textbox manual.
+   * Fungsi ini tetap dipertahankan agar pemanggilan lama
+   * dari refreshSemuaBabAuthorMT() tidak merusak form.
+   */
 
-
-  const container =
+  const input =
     card.querySelector(
-      ".bab-author-container .bab-list"
+      ".input-bab-manual"
     );
 
-
-  if(!container){
-    return;
+  if(input){
+    input.value =
+      card.querySelector(
+        'input[name="mtBab[]"]'
+      ).value === "SEMUA BAB"
+        ? ""
+        : card.querySelector(
+            'input[name="mtBab[]"]'
+          ).value;
   }
-
-
-  container.innerHTML = "";
-
-
-  if(!rincian){
-
-    container.innerHTML = `
-
-      <div
-        class="info-box"
-        style="grid-column:1/-1;margin:0;">
-
-        Silakan isi Rincian Bab terlebih dahulu.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  const daftarBab =
-    rincian
-      .split(/\n/)
-      .map(
-        x => x.trim()
-      )
-      .filter(
-        x => x
-      );
-
-
-  daftarBab.forEach(
-    function(bab){
-
-      const label =
-        document.createElement(
-          "label"
-        );
-
-
-      label.className =
-        "bab-item";
-
-
-      label.innerHTML = `
-
-        <input
-          type="checkbox"
-          class="checkbox-bab-mt"
-          value="${escapeHtml(bab)}"
-          onchange="updateBabAuthorMT(this)">
-
-        <span>
-          ${escapeHtml(bab)}
-        </span>
-
-      `;
-
-
-      container.appendChild(
-        label
-      );
-
-    }
-  );
 
 }
 
 
 /* ==================================================
-   REFRESH BAB
+   UPDATE BAB AUTHOR MANUAL
 ================================================== */
 
-function refreshSemuaBabAuthorMT(){
+function updateBabAuthorManual(input){
 
-  const cards =
-    document.querySelectorAll(
-      "#authorMTContainer .author-card"
+  const card =
+    input.closest(
+      ".author-card"
     );
 
+  if(!card){
+    return;
+  }
 
-  cards.forEach(
-    function(card){
+  const hiddenBab =
+    card.querySelector(
+      'input[name="mtBab[]"]'
+    );
 
-      const checkboxContainer =
-        card.querySelector(
-          ".bab-author-container .bab-list"
-        );
+  if(!hiddenBab){
+    return;
+  }
 
-
-      if(checkboxContainer){
-
-        isiBabUntukAuthorMT(
-          card
-        );
-
-      }
-
-    }
-  );
+  hiddenBab.value =
+    input.value.trim();
 
 }
 
@@ -1924,54 +1851,61 @@ function ubahModeBab(radio){
       ".author-card"
     );
 
+  if(!card){
+    return;
+  }
 
   const mode =
     radio.value;
 
-
-  const checkboxBox =
+  const babBox =
     card.querySelector(
-      ".bab-author-container .bab-list"
+      ".bab-author-container"
     );
 
+  const manualInput =
+    card.querySelector(
+      ".input-bab-manual"
+    );
 
   const hiddenBab =
     card.querySelector(
       'input[name="mtBab[]"]'
     );
 
-
   if(mode === "semua"){
 
-    checkboxBox.style.display =
-      "none";
+    if(babBox){
+      babBox.style.display =
+        "none";
+    }
 
+    if(manualInput){
+      manualInput.value =
+        "";
+    }
 
-    hiddenBab.value =
-      "SEMUA BAB";
-
-
-    card.querySelectorAll(
-      ".checkbox-bab-mt"
-    ).forEach(
-      function(cb){
-
-        cb.checked = false;
-
-      }
-    );
+    if(hiddenBab){
+      hiddenBab.value =
+        "SEMUA BAB";
+    }
 
   }
 
 
   if(mode === "pilih"){
 
-    checkboxBox.style.display =
-      "grid";
+    if(babBox){
+      babBox.style.display =
+        "block";
+    }
 
-
-    hiddenBab.value =
-      "";
+    if(hiddenBab){
+      hiddenBab.value =
+        manualInput
+          ? manualInput.value.trim()
+          : "";
+    }
 
   }
 
@@ -1980,46 +1914,34 @@ function ubahModeBab(radio){
 
 /* ==================================================
    UPDATE BAB AUTHOR M
+   Kompatibilitas dengan pemanggilan lama.
 ================================================== */
 
-function updateBabAuthorMT(
-  checkbox
-){
+function updateBabAuthorMT(checkbox){
 
   const card =
     checkbox.closest(
       ".author-card"
     );
 
+  if(!card){
+    return;
+  }
 
   const hiddenBab =
     card.querySelector(
       'input[name="mtBab[]"]'
     );
 
-
-  const checked =
-    card.querySelectorAll(
-      ".checkbox-bab-mt:checked"
+  const manualInput =
+    card.querySelector(
+      ".input-bab-manual"
     );
 
-
-  const daftar = [];
-
-
-  checked.forEach(
-    function(cb){
-
-      daftar.push(
-        cb.value
-      );
-
-    }
-  );
-
-
-  hiddenBab.value =
-    daftar.join(" | ");
+  if(hiddenBab && manualInput){
+    hiddenBab.value =
+      manualInput.value.trim();
+  }
 
 }
 
@@ -2582,12 +2504,7 @@ function simpanOrder(
       ).value,
 
     authors:
-      authors,
-
-    linkDrive:
-      document.getElementById("linkDrive")
-        ? document.getElementById("linkDrive").value.trim()
-        : ""
+      authors
 
   };
 
@@ -3042,6 +2959,12 @@ function resetFormAuthor(){
   }
 
 
+  document.querySelectorAll(
+    ".input-bab-manual"
+  ).forEach(function(input){
+    input.value = "";
+  });
+
   const today =
     new Date()
       .toISOString()
@@ -3195,36 +3118,6 @@ function kembali(){
 
 </script>
 
-
-
-<script>
-(function(){
-  function syncLinkDrive(){
-    var group=document.getElementById('linkDriveGroup');
-    var input=document.getElementById('linkDrive');
-    if(!group || !input) return;
-    var show=false;
-    if(true){
-      var jp=document.getElementById('jenisPenulisan');
-      show=jp && String(jp.value||'').trim().toLowerCase()==='naskah mandiri';
-    } else {
-      var k=document.getElementById('kmt');
-      show=k && String(k.value||'').trim().toUpperCase()==='M';
-    }
-    group.style.display=show?'block':'none';
-    input.required=show;
-    if(!show) input.value='';
-  }
-  document.addEventListener('DOMContentLoaded',function(){
-    var jp=document.getElementById('jenisPenulisan');
-    var k=document.getElementById('kmt');
-    if(jp) jp.addEventListener('change',syncLinkDrive);
-    if(k) k.addEventListener('change',syncLinkDrive);
-    syncLinkDrive();
-  });
-  window.syncLinkDrive=syncLinkDrive;
-})();
-</script>
 
 </body>
 
