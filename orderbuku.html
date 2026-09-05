@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 
@@ -250,6 +251,23 @@ small{
 .radio-option input{
   width:auto;
   margin:0;
+}
+
+/* =========================
+   BAB MANUAL
+========================= */
+
+.bab-manual-container{
+  background:#f0f7fb;
+  border:1px solid #c9e2ee;
+  padding:15px;
+  border-radius:10px;
+  margin-top:15px;
+}
+
+.bab-manual-container textarea{
+  min-height:100px;
+  background:white;
 }
 
 /* =========================
@@ -561,33 +579,280 @@ small{
 
 </style>
 
+
 <script>
 /* ==========================================================
    API LANGSUNG DI HTML - TIDAK MENGGUNAKAN api.js
-   Ganti hanya GAS_API_URL sesuai Web App modul ini.
+   TIDAK DIUBAH
 ========================================================== */
+
 const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwZycMn2AtI0pWLmw9vIuid3Wrmoz3fAZDN7GFseq-YQkr9BdwvdkHPcaEqHhF58H-EGw/exec';
+
 const GAS_API_KEY = 'ADMIN-515KA';
+
+
 (function(){
-  let successHandler=null, failureHandler=null;
+
+  let successHandler=null,
+      failureHandler=null;
+
+
   function normalizeCall(method,args){
-    return args && args.length ? args.slice() : [];
+
+    return args && args.length
+      ? args.slice()
+      : [];
+
   }
+
+
   function callGas(method,args){
-    const payload=normalizeCall(method,args);
+
+    const payload =
+      normalizeCall(method,args);
+
+
     return new Promise(function(resolve,reject){
-      const cb='__gas_cb_'+Date.now()+'_'+Math.floor(Math.random()*100000);
-      const script=document.createElement('script'); let timer=null;
-      function cleanup(){if(timer)clearTimeout(timer);try{delete window[cb];}catch(e){window[cb]=undefined;}if(script.parentNode)script.parentNode.removeChild(script);}
-      window[cb]=function(result){cleanup();if(result&&result.success===false){reject(new Error(result.message||'Google Apps Script error'));return;}resolve(result);};
-      script.onerror=function(){cleanup();reject(new Error('Tidak dapat menghubungi Google Apps Script. Pastikan URL Web App modul ini benar dan akses Web App adalah Anyone.'));};
-      timer=setTimeout(function(){cleanup();reject(new Error('Request ke Google Apps Script timeout (30 detik).'));},30000);
-      const params=new URLSearchParams();params.set('key',GAS_API_KEY);params.set('method',method);params.set('callback',cb);params.set('data',JSON.stringify(payload));
-      script.src=GAS_API_URL+'?'+params.toString();document.head.appendChild(script);
+
+      const cb =
+        '__gas_cb_' +
+        Date.now() +
+        '_' +
+        Math.floor(Math.random()*100000);
+
+
+      const script =
+        document.createElement('script');
+
+
+      let timer=null;
+
+
+      function cleanup(){
+
+        if(timer)
+          clearTimeout(timer);
+
+
+        try{
+          delete window[cb];
+        }
+        catch(e){
+          window[cb]=undefined;
+        }
+
+
+        if(script.parentNode)
+          script.parentNode.removeChild(script);
+
+      }
+
+
+      window[cb]=function(result){
+
+        cleanup();
+
+
+        if(
+          result &&
+          result.success===false
+        ){
+
+          reject(
+            new Error(
+              result.message ||
+              'Google Apps Script error'
+            )
+          );
+
+          return;
+
+        }
+
+
+        resolve(result);
+
+      };
+
+
+      script.onerror=function(){
+
+        cleanup();
+
+
+        reject(
+          new Error(
+            'Tidak dapat menghubungi Google Apps Script. Pastikan URL Web App modul ini benar dan akses Web App adalah Anyone.'
+          )
+        );
+
+      };
+
+
+      timer=setTimeout(function(){
+
+        cleanup();
+
+
+        reject(
+          new Error(
+            'Request ke Google Apps Script timeout (30 detik).'
+          )
+        );
+
+      },30000);
+
+
+      const params =
+        new URLSearchParams();
+
+
+      params.set(
+        'key',
+        GAS_API_KEY
+      );
+
+
+      params.set(
+        'method',
+        method
+      );
+
+
+      params.set(
+        'callback',
+        cb
+      );
+
+
+      params.set(
+        'data',
+        JSON.stringify(payload)
+      );
+
+
+      script.src =
+        GAS_API_URL +
+        '?' +
+        params.toString();
+
+
+      document.head.appendChild(
+        script
+      );
+
     });
+
   }
-  const runProxy=new Proxy({}, {get:function(_,method){if(method==='withSuccessHandler')return function(fn){successHandler=fn;return runProxy;};if(method==='withFailureHandler')return function(fn){failureHandler=fn;return runProxy;};return function(){const args=Array.prototype.slice.call(arguments);const s=successHandler,f=failureHandler;successHandler=null;failureHandler=null;callGas(method,args).then(function(result){if(typeof s==='function')s(result);}).catch(function(error){if(typeof f==='function')f(error);else console.error(error);});};}});
-  window.google=window.google||{};window.google.script=window.google.script||{};window.google.script.run=runProxy;
+
+
+  const runProxy =
+    new Proxy(
+      {},
+      {
+        get:function(_,method){
+
+          if(
+            method==='withSuccessHandler'
+          ){
+
+            return function(fn){
+
+              successHandler=fn;
+
+              return runProxy;
+
+            };
+
+          }
+
+
+          if(
+            method==='withFailureHandler'
+          ){
+
+            return function(fn){
+
+              failureHandler=fn;
+
+              return runProxy;
+
+            };
+
+          }
+
+
+          return function(){
+
+            const args =
+              Array.prototype.slice.call(
+                arguments
+              );
+
+
+            const s =
+              successHandler;
+
+
+            const f =
+              failureHandler;
+
+
+            successHandler=null;
+            failureHandler=null;
+
+
+            callGas(
+              method,
+              args
+            )
+            .then(function(result){
+
+              if(
+                typeof s==='function'
+              ){
+
+                s(result);
+
+              }
+
+            })
+            .catch(function(error){
+
+              if(
+                typeof f==='function'
+              ){
+
+                f(error);
+
+              }
+              else{
+
+                console.error(error);
+
+              }
+
+            });
+
+          };
+
+        }
+
+      }
+    );
+
+
+  window.google =
+    window.google || {};
+
+
+  window.google.script =
+    window.google.script || {};
+
+
+  window.google.script.run =
+    runProxy;
+
 })();
 </script>
 
@@ -596,10 +861,6 @@ const GAS_API_KEY = 'ADMIN-515KA';
 
 <body>
 
-
-<!-- ==================================================
-     HEADER
-================================================== -->
 
 <header class="header">
 
@@ -617,10 +878,6 @@ const GAS_API_KEY = 'ADMIN-515KA';
 <div class="container">
 
 
-<!-- ==================================================
-     BACK
-================================================== -->
-
 <button
 type="button"
 class="back"
@@ -633,10 +890,6 @@ onclick="kembali()">
 
 <div class="form-card">
 
-
-<!-- ==================================================
-     TITLE
-================================================== -->
 
 <div class="form-title">
 
@@ -651,10 +904,6 @@ dalam satu form.
 
 </div>
 
-
-<!-- ==================================================
-     JENIS INPUT
-================================================== -->
 
 <div class="input-type">
 
@@ -703,7 +952,7 @@ yang sudah ada.
 
 
 <!-- ==================================================
-     FORM ORDER BUKU
+     FORM ORDER
 ================================================== -->
 
 <div
@@ -732,8 +981,6 @@ id="orderForm"
 onsubmit="simpanOrder(event)">
 
 
-<!-- TANGGAL -->
-
 <div class="form-group">
 
 <label>
@@ -748,8 +995,6 @@ required>
 
 </div>
 
-
-<!-- MARKETING -->
 
 <div class="form-group">
 
@@ -771,8 +1016,6 @@ Isi nama marketing secara manual.
 </div>
 
 
-<!-- JUDUL -->
-
 <div class="form-group">
 
 <label>
@@ -788,8 +1031,6 @@ required>
 
 </div>
 
-
-<!-- RINCIAN BAB -->
 
 <div class="form-group">
 
@@ -821,8 +1062,6 @@ untuk author Mandiri dan author Kolaborasi.
 
 </div>
 
-
-<!-- K M T -->
 
 <div class="form-group">
 
@@ -857,8 +1096,6 @@ T - Tunggal
 </div>
 
 
-<!-- JENIS PENULISAN -->
-
 <div class="form-group">
 
 <label>
@@ -887,20 +1124,21 @@ Naskah Mandiri
 </div>
 
 
-<!-- LINK DRIVE - KHUSUS JENIS PENULISAN MANDIRI -->
-
-<div class="form-group" id="linkDriveGroup" style="display:none;">
+<div
+class="form-group"
+id="linkDriveGroup"
+style="display:none;">
 
 <label>
 Link Drive Google Drive
 </label>
 
 <input
- type="url"
- id="linkDrive"
- name="linkDrive"
- placeholder="https://drive.google.com/..."
- autocomplete="off">
+type="url"
+id="linkDrive"
+name="linkDrive"
+placeholder="https://drive.google.com/..."
+autocomplete="off">
 
 <small>
 Wajib diisi jika Jenis Penulisan = Naskah Mandiri.
@@ -909,18 +1147,23 @@ Wajib diisi jika Jenis Penulisan = Naskah Mandiri.
 </div>
 
 
-<!-- AUTHOR M / T -->
+<!-- ==================================================
+     AUTHOR M / T
+================================================== -->
 
 <div
 id="authorMTSection"
 style="display:none;">
+
 
 <div
 id="infoAuthorMT"
 class="info-box">
 </div>
 
+
 <div id="authorMTContainer"></div>
+
 
 <button
 type="button"
@@ -932,10 +1175,9 @@ onclick="tambahAuthorMT()">
 
 </button>
 
+
 </div>
 
-
-<!-- SIMPAN -->
 
 <button
 type="submit"
@@ -988,10 +1230,6 @@ id="authorForm"
 onsubmit="simpanAuthor(event)">
 
 
-<!-- ==================================================
-     ID ORDER MANUAL
-================================================== -->
-
 <div class="form-group">
 
 <label>
@@ -1010,6 +1248,7 @@ required>
 Ketik ID Order buku yang sudah ada.
 </small>
 
+
 <button
 type="button"
 id="btnAmbilOrder"
@@ -1020,6 +1259,7 @@ onclick="ambilDetailOrder()">
 
 </button>
 
+
 <div
 id="orderStatus"
 class="order-status">
@@ -1027,10 +1267,6 @@ class="order-status">
 
 </div>
 
-
-<!-- ==================================================
-     JUDUL
-================================================== -->
 
 <div class="form-group">
 
@@ -1047,10 +1283,6 @@ readonly>
 
 </div>
 
-
-<!-- ==================================================
-     MARKETING INPUT
-================================================== -->
 
 <div class="form-group">
 
@@ -1072,8 +1304,6 @@ Isi nama marketing yang melakukan input author kolaborasi.
 </div>
 
 
-<!-- TANGGAL -->
-
 <div class="form-group">
 
 <label>
@@ -1088,10 +1318,6 @@ required>
 
 </div>
 
-
-<!-- ==================================================
-     SATU AUTHOR
-================================================== -->
 
 <div class="form-group">
 
@@ -1217,7 +1443,7 @@ SIMPAN AUTHOR KOLABORASI
 
 
 <!-- ==================================================
-     MODAL ID ORDER
+     MODAL
 ================================================== -->
 
 <div
@@ -1355,10 +1581,6 @@ document.addEventListener(
     );
 
 
-    /*
-    ENTER PADA ID ORDER
-    */
-
     document.getElementById(
       "idOrder"
     ).addEventListener(
@@ -1375,6 +1597,25 @@ document.addEventListener(
 
       }
     );
+
+
+    const jenisPenulisan =
+      document.getElementById(
+        "jenisPenulisan"
+      );
+
+
+    if(jenisPenulisan){
+
+      jenisPenulisan.addEventListener(
+        "change",
+        syncLinkDrive
+      );
+
+    }
+
+
+    syncLinkDrive();
 
   }
 );
@@ -1418,12 +1659,6 @@ function ubahJenisInput(){
       .classList.add("active");
 
 
-    /*
-    TIDAK ADA LAGI DROPDOWN ORDER.
-
-    ID ORDER DIKETIK MANUAL.
-    */
-
     setTimeout(
       function(){
 
@@ -1441,10 +1676,62 @@ function ubahJenisInput(){
 
 
 /* ==================================================
-   K / M / T
+   LINK DRIVE
 ================================================== */
 
-function ubahJenisPenulisan(){const jenis=document.getElementById("jenisPenulisan")?.value||"";const box=document.getElementById("driveLinkOrderBox");const input=document.getElementById("driveLink");if(!box||!input)return;if(jenis==="Naskah Mandiri"){box.style.display="block";input.required=true;}else{box.style.display="none";input.required=false;input.value="";}}
+function syncLinkDrive(){
+
+  const group =
+    document.getElementById(
+      "linkDriveGroup"
+    );
+
+
+  const input =
+    document.getElementById(
+      "linkDrive"
+    );
+
+
+  const jp =
+    document.getElementById(
+      "jenisPenulisan"
+    );
+
+
+  if(!group || !input || !jp)
+    return;
+
+
+  const show =
+    String(jp.value || "")
+      .trim()
+      .toLowerCase() ===
+      "naskah mandiri";
+
+
+  group.style.display =
+    show
+      ? "block"
+      : "none";
+
+
+  input.required =
+    show;
+
+
+  if(!show){
+
+    input.value = "";
+
+  }
+
+}
+
+
+/* ==================================================
+   K / M / T
+================================================== */
 
 function ubahKMT(){
 
@@ -1485,7 +1772,8 @@ function ubahKMT(){
 
   if(kmt === "K"){
 
-    section.style.display = "none";
+    section.style.display =
+      "none";
 
     return;
 
@@ -1494,9 +1782,13 @@ function ubahKMT(){
 
   if(kmt === "M"){
 
-    section.style.display = "block";
+    section.style.display =
+      "block";
 
-    btnTambah.style.display = "block";
+
+    btnTambah.style.display =
+      "block";
+
 
     info.innerHTML = `
 
@@ -1515,10 +1807,18 @@ function ubahKMT(){
 
       <br><br>
 
-      Atau masing-masing author dapat memilih
-      <strong>Semua Bab</strong>.
+      Setiap author dapat memilih
+      <strong>Semua Bab</strong> atau
+      <strong>Pilih Bab</strong>.
+
+      <br><br>
+
+      Jika memilih <strong>Pilih Bab</strong>,
+      masukkan bab secara manual pada textbox
+      yang muncul.
 
     `;
+
 
     tambahAuthorMT();
 
@@ -1529,9 +1829,13 @@ function ubahKMT(){
 
   if(kmt === "T"){
 
-    section.style.display = "block";
+    section.style.display =
+      "block";
 
-    btnTambah.style.display = "none";
+
+    btnTambah.style.display =
+      "none";
+
 
     info.innerHTML = `
 
@@ -1550,6 +1854,7 @@ function ubahKMT(){
 
     `;
 
+
     tambahAuthorMT();
 
     return;
@@ -1557,7 +1862,8 @@ function ubahKMT(){
   }
 
 
-  section.style.display = "none";
+  section.style.display =
+    "none";
 
 }
 
@@ -1612,6 +1918,10 @@ function tambahAuthorMT(){
   let bagianBab = "";
 
 
+  /* =========================
+     T - SEMUA BAB
+  ========================= */
+
   if(kmt === "T"){
 
     bagianBab = `
@@ -1648,6 +1958,10 @@ function tambahAuthorMT(){
   }
 
 
+  /* =========================
+     M - PILIH MODE
+  ========================= */
+
   if(kmt === "M"){
 
     bagianBab = `
@@ -1660,7 +1974,11 @@ function tambahAuthorMT(){
           Bab yang Dikerjakan
         </label>
 
+
         <div class="author-mode-box">
+
+
+          <!-- SEMUA BAB -->
 
           <label class="radio-option">
 
@@ -1678,6 +1996,8 @@ function tambahAuthorMT(){
           </label>
 
 
+          <!-- PILIH BAB -->
+
           <label class="radio-option">
 
             <input
@@ -1692,17 +2012,42 @@ function tambahAuthorMT(){
 
           </label>
 
+
         </div>
 
+
+        <!-- =========================
+             TEXTBOX MANUAL
+        ========================= -->
 
         <div
-          class="bab-author-container"
+          class="bab-manual-container"
           style="display:none;">
 
-          <div class="bab-list"></div>
+          <label>
+            Bab yang Dikerjakan
+          </label>
+
+          <textarea
+            class="bab-manual-input"
+            placeholder="Contoh:
+Bab 1
+Bab 3
+Bab 5"
+            oninput="updateBabManual(this)"></textarea>
+
+          <small>
+
+            Masukkan nomor/nama bab yang dikerjakan.
+            <br>
+            Satu bab per baris.
+
+          </small>
 
         </div>
 
+
+        <!-- NILAI YANG DIKIRIM KE GAS -->
 
         <input
           type="hidden"
@@ -1724,8 +2069,10 @@ function tambahAuthorMT(){
         Author ${jumlahAuthorMT}
       </div>
 
+
       ${
-        kmt === "M" && jumlahAuthorMT > 1
+        kmt === "M" &&
+        jumlahAuthorMT > 1
         ?
         `
         <button
@@ -1745,6 +2092,7 @@ function tambahAuthorMT(){
 
 
     <div class="author-grid">
+
 
       <div>
 
@@ -1790,6 +2138,7 @@ function tambahAuthorMT(){
 
       </div>
 
+
     </div>
 
 
@@ -1800,144 +2149,6 @@ function tambahAuthorMT(){
 
   container.appendChild(
     card
-  );
-
-
-  if(kmt === "M"){
-
-    isiBabUntukAuthorMT(
-      card
-    );
-
-  }
-
-}
-
-
-/* ==================================================
-   ISI BAB AUTHOR M
-================================================== */
-
-function isiBabUntukAuthorMT(card){
-
-  const rincian =
-    document.getElementById(
-      "rincianBab"
-    ).value;
-
-
-  const container =
-    card.querySelector(
-      ".bab-author-container .bab-list"
-    );
-
-
-  if(!container){
-    return;
-  }
-
-
-  container.innerHTML = "";
-
-
-  if(!rincian){
-
-    container.innerHTML = `
-
-      <div
-        class="info-box"
-        style="grid-column:1/-1;margin:0;">
-
-        Silakan isi Rincian Bab terlebih dahulu.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  const daftarBab =
-    rincian
-      .split(/\n/)
-      .map(
-        x => x.trim()
-      )
-      .filter(
-        x => x
-      );
-
-
-  daftarBab.forEach(
-    function(bab){
-
-      const label =
-        document.createElement(
-          "label"
-        );
-
-
-      label.className =
-        "bab-item";
-
-
-      label.innerHTML = `
-
-        <input
-          type="checkbox"
-          class="checkbox-bab-mt"
-          value="${escapeHtml(bab)}"
-          onchange="updateBabAuthorMT(this)">
-
-        <span>
-          ${escapeHtml(bab)}
-        </span>
-
-      `;
-
-
-      container.appendChild(
-        label
-      );
-
-    }
-  );
-
-}
-
-
-/* ==================================================
-   REFRESH BAB
-================================================== */
-
-function refreshSemuaBabAuthorMT(){
-
-  const cards =
-    document.querySelectorAll(
-      "#authorMTContainer .author-card"
-    );
-
-
-  cards.forEach(
-    function(card){
-
-      const checkboxContainer =
-        card.querySelector(
-          ".bab-author-container .bab-list"
-        );
-
-
-      if(checkboxContainer){
-
-        isiBabUntukAuthorMT(
-          card
-        );
-
-      }
-
-    }
   );
 
 }
@@ -1955,13 +2166,23 @@ function ubahModeBab(radio){
     );
 
 
+  if(!card)
+    return;
+
+
   const mode =
     radio.value;
 
 
-  const checkboxBox =
+  const manualBox =
     card.querySelector(
-      ".bab-author-container .bab-list"
+      ".bab-manual-container"
+    );
+
+
+  const manualInput =
+    card.querySelector(
+      ".bab-manual-input"
     );
 
 
@@ -1971,37 +2192,68 @@ function ubahModeBab(radio){
     );
 
 
+  if(!manualBox ||
+     !manualInput ||
+     !hiddenBab){
+
+    return;
+
+  }
+
+
+  /* =========================
+     SEMUA BAB
+  ========================= */
+
   if(mode === "semua"){
 
-    checkboxBox.style.display =
+    manualBox.style.display =
       "none";
+
+
+    manualInput.required =
+      false;
+
+
+    manualInput.value =
+      "";
 
 
     hiddenBab.value =
       "SEMUA BAB";
 
 
-    card.querySelectorAll(
-      ".checkbox-bab-mt"
-    ).forEach(
-      function(cb){
-
-        cb.checked = false;
-
-      }
-    );
+    return;
 
   }
 
 
+  /* =========================
+     PILIH BAB
+  ========================= */
+
   if(mode === "pilih"){
 
-    checkboxBox.style.display =
-      "grid";
+    manualBox.style.display =
+      "block";
+
+
+    manualInput.required =
+      true;
 
 
     hiddenBab.value =
-      "";
+      manualInput.value.trim();
+
+
+    setTimeout(
+      function(){
+
+        manualInput.focus();
+
+      },
+      50
+    );
 
   }
 
@@ -2009,17 +2261,19 @@ function ubahModeBab(radio){
 
 
 /* ==================================================
-   UPDATE BAB AUTHOR M
+   UPDATE BAB MANUAL
 ================================================== */
 
-function updateBabAuthorMT(
-  checkbox
-){
+function updateBabManual(textarea){
 
   const card =
-    checkbox.closest(
+    textarea.closest(
       ".author-card"
     );
+
+
+  if(!card)
+    return;
 
 
   const hiddenBab =
@@ -2028,39 +2282,36 @@ function updateBabAuthorMT(
     );
 
 
-  const checked =
-    card.querySelectorAll(
-      ".checkbox-bab-mt:checked"
-    );
-
-
-  const daftar = [];
-
-
-  checked.forEach(
-    function(cb){
-
-      daftar.push(
-        cb.value
-      );
-
-    }
-  );
+  if(!hiddenBab)
+    return;
 
 
   hiddenBab.value =
-    daftar.join(" | ");
+    textarea.value.trim();
 
 }
 
 
 /* ==================================================
-   HAPUS AUTHOR M
+   REFRESH
 ================================================== */
 
-function hapusAuthorMT(
-  button
-){
+function refreshSemuaBabAuthorMT(){
+
+  /*
+   Tidak lagi mengubah textbox manual.
+   Fungsi ini dipertahankan agar struktur
+   program tetap aman.
+  */
+
+}
+
+
+/* ==================================================
+   HAPUS AUTHOR
+================================================== */
+
+function hapusAuthorMT(button){
 
   const card =
     button.closest(
@@ -2081,7 +2332,7 @@ function hapusAuthorMT(
 
 
 /* ==================================================
-   NOMOR AUTHOR M
+   NOMOR AUTHOR
 ================================================== */
 
 function perbaruiNomorAuthorMT(){
@@ -2098,7 +2349,8 @@ function perbaruiNomorAuthorMT(){
       card.querySelector(
         ".author-number"
       ).textContent =
-        "Author " + (index + 1);
+        "Author " +
+        (index + 1);
 
     }
   );
@@ -2112,7 +2364,6 @@ function perbaruiNomorAuthorMT(){
 
 /* ==================================================
    DETAIL ORDER TAMBAH AUTHOR
-   ID ORDER DIKETIK MANUAL
 ================================================== */
 
 function ambilDetailOrder(){
@@ -2151,10 +2402,6 @@ function ambilDetailOrder(){
     );
 
 
-  /*
-  RESET
-  */
-
   judul.value = "";
 
 
@@ -2183,28 +2430,23 @@ function ambilDetailOrder(){
     "";
 
 
-  /*
-  VALIDASI ID ORDER
-  */
-
   if(!idOrder){
 
     status.className =
       "order-status error";
 
+
     status.textContent =
       "Silakan ketik ID Order terlebih dahulu.";
 
+
     input.focus();
+
 
     return;
 
   }
 
-
-  /*
-  CEK GOOGLE SCRIPT
-  */
 
   if(
     typeof google === "undefined" ||
@@ -2215,20 +2457,19 @@ function ambilDetailOrder(){
     status.className =
       "order-status error";
 
+
     status.textContent =
       "Google Apps Script tidak tersedia.";
+
 
     return;
 
   }
 
 
-  /*
-  LOADING
-  */
-
   button.disabled =
     true;
+
 
   button.textContent =
     "⏳ MENGAMBIL DATA...";
@@ -2237,13 +2478,11 @@ function ambilDetailOrder(){
   status.className =
     "order-status loading";
 
+
   status.textContent =
-    "Sedang mencari ID Order: " + idOrder;
+    "Sedang mencari ID Order: " +
+    idOrder;
 
-
-  /*
-  AMBIL DETAIL ORDER
-  */
 
   google.script.run
 
@@ -2252,6 +2491,7 @@ function ambilDetailOrder(){
 
         button.disabled =
           false;
+
 
         button.textContent =
           "🔍 AMBIL DATA ORDER";
@@ -2262,11 +2502,13 @@ function ambilDetailOrder(){
           status.className =
             "order-status error";
 
+
           status.textContent =
             "ID Order tidak ditemukan.";
 
-          judul.value =
-            "";
+
+          judul.value = "";
+
 
           if(container){
 
@@ -2285,14 +2527,11 @@ function ambilDetailOrder(){
 
           }
 
+
           return;
 
         }
 
-
-        /*
-        JUDUL BUKU
-        */
 
         judul.value =
           data.judulBuku ||
@@ -2300,20 +2539,13 @@ function ambilDetailOrder(){
           "";
 
 
-        /*
-        STATUS BERHASIL
-        */
-
         status.className =
           "order-status success";
+
 
         status.textContent =
           "✓ ID Order ditemukan. Data order berhasil dimuat.";
 
-
-        /*
-        TAMPILKAN BAB
-        */
 
         tampilkanBabKolaborasi(
           data.rincianBab || ""
@@ -2322,11 +2554,13 @@ function ambilDetailOrder(){
       }
     )
 
+
     .withFailureHandler(
       function(error){
 
         button.disabled =
           false;
+
 
         button.textContent =
           "🔍 AMBIL DATA ORDER";
@@ -2334,6 +2568,7 @@ function ambilDetailOrder(){
 
         status.className =
           "order-status error";
+
 
         status.textContent =
           "Gagal mengambil data order.";
@@ -2377,6 +2612,7 @@ function ambilDetailOrder(){
       }
     )
 
+
     .ambilDetailOrder(
       idOrder
     );
@@ -2398,9 +2634,8 @@ function tampilkanBabKolaborasi(
     );
 
 
-  if(!container){
+  if(!container)
     return;
-  }
 
 
   container.innerHTML = "";
@@ -2500,9 +2735,7 @@ function tampilkanBabKolaborasi(
    SIMPAN ORDER
 ================================================== */
 
-function simpanOrder(
-  event
-){
+function simpanOrder(event){
 
   event.preventDefault();
 
@@ -2541,6 +2774,7 @@ function simpanOrder(
       "Jenis T (Tunggal) harus memiliki tepat 1 author."
     );
 
+
     return;
 
   }
@@ -2555,10 +2789,15 @@ function simpanOrder(
       "Jenis M (Mandiri) minimal harus memiliki 1 author."
     );
 
+
     return;
 
   }
 
+
+  /* =========================
+     VALIDASI BAB
+  ========================= */
 
   for(
     let i = 0;
@@ -2574,6 +2813,7 @@ function simpanOrder(
         " belum ditentukan."
       );
 
+
       return;
 
     }
@@ -2588,36 +2828,49 @@ function simpanOrder(
         "tanggal"
       ).value,
 
+
     marketing:
       document.getElementById(
         "marketing"
       ).value.trim(),
+
 
     judulBuku:
       document.getElementById(
         "judulBuku"
       ).value.trim(),
 
+
     rincianBab:
       document.getElementById(
         "rincianBab"
       ).value,
 
+
     kmt:
       kmt,
+
 
     jenisPenulisan:
       document.getElementById(
         "jenisPenulisan"
       ).value,
 
+
     authors:
       authors,
 
+
     linkDrive:
-      document.getElementById("linkDrive")
-        ? document.getElementById("linkDrive").value.trim()
-        : ""
+      document.getElementById(
+        "linkDrive"
+      )
+      ?
+      document.getElementById(
+        "linkDrive"
+      ).value.trim()
+      :
+      ""
 
   };
 
@@ -2656,18 +2909,29 @@ function simpanOrder(
         }
       )
 
+
       .withFailureHandler(
         function(error){
 
           alert(
             "Gagal menyimpan order: " +
-            error.message
+            (
+              error &&
+              error.message
+              ?
+              error.message
+              :
+              error
+            )
           );
 
         }
       )
 
-      .simpanOrder(data);
+
+      .simpanOrder(
+        data
+      );
 
 
     return;
@@ -2760,9 +3024,7 @@ function ambilAuthorMT(){
    SIMPAN AUTHOR KOLABORASI
 ================================================== */
 
-function simpanAuthor(
-  event
-){
+function simpanAuthor(event){
 
   event.preventDefault();
 
@@ -2782,10 +3044,6 @@ function simpanAuthor(
   }
 
 
-  /*
-  ID ORDER MANUAL
-  */
-
   const idOrder =
     document.getElementById(
       "idOrder"
@@ -2798,18 +3056,16 @@ function simpanAuthor(
       "ID Order wajib diisi."
     );
 
+
     document
       .getElementById("idOrder")
       .focus();
+
 
     return;
 
   }
 
-
-  /*
-  PASTIKAN DATA ORDER SUDAH DIMUAT
-  */
 
   const judulBuku =
     document.getElementById(
@@ -2823,9 +3079,11 @@ function simpanAuthor(
       "Silakan klik AMBIL DATA ORDER terlebih dahulu."
     );
 
+
     document
       .getElementById("idOrder")
       .focus();
+
 
     return;
 
@@ -2856,14 +3114,11 @@ function simpanAuthor(
       "Data author tidak ditemukan."
     );
 
+
     return;
 
   }
 
-
-  /*
-  AMBIL BAB
-  */
 
   const babDipilih = [];
 
@@ -2889,14 +3144,11 @@ function simpanAuthor(
       "Pilih minimal satu bab untuk author."
     );
 
+
     return;
 
   }
 
-
-  /*
-  DATA AUTHOR
-  */
 
   const author = {
 
@@ -2905,15 +3157,18 @@ function simpanAuthor(
         '[name="authorNama"]'
       ).value.trim(),
 
+
     email:
       card.querySelector(
         '[name="authorEmail"]'
       ).value.trim(),
 
+
     telp:
       card.querySelector(
         '[name="authorTelp"]'
       ).value.trim(),
+
 
     bab:
       babDipilih
@@ -2921,33 +3176,29 @@ function simpanAuthor(
   };
 
 
-  /*
-  DATA UTAMA
-  */
-
   const data = {
 
     idOrder:
       idOrder,
 
+
     judulBuku:
       judulBuku,
+
 
     marketingInput:
       marketing,
 
+
     tanggal:
       tanggal,
+
 
     author:
       author
 
   };
 
-
-  /*
-  SIMPAN KE GOOGLE APPS SCRIPT
-  */
 
   if(
     typeof google !== "undefined" &&
@@ -2970,13 +3221,15 @@ function simpanAuthor(
         }
       )
 
+
       .withFailureHandler(
         function(error){
 
           alert(
             "Gagal menyimpan author: " +
             (
-              error && error.message
+              error &&
+              error.message
               ?
               error.message
               :
@@ -2987,17 +3240,16 @@ function simpanAuthor(
         }
       )
 
-      .simpanAuthor(data);
+
+      .simpanAuthor(
+        data
+      );
 
 
     return;
 
   }
 
-
-  /*
-  MODE TEST
-  */
 
   console.log(
     "DATA AUTHOR KOLABORASI:",
@@ -3080,12 +3332,9 @@ function resetFormAuthor(){
 
   document.getElementById(
     "tanggalTambah"
-  ).value = today;
+  ).value =
+    today;
 
-
-  /*
-  FOKUS KEMBALI KE ID ORDER
-  */
 
   document
     .getElementById("idOrder")
@@ -3178,9 +3427,7 @@ function tutupModal(){
    ESCAPE HTML
 ================================================== */
 
-function escapeHtml(
-  text
-){
+function escapeHtml(text){
 
   return String(text)
 
@@ -3225,37 +3472,7 @@ function kembali(){
 
 </script>
 
-
-
-<script>
-(function(){
-  function syncLinkDrive(){
-    var group=document.getElementById('linkDriveGroup');
-    var input=document.getElementById('linkDrive');
-    if(!group || !input) return;
-    var show=false;
-    if(true){
-      var jp=document.getElementById('jenisPenulisan');
-      show=jp && String(jp.value||'').trim().toLowerCase()==='naskah mandiri';
-    } else {
-      var k=document.getElementById('kmt');
-      show=k && String(k.value||'').trim().toUpperCase()==='M';
-    }
-    group.style.display=show?'block':'none';
-    input.required=show;
-    if(!show) input.value='';
-  }
-  document.addEventListener('DOMContentLoaded',function(){
-    var jp=document.getElementById('jenisPenulisan');
-    var k=document.getElementById('kmt');
-    if(jp) jp.addEventListener('change',syncLinkDrive);
-    if(k) k.addEventListener('change',syncLinkDrive);
-    syncLinkDrive();
-  });
-  window.syncLinkDrive=syncLinkDrive;
-})();
-</script>
-
 </body>
 
 </html>
+```
