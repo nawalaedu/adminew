@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 
@@ -426,34 +427,191 @@ small{
 
 </style>
 
+
 <script>
+
 /* ==========================================================
    API LANGSUNG DI HTML - TIDAK MENGGUNAKAN api.js
-   Ganti hanya GAS_API_URL sesuai Web App modul ini.
+   API TIDAK DIUBAH
 ========================================================== */
+
 const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbywmserhW-QVHgeBla2nONIEPmfLA75yKZ4iq1OQqbNAh7QWomtpO0XI8Ye8RPjXsRSpQ/exec';
+
 const GAS_API_KEY = 'ADMIN-515KA';
+
+
 (function(){
-  let successHandler=null, failureHandler=null;
+
+  let successHandler=null;
+  let failureHandler=null;
+
   function normalizeCall(method,args){
     return args && args.length ? args.slice() : [];
   }
+
   function callGas(method,args){
+
     const payload=normalizeCall(method,args);
+
     return new Promise(function(resolve,reject){
+
       const cb='__gas_cb_'+Date.now()+'_'+Math.floor(Math.random()*100000);
-      const script=document.createElement('script'); let timer=null;
-      function cleanup(){if(timer)clearTimeout(timer);try{delete window[cb];}catch(e){window[cb]=undefined;}if(script.parentNode)script.parentNode.removeChild(script);}
-      window[cb]=function(result){cleanup();if(result&&result.success===false){reject(new Error(result.message||'Google Apps Script error'));return;}resolve(result);};
-      script.onerror=function(){cleanup();reject(new Error('Tidak dapat menghubungi Google Apps Script. Pastikan URL Web App modul ini benar dan akses Web App adalah Anyone.'));};
-      timer=setTimeout(function(){cleanup();reject(new Error('Request ke Google Apps Script timeout (30 detik).'));},30000);
-      const params=new URLSearchParams();params.set('key',GAS_API_KEY);params.set('method',method);params.set('callback',cb);params.set('data',JSON.stringify(payload));
-      script.src=GAS_API_URL+'?'+params.toString();document.head.appendChild(script);
+
+      const script=document.createElement('script');
+
+      let timer=null;
+
+      function cleanup(){
+
+        if(timer) clearTimeout(timer);
+
+        try{
+          delete window[cb];
+        }catch(e){
+          window[cb]=undefined;
+        }
+
+        if(script.parentNode){
+          script.parentNode.removeChild(script);
+        }
+
+      }
+
+      window[cb]=function(result){
+
+        cleanup();
+
+        if(result && result.success===false){
+
+          reject(
+            new Error(
+              result.message ||
+              'Google Apps Script error'
+            )
+          );
+
+          return;
+        }
+
+        resolve(result);
+
+      };
+
+      script.onerror=function(){
+
+        cleanup();
+
+        reject(
+          new Error(
+            'Tidak dapat menghubungi Google Apps Script. Pastikan URL Web App modul ini benar dan akses Web App adalah Anyone.'
+          )
+        );
+
+      };
+
+      timer=setTimeout(function(){
+
+        cleanup();
+
+        reject(
+          new Error(
+            'Request ke Google Apps Script timeout (30 detik).'
+          )
+        );
+
+      },30000);
+
+      const params=new URLSearchParams();
+
+      params.set('key',GAS_API_KEY);
+      params.set('method',method);
+      params.set('callback',cb);
+      params.set('data',JSON.stringify(payload));
+
+      script.src=GAS_API_URL+'?'+params.toString();
+
+      document.head.appendChild(script);
+
     });
+
   }
-  const runProxy=new Proxy({}, {get:function(_,method){if(method==='withSuccessHandler')return function(fn){successHandler=fn;return runProxy;};if(method==='withFailureHandler')return function(fn){failureHandler=fn;return runProxy;};return function(){const args=Array.prototype.slice.call(arguments);const s=successHandler,f=failureHandler;successHandler=null;failureHandler=null;callGas(method,args).then(function(result){if(typeof s==='function')s(result);}).catch(function(error){if(typeof f==='function')f(error);else console.error(error);});};}});
-  window.google=window.google||{};window.google.script=window.google.script||{};window.google.script.run=runProxy;
+
+  const runProxy=new Proxy({},{
+
+    get:function(_,method){
+
+      if(method==='withSuccessHandler'){
+
+        return function(fn){
+
+          successHandler=fn;
+
+          return runProxy;
+
+        };
+
+      }
+
+      if(method==='withFailureHandler'){
+
+        return function(fn){
+
+          failureHandler=fn;
+
+          return runProxy;
+
+        };
+
+      }
+
+      return function(){
+
+        const args=
+          Array.prototype.slice.call(arguments);
+
+        const s=successHandler;
+        const f=failureHandler;
+
+        successHandler=null;
+        failureHandler=null;
+
+        callGas(method,args)
+
+          .then(function(result){
+
+            if(typeof s==='function'){
+              s(result);
+            }
+
+          })
+
+          .catch(function(error){
+
+            if(typeof f==='function'){
+              f(error);
+            }else{
+              console.error(error);
+            }
+
+          });
+
+      };
+
+    }
+
+  });
+
+
+  window.google=window.google||{};
+
+  window.google.script=
+    window.google.script||{};
+
+  window.google.script.run=
+    runProxy;
+
 })();
+
 </script>
 
 </head>
@@ -588,6 +746,14 @@ disimpan.
 <strong>M</strong> = Mandiri,
 <strong>T</strong> = Tunggal.
 
+<br><br>
+
+<strong>Scope</strong> menentukan cakupan jurnal.
+
+<br>
+
+<strong>Indeks</strong> menentukan indeksasi jurnal.
+
 </div>
 
 
@@ -641,62 +807,113 @@ Masukkan nama marketing yang melakukan input order.
 
 
 <!-- ==================================================
-     KODE JURNAL
+     SCOPE
 ================================================== -->
 
 <div class="form-group">
 
 <label>
-Kode Jurnal
+Scope
 </label>
 
-<input
-type="text"
-id="kodeJurnal"
-name="kodeJurnal"
-placeholder="Contoh: N001, N002, N020"
+<select
+id="scope"
+name="scope"
 required>
 
+<option value="">
+Pilih Scope
+</option>
+
+<option value="Nasional">
+Nasional
+</option>
+
+<option value="Internasional">
+Internasional
+</option>
+
+</select>
+
 <small>
-Masukkan kode jurnal tempat IJP akan diterbitkan.
+Pilih cakupan jurnal yang menjadi target publikasi IJP.
 </small>
 
 </div>
 
 
 <!-- ==================================================
-     BULAN TERBIT
+     INDEKS
 ================================================== -->
 
 <div class="form-group">
 
 <label>
-Bulan Terbit
+Indeks
 </label>
 
 <select
-id="bulanTerbit"
-name="bulanTerbit"
+id="indeks"
+name="indeks"
 required>
 
 <option value="">
-Pilih Bulan Terbit
+Pilih Indeks
 </option>
 
-<option value="Januari">Januari</option>
-<option value="Februari">Februari</option>
-<option value="Maret">Maret</option>
-<option value="April">April</option>
-<option value="Mei">Mei</option>
-<option value="Juni">Juni</option>
-<option value="Juli">Juli</option>
-<option value="Agustus">Agustus</option>
-<option value="September">September</option>
-<option value="Oktober">Oktober</option>
-<option value="November">November</option>
-<option value="Desember">Desember</option>
+<optgroup label="SINTA">
+
+<option value="SINTA 1">
+SINTA 1
+</option>
+
+<option value="SINTA 2">
+SINTA 2
+</option>
+
+<option value="SINTA 3">
+SINTA 3
+</option>
+
+<option value="SINTA 4">
+SINTA 4
+</option>
+
+<option value="SINTA 5">
+SINTA 5
+</option>
+
+<option value="SINTA 6">
+SINTA 6
+</option>
+
+</optgroup>
+
+<optgroup label="SCOPUS">
+
+<option value="Scopus Q1">
+Scopus Q1
+</option>
+
+<option value="Scopus Q2">
+Scopus Q2
+</option>
+
+<option value="Scopus Q3">
+Scopus Q3
+</option>
+
+<option value="Scopus Q4">
+Scopus Q4
+</option>
+
+</optgroup>
 
 </select>
+
+<small>
+Pilih indeks jurnal: SINTA 1–6 atau Scopus Q1–Q4.
+</small>
 
 </div>
 
@@ -790,20 +1007,25 @@ Naskah Mandiri
 </div>
 
 
-<!-- LINK DRIVE - KHUSUS KMT M -->
+<!-- ==================================================
+     LINK DRIVE - KHUSUS KMT M
+================================================== -->
 
-<div class="form-group" id="linkDriveGroup" style="display:none;">
+<div
+class="form-group"
+id="linkDriveGroup"
+style="display:none;">
 
 <label>
 Link Drive Google Drive
 </label>
 
 <input
- type="url"
- id="linkDrive"
- name="linkDrive"
- placeholder="https://drive.google.com/..."
- autocomplete="off">
+type="url"
+id="linkDrive"
+name="linkDrive"
+placeholder="https://drive.google.com/..."
+autocomplete="off">
 
 <small>
 Wajib diisi jika KMT = M (Mandiri).
@@ -820,16 +1042,12 @@ Wajib diisi jika KMT = M (Mandiri).
 id="authorMTSection"
 style="display:none;">
 
-
 <div
 id="infoAuthorMT"
 class="info-box">
-
 </div>
 
-
 <div id="authorMTContainer"></div>
-
 
 <button
 type="button"
@@ -840,7 +1058,6 @@ onclick="tambahAuthorMT()">
 ＋ TAMBAH AUTHOR
 
 </button>
-
 
 </div>
 
@@ -856,7 +1073,6 @@ class="btn-save">
 SIMPAN ORDER IJP
 
 </button>
-
 
 </form>
 
@@ -900,7 +1116,7 @@ onsubmit="simpanAuthorIJP(event)">
 
 
 <!-- ==================================================
-     ID ORDER - INPUT MANUAL
+     ID ORDER
 ================================================== -->
 
 <div class="form-group">
@@ -955,18 +1171,18 @@ readonly>
 
 
 <!-- ==================================================
-     KODE JURNAL
+     SCOPE
 ================================================== -->
 
 <div class="form-group">
 
 <label>
-Kode Jurnal
+Scope
 </label>
 
 <input
 type="text"
-id="kodeJurnalAuthor"
+id="scopeAuthor"
 class="readonly"
 placeholder="Otomatis berdasarkan ID Order"
 readonly>
@@ -975,18 +1191,18 @@ readonly>
 
 
 <!-- ==================================================
-     BULAN TERBIT
+     INDEKS
 ================================================== -->
 
 <div class="form-group">
 
 <label>
-Bulan Terbit
+Indeks
 </label>
 
 <input
 type="text"
-id="bulanTerbitAuthor"
+id="indeksAuthor"
 class="readonly"
 placeholder="Otomatis berdasarkan ID Order"
 readonly>
@@ -1058,16 +1274,45 @@ required>
 Pilih urutan penulis
 </option>
 
-<option value="1">Penulis ke-1</option>
-<option value="2">Penulis ke-2</option>
-<option value="3">Penulis ke-3</option>
-<option value="4">Penulis ke-4</option>
-<option value="5">Penulis ke-5</option>
-<option value="6">Penulis ke-6</option>
-<option value="7">Penulis ke-7</option>
-<option value="8">Penulis ke-8</option>
-<option value="9">Penulis ke-9</option>
-<option value="10">Penulis ke-10</option>
+<option value="1">
+Penulis ke-1
+</option>
+
+<option value="2">
+Penulis ke-2
+</option>
+
+<option value="3">
+Penulis ke-3
+</option>
+
+<option value="4">
+Penulis ke-4
+</option>
+
+<option value="5">
+Penulis ke-5
+</option>
+
+<option value="6">
+Penulis ke-6
+</option>
+
+<option value="7">
+Penulis ke-7
+</option>
+
+<option value="8">
+Penulis ke-8
+</option>
+
+<option value="9">
+Penulis ke-9
+</option>
+
+<option value="10">
+Penulis ke-10
+</option>
 
 </select>
 
@@ -1089,16 +1334,16 @@ Author Kolaborasi
 </label>
 
 <small style="margin-bottom:15px;">
+
 Form ini menerima <strong>1 author</strong>
 dalam satu kali input.
+
 </small>
 
 
 <div id="authorContainer">
 
-
 <div class="author-card">
-
 
 <div class="author-header">
 
@@ -1178,9 +1423,7 @@ Masukkan institusi/afiliasi author.
 
 </div>
 
-
 </div>
-
 
 </div>
 
@@ -1196,7 +1439,6 @@ class="btn-save">
 SIMPAN AUTHOR KOLABORASI
 
 </button>
-
 
 </form>
 
@@ -1215,19 +1457,15 @@ SIMPAN AUTHOR KOLABORASI
 id="orderModal"
 class="modal">
 
-
 <div class="modal-box">
-
 
 <div class="modal-icon">
 ✅
 </div>
 
-
 <h2>
 Order IJP Berhasil
 </h2>
-
 
 <p>
 Order IJP telah berhasil dicatat.
@@ -1236,9 +1474,7 @@ Simpan ID Order berikut untuk proses
 Tambah Author, Invoice, dan proses berikutnya.
 </p>
 
-
 <div class="order-result">
-
 
 <div class="result-row">
 
@@ -1273,7 +1509,6 @@ class="result-value">
 
 </div>
 
-
 </div>
 
 
@@ -1288,7 +1523,6 @@ onclick="salinIdOrder()">
 
 </button>
 
-
 <button
 type="button"
 class="btn-modal btn-close"
@@ -1299,7 +1533,6 @@ TUTUP
 </button>
 
 </div>
-
 
 </div>
 
@@ -1313,6 +1546,7 @@ TUTUP
 ================================================== */
 
 let jumlahAuthorMT = 0;
+
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -1446,14 +1680,23 @@ function ubahKMT(){
       Setiap author wajib dilengkapi dengan:
 
       <br>
+
       • Nama Author
+
       <br>
+
       • Email Author
+
       <br>
+
       • No. Telp Author
+
       <br>
+
       • Afiliasi Author
+
       <br>
+
       • Urutan Penulis
 
       <br><br>
@@ -1492,14 +1735,23 @@ function ubahKMT(){
       Author wajib dilengkapi dengan:
 
       <br>
+
       • Nama Author
+
       <br>
+
       • Email Author
+
       <br>
+
       • No. Telp Author
+
       <br>
+
       • Afiliasi Author
+
       <br>
+
       • Urutan Penulis
 
       <br><br>
@@ -1704,7 +1956,6 @@ function buatOptionPenulis(){
 
   let html = "";
 
-
   for(
     let i = 1;
     i <= 20;
@@ -1720,7 +1971,6 @@ function buatOptionPenulis(){
     `;
 
   }
-
 
   return html;
 
@@ -1800,10 +2050,6 @@ function ambilDetailOrderIJP(){
     input.value.trim();
 
 
-  /* ==================================================
-     VALIDASI ID ORDER
-  ================================================== */
-
   if(!idOrder){
 
     alert(
@@ -1817,26 +2063,20 @@ function ambilDetailOrderIJP(){
   }
 
 
-  /* ==================================================
-     KOSONGKAN DETAIL LAMA
-  ================================================== */
+  /* KOSONGKAN DETAIL LAMA */
 
   document.getElementById(
     "judulIJPAuthor"
   ).value = "";
 
   document.getElementById(
-    "kodeJurnalAuthor"
+    "scopeAuthor"
   ).value = "";
 
   document.getElementById(
-    "bulanTerbitAuthor"
+    "indeksAuthor"
   ).value = "";
 
-
-  /* ==================================================
-     CEK GOOGLE APPS SCRIPT
-  ================================================== */
 
   if(
     typeof google === "undefined" ||
@@ -1852,10 +2092,6 @@ function ambilDetailOrderIJP(){
 
   }
 
-
-  /* ==================================================
-     AMBIL DATA ORDER
-  ================================================== */
 
   google.script.run
 
@@ -1886,35 +2122,43 @@ function ambilDetailOrderIJP(){
 
 
         /* =========================
-           KODE JURNAL
+           SCOPE
         ========================= */
 
         document.getElementById(
-          "kodeJurnalAuthor"
+          "scopeAuthor"
         ).value =
+          data.scope ||
+          data.Scope ||
           data.kodeJurnal ||
           "";
 
 
         /* =========================
-           BULAN TERBIT
+           INDEKS
         ========================= */
 
         document.getElementById(
-          "bulanTerbitAuthor"
+          "indeksAuthor"
         ).value =
+          data.indeks ||
+          data.Indeks ||
           data.bulanTerbit ||
           "";
 
 
         /* =========================
-           VALIDASI HASIL
+           VALIDASI
         ========================= */
 
         if(
           !data.judulIJP &&
           !data.judulArtikel &&
+          !data.scope &&
+          !data.Scope &&
           !data.kodeJurnal &&
+          !data.indeks &&
+          !data.Indeks &&
           !data.bulanTerbit
         ){
 
@@ -1997,9 +2241,7 @@ function simpanOrderIJP(
     ambilAuthorMT();
 
 
-  /* ==================================================
-     T = TEPAT SATU AUTHOR
-  ================================================== */
+  /* T = TEPAT SATU AUTHOR */
 
   if(
     kmt === "T" &&
@@ -2015,9 +2257,7 @@ function simpanOrderIJP(
   }
 
 
-  /* ==================================================
-     M = MINIMAL SATU AUTHOR
-  ================================================== */
+  /* M = MINIMAL SATU AUTHOR */
 
   if(
     kmt === "M" &&
@@ -2033,9 +2273,7 @@ function simpanOrderIJP(
   }
 
 
-  /* ==================================================
-     VALIDASI AUTHOR
-  ================================================== */
+  /* VALIDASI AUTHOR */
 
   for(
     let i = 0;
@@ -2075,6 +2313,17 @@ function simpanOrderIJP(
      DATA ORDER
   ================================================== */
 
+  const scope =
+    document.getElementById(
+      "scope"
+    ).value;
+
+  const indeks =
+    document.getElementById(
+      "indeks"
+    ).value;
+
+
   const data = {
 
     tanggal:
@@ -2087,15 +2336,11 @@ function simpanOrderIJP(
         "marketing"
       ).value.trim(),
 
-    kodeJurnal:
-      document.getElementById(
-        "kodeJurnal"
-      ).value.trim(),
+    scope:
+      scope,
 
-    bulanTerbit:
-      document.getElementById(
-        "bulanTerbit"
-      ).value,
+    indeks:
+      indeks,
 
     judulIJP:
       document.getElementById(
@@ -2115,15 +2360,25 @@ function simpanOrderIJP(
 
     linkDrive:
       document.getElementById("linkDrive")
-        ? document.getElementById("linkDrive").value.trim()
-        : ""
+        ?
+        document.getElementById("linkDrive").value.trim()
+        :
+        "",
+
+    /* ==================================================
+       ALIAS UNTUK KOMPATIBILITAS API / GS LAMA
+    ================================================== */
+
+    kodeJurnal:
+      scope,
+
+    bulanTerbit:
+      indeks
 
   };
 
 
-  /* ==================================================
-     VALIDASI MARKETING
-  ================================================== */
+  /* VALIDASI MARKETING */
 
   if(!data.marketing){
 
@@ -2133,6 +2388,40 @@ function simpanOrderIJP(
 
     document.getElementById(
       "marketing"
+    ).focus();
+
+    return;
+
+  }
+
+
+  /* VALIDASI SCOPE */
+
+  if(!data.scope){
+
+    alert(
+      "Scope wajib dipilih."
+    );
+
+    document.getElementById(
+      "scope"
+    ).focus();
+
+    return;
+
+  }
+
+
+  /* VALIDASI INDEKS */
+
+  if(!data.indeks){
+
+    alert(
+      "Indeks wajib dipilih."
+    );
+
+    document.getElementById(
+      "indeks"
     ).focus();
 
     return;
@@ -2185,7 +2474,14 @@ function simpanOrderIJP(
 
           alert(
             "Gagal menyimpan order IJP: " +
-            error.message
+            (
+              error &&
+              error.message
+              ?
+              error.message
+              :
+              error
+            )
           );
 
         }
@@ -2328,10 +2624,6 @@ function simpanAuthorIJP(
     ).value.trim();
 
 
-  /* ==================================================
-     VALIDASI ID ORDER
-  ================================================== */
-
   if(!idOrder){
 
     alert(
@@ -2353,15 +2645,15 @@ function simpanAuthorIJP(
     ).value;
 
 
-  const kodeJurnal =
+  const scope =
     document.getElementById(
-      "kodeJurnalAuthor"
+      "scopeAuthor"
     ).value;
 
 
-  const bulanTerbit =
+  const indeks =
     document.getElementById(
-      "bulanTerbitAuthor"
+      "indeksAuthor"
     ).value;
 
 
@@ -2383,9 +2675,7 @@ function simpanAuthorIJP(
     ).value;
 
 
-  /* ==================================================
-     VALIDASI DETAIL ORDER
-  ================================================== */
+  /* VALIDASI DETAIL ORDER */
 
   if(!judulIJP){
 
@@ -2402,10 +2692,6 @@ function simpanAuthorIJP(
   }
 
 
-  /* ==================================================
-     VALIDASI MARKETING
-  ================================================== */
-
   if(!marketing){
 
     alert(
@@ -2420,10 +2706,6 @@ function simpanAuthorIJP(
 
   }
 
-
-  /* ==================================================
-     AUTHOR
-  ================================================== */
 
   const card =
     document.querySelector(
@@ -2470,10 +2752,6 @@ function simpanAuthorIJP(
   };
 
 
-  /* ==================================================
-     VALIDASI AFILIASI
-  ================================================== */
-
   if(!author.afiliasi){
 
     alert(
@@ -2497,11 +2775,11 @@ function simpanAuthorIJP(
     judulIJP:
       judulIJP,
 
-    kodeJurnal:
-      kodeJurnal,
+    scope:
+      scope,
 
-    bulanTerbit:
-      bulanTerbit,
+    indeks:
+      indeks,
 
     marketingInput:
       marketing,
@@ -2513,7 +2791,15 @@ function simpanAuthorIJP(
       urutanPenulis,
 
     author:
-      author
+      author,
+
+    /* ALIAS KOMPATIBILITAS GS LAMA */
+
+    kodeJurnal:
+      scope,
+
+    bulanTerbit:
+      indeks
 
   };
 
@@ -2548,7 +2834,14 @@ function simpanAuthorIJP(
 
           alert(
             "Gagal menyimpan author IJP: " +
-            error.message
+            (
+              error &&
+              error.message
+              ?
+              error.message
+              :
+              error
+            )
           );
 
         }
@@ -2576,23 +2869,33 @@ function simpanAuthorIJP(
 
 
   alert(
+
     "Data Author Kolaborasi IJP siap disimpan.\n\n" +
+
     "ID Order: " +
     data.idOrder +
+
     "\nJudul IJP: " +
     data.judulIJP +
-    "\nKode Jurnal: " +
-    data.kodeJurnal +
-    "\nBulan Terbit: " +
-    data.bulanTerbit +
+
+    "\nScope: " +
+    data.scope +
+
+    "\nIndeks: " +
+    data.indeks +
+
     "\nMarketing: " +
     marketing +
+
     "\nPenulis ke-" +
     data.urutanPenulis +
+
     "\nAuthor: " +
     data.author.nama +
+
     "\nAfiliasi: " +
     data.author.afiliasi
+
   );
 
 }
@@ -2615,12 +2918,12 @@ function resetFormAuthor(){
 
 
   document.getElementById(
-    "kodeJurnalAuthor"
+    "scopeAuthor"
   ).value = "";
 
 
   document.getElementById(
-    "bulanTerbitAuthor"
+    "indeksAuthor"
   ).value = "";
 
 
@@ -2774,36 +3077,98 @@ function kembali(){
 </script>
 
 
-
 <script>
+
+/* ==================================================
+   LINK DRIVE KHUSUS KMT M
+================================================== */
+
 (function(){
+
   function syncLinkDrive(){
-    var group=document.getElementById('linkDriveGroup');
-    var input=document.getElementById('linkDrive');
+
+    var group =
+      document.getElementById(
+        'linkDriveGroup'
+      );
+
+    var input =
+      document.getElementById(
+        'linkDrive'
+      );
+
     if(!group || !input) return;
-    var show=false;
-    if(false){
-      var jp=document.getElementById('jenisPenulisan');
-      show=jp && String(jp.value||'').trim().toLowerCase()==='naskah mandiri';
-    } else {
-      var k=document.getElementById('kmt');
-      show=k && String(k.value||'').trim().toUpperCase()==='M';
+
+
+    var k =
+      document.getElementById(
+        'kmt'
+      );
+
+
+    var show =
+      k &&
+      String(
+        k.value || ''
+      )
+      .trim()
+      .toUpperCase() === 'M';
+
+
+    group.style.display =
+      show
+      ?
+      'block'
+      :
+      'none';
+
+
+    input.required =
+      show;
+
+
+    if(!show){
+
+      input.value = '';
+
     }
-    group.style.display=show?'block':'none';
-    input.required=show;
-    if(!show) input.value='';
+
   }
-  document.addEventListener('DOMContentLoaded',function(){
-    var jp=document.getElementById('jenisPenulisan');
-    var k=document.getElementById('kmt');
-    if(jp) jp.addEventListener('change',syncLinkDrive);
-    if(k) k.addEventListener('change',syncLinkDrive);
-    syncLinkDrive();
-  });
-  window.syncLinkDrive=syncLinkDrive;
+
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    function(){
+
+      var k =
+        document.getElementById(
+          'kmt'
+        );
+
+      if(k){
+
+        k.addEventListener(
+          'change',
+          syncLinkDrive
+        );
+
+      }
+
+      syncLinkDrive();
+
+    }
+  );
+
+
+  window.syncLinkDrive =
+    syncLinkDrive;
+
 })();
+
 </script>
+
 
 </body>
 
 </html>
+```
